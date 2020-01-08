@@ -1,0 +1,28 @@
+﻿<Window x:Name="MainWindow1" x:Class="AutomationProjectManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutomationProjectManager"
+        mc:Ignorable="d"
+        Title="Automation Projects Manager" Height="600" Width="800" Background="#FFEDF2E7">
+    <Window.Foreground>
+        <SolidColorBrush Color="#FFEDF2E7" Opacity="0.2"/>
+    </Window.Foreground>
+    <Grid x:Name="Bottom">
+        <Grid x:Name="MenuBar" Height="50" VerticalAlignment="Top" Margin="0,0,0,0" Background="#FF2980B9"/>
+        <Grid x:Name="MainGrid" Background="#FF2C3E50" Margin="0,55,0,0">
+            <TabControl  Margin="0,0,0,0" >
+                <TabItem Header="Login">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="Projekty">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="Ustawienia">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
