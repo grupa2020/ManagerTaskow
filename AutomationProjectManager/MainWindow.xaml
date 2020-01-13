@@ -14,7 +14,19 @@
         <Grid x:Name="MainGrid" Background="#FF2C3E50" Margin="0,55,0,0">
             <TabControl  Margin="0,0,0,0" >
                 <TabItem Header="Login">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#16a085">
+                        <Border Background="#2c3e50" CornerRadius="20" Margin="40">
+                        <StackPanel>
+                            <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="#FFE8E8F2"></Label>
+                            <Separator></Separator>
+                            <Label Content="Nazwa użytkownika:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                            <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light"></TextBox>
+                            <Label Content="Hasło:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                            <PasswordBox x:Name="passTextBox"  FontSize="18" Margin="150,15,150,15"></PasswordBox>
+                                <Button x:Name="submitLoginBtn" Background="#27ae60" Foreground="White" Content="Zaloguj" FontSize="16" FontFamily="Calibri" Margin="150,15,150,0" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Projekty">
                     <Grid Background="#FFE5E5E5"/>

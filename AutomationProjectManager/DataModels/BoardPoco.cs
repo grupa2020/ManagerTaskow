@@ -8,5 +8,9 @@ namespace AutomationProjectManager.Model
 {
     class BoardPoco
     {
+        public int BoardId { get; set; }
+        public string Name { get; set; }
+        public int ProjectId { get; set; }
+        public int RoleAccess { get; set; }
     }
 }
