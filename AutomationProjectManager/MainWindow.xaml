@@ -16,23 +16,38 @@
                 <TabItem Header="Login">
                     <Grid Background="#16a085">
                         <Border Background="#2c3e50" CornerRadius="20" Margin="40">
-                        <StackPanel>
-                            <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="#FFE8E8F2"></Label>
-                            <Separator></Separator>
-                            <Label Content="Nazwa użytkownika:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
-                            <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light"></TextBox>
-                            <Label Content="Hasło:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
-                            <PasswordBox x:Name="passTextBox"  FontSize="18" Margin="150,15,150,15"></PasswordBox>
+                            <StackPanel>
+                                <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="#FFE8E8F2"></Label>
+                                <Separator></Separator>
+                                <Label Content="Nazwa użytkownika:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                                <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light"></TextBox>
+                                <Label Content="Hasło:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                                <PasswordBox x:Name="passTextBox"  FontSize="18" Margin="150,15,150,15"></PasswordBox>
                                 <Button x:Name="submitLoginBtn" Background="#27ae60" Foreground="White" Content="Zaloguj" FontSize="16" FontFamily="Calibri" Margin="150,15,150,0" />
                             </StackPanel>
                         </Border>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Projekty">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <StackPanel Margin="10,10,10,10" >
+                            <DataGrid Name="projectDataGrid" Margin="10,10,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False"  IsReadOnly="True"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="400" MouseDoubleClick="projectDataGrid_MouseDoubleClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding ProjectId}" Header="ID Projektu" />
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="Nazwa projektu" />
+                                    <DataGridTextColumn Binding="{Binding StartDate}" Header="Rozpoczęcie" />
+                                    <DataGridTextColumn Binding="{Binding Status}" Header="Status" />
+                                    <DataGridTextColumn Binding="{Binding OrganizationId}" Header="Numer Klienta" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                        <Button x:Name="refreshButton" Content="Odśwież" HorizontalAlignment="Left" Margin="399,440,0,0" VerticalAlignment="Top" Width="75" Click="refresh_Click"/>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Ustawienia">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <Button x:Name="testBtn" Content="Button" HorizontalAlignment="Left" Margin="354,155,0,0" VerticalAlignment="Top" Width="75" Click="testBtn_Click"/>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>
