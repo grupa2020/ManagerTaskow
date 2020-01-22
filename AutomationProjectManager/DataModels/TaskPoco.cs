@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace AutomationProjectManager.Model
 {
-    class TaskPoco
+   public enum TaskType {AlgorithmDescription,DriversProject,ElectricalProject,
+        Maintainence,Mounting,OrderList,ProjectDescription,VarDefTool,Workshop };//Typy tasków w folderze TasksChildrens są klasy konkretnych typów które dziedziczą po klasie TaskPoco
+    public class TaskPoco
     {
         public int TaskId { get; set; }
-        public string Content { get; set; }
+        public TaskType Type { get; set; }
         public int BoardId { get; set; }
+        public string Content { get; set; }
+        public virtual void UpdateContent()
+        {
+            Content = "";
+        }
     }
 }
