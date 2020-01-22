@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutomationProjectManager.Model;
+using AutomationProjectManager.ToolsWindows;
+using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace AutomationProjectManager
 {
     /// <summary>
@@ -23,6 +28,38 @@ namespace AutomationProjectManager
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void testBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OrderList listWindow = new OrderList();
+            listWindow.Show();
+        }
+
+       
+
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.GET;
+            client.serviceUri = "https://localhost:44309/api/Projects/0";
+            string response = client.getRequest();
+            List<ProjectPoco> projectList;
+            projectList = JsonConvert.DeserializeObject<List<ProjectPoco>>(response);
+            projectDataGrid.ItemsSource = projectList;
+
+           
+        }
+
+        private void projectDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(projectDataGrid.SelectedItem!=null)
+            {
+                ProjectPoco selected = (ProjectPoco)projectDataGrid.SelectedItem;
+                ProjectWindow projectWindow = new ProjectWindow(selected.ProjectId);
+                projectWindow.Show();
+            }
+          
         }
     }
 }

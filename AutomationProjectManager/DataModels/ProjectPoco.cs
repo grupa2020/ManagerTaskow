@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace AutomationProjectManager.Model
         public DateTime StartDate { get; set; }
         public int Status { get; set; }
         public int OrganizationId { get; set; }
+
+  
     }
 }
