@@ -46,7 +46,9 @@
                 </TabItem>
                 <TabItem Header="Ustawienia">
                     <Grid Background="#FFE5E5E5">
-                        <Button x:Name="testBtn" Content="Button" HorizontalAlignment="Left" Margin="354,155,0,0" VerticalAlignment="Top" Width="75" Click="testBtn_Click"/>
+                        <Button x:Name="savePropertiesbtn" Content="Zapisz  ustawienia" Margin="0,0,25,34" Click="saveBtn_Click" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="107"/>
+                        <Label Content="Adres serwera REST:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="194"/>
+                        <TextBox x:Name="serviceUriTextBox" Height="26" Margin="225,10,25,0" TextWrapping="Wrap" Text="ścieżka" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
             </TabControl>
