@@ -62,7 +62,13 @@
     </ApplicationDefinition>
     <Compile Include="Connection\RestClient.cs" />
     <Compile Include="DataModels\TasksChildrens\AlgorithmDescriptionTask.cs" />
+    <Compile Include="DataModels\TasksChildrens\DriversProject.cs" />
+    <Compile Include="DataModels\TasksChildrens\ElectricalProject.cs" />
+    <Compile Include="DataModels\TasksChildrens\Maintainence.cs" />
+    <Compile Include="DataModels\TasksChildrens\Mounting.cs" />
+    <Compile Include="DataModels\TasksChildrens\OrderList.cs" />
     <Compile Include="DataModels\TasksChildrens\ProjectDescription.cs" />
+    <Compile Include="DataModels\TasksChildrens\Workshop.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
