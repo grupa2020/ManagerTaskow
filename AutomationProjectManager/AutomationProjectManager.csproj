@@ -69,6 +69,8 @@
     <Compile Include="DataModels\TasksChildrens\OrderList.cs" />
     <Compile Include="DataModels\TasksChildrens\ProjectDescription.cs" />
     <Compile Include="DataModels\TasksChildrens\Workshop.cs" />
+    <Compile Include="Factories\TaskBoardXY.cs" />
+    <Compile Include="Factories\TaskButton.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
@@ -209,7 +211,6 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Themes\" />
-    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

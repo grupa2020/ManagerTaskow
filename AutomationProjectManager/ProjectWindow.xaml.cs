@@ -1,8 +1,11 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.DataModels.TasksChildrens;
+using AutomationProjectManager.Factories;
+using AutomationProjectManager.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,19 +77,65 @@ namespace AutomationProjectManager
             List<TaskPoco> taskList;
             taskList = JsonConvert.DeserializeObject<List<TaskPoco>>(response);
 
-            projectDataGrid.ItemsSource = taskList;
 
-            /*
-            foreach (TaskPoco task in taskList)
+            ///////////////DO TESTÓW
+
+
+            taskList.Add(new ElectricalProject(12,"bla bla",12));
+            taskList.Add(new Maintainence(12, "bla bla", 12));
+            taskList.Add(new Mounting(12, "bla bla", 12));
+            taskList.Add(new OrderList(12, "bla bla", 12));
+            taskList.Add(new ProjectDescription(12, "bla bla", 12));
+            taskList.Add(new Workshop(12, "bla bla", 12));
+            taskList.Add(new ElectricalProject(12,"bla bla",12));
+            taskList.Add(new DriversProject(12, "bla bla", 12));
+            ///
+
+
+
+
+
+
+
+            // Tworzenie przycisków tasków i dodawanie ich do DataGrid 
+
+
+            TaskBoardXY location=new TaskBoardXY();
+
+            
+            for(int columnCount=1; columnCount < 9; columnCount++)  //Ilość Kolumn tasków
             {
-                selectBoardBox.Items.Add(task.TaskId);
+                tasksGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            if (selectBoardBox.Items.Count >= 1)
+            foreach (TaskPoco task in taskList)
             {
-                selectBoardBox.SelectedIndex = 0;
-            }   */
+                TaskButton taskButton = new TaskButton(task);
+                taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
+                
+                int dstRow = location.GetDestinationRow(task.Type);
+                
+                Grid.SetColumn(taskButton, Convert.ToInt32(task.Type));
+                Grid.SetRow(taskButton, dstRow-1);
+ 
+                tasksGrid.Children.Add(taskButton);
+            }
+
+            int rowsCount = location.GetMax();
+            for(int i=0;i<rowsCount;i++)
+            {
+                tasksGrid.RowDefinitions.Add(new RowDefinition());
+            }
         }
 
+
+        private void openTaskWindow(object sender, RoutedEventArgs e)
+        {
+            TaskButton taskSender= sender as TaskButton;
+            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString()+" "+taskSender.Content);
+            //   throw new NotImplementedException();
+        }
+
+     
     }
 }

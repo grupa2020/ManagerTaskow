@@ -20,7 +20,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = BoardId;
             this.TaskId = TaskId;
-            this.Type = TaskType.ProjectDescription;
+            this.Type = TaskType.DriversProject;
         }
 
         public override void UpdateContent()

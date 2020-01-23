@@ -12,9 +12,10 @@
                 <Label x:Name="lblInfo1" Content="Wybór Tablicy Projektu:"  />
                 <ComboBox x:Name="selectBoardBox" Margin="10,10,10,10" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400"/>
             </WrapPanel>
-            <DataGrid Name="projectDataGrid" Margin="10,10,10,10"    IsReadOnly="True"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="250">
-               
-            </DataGrid>
+            <Grid x:Name="tasksGrid" ShowGridLines="true" Height="244">
+           
+            </Grid>
+
 
         </StackPanel>
     </Grid>
