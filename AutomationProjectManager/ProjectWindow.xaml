@@ -10,11 +10,20 @@
         <StackPanel Margin="10" >
             <WrapPanel>
                 <Label x:Name="lblInfo1" Content="Wybór Tablicy Projektu:"  />
-                <ComboBox x:Name="selectBoardBox" Margin="10,10,10,10" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400"/>
+                <ComboBox x:Name="selectBoardBox" Margin="10,10,10,10" VerticalAlignment="Top"
+                         SelectionChanged="selectBoardBox_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400"/>
+                <Button Content="Dodaj nową tablicę" Name="AddBoardBtn" Click="AddBoardBtn_Click"/>
             </WrapPanel>
+            <ScrollViewer>
             <Grid x:Name="tasksGrid" ShowGridLines="true" Height="244">
            
             </Grid>
+            </ScrollViewer>
+            <Grid>
+                <Button Content="Dodaj" Name="AddTaskBtn" Click="AddTaskBtn_Click"/>
+            </Grid>
+            
+
 
 
         </StackPanel>

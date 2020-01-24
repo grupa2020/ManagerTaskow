@@ -19,9 +19,9 @@ namespace AutomationProjectManager.Factories
         {
             this.taskContent = task.Content;
 
-            string taskLabel = Translate(task.Type);
+            string taskLabel = Translate(task.TaskType);
             this.taskId = task.TaskId;
-            this.Name = task.Type.ToString();
+            this.Name = task.TaskType.ToString();
             this.Content = new TextBlock()
             {
                 FontSize = 14,
@@ -46,9 +46,9 @@ namespace AutomationProjectManager.Factories
             //this.Height = 200;
             this.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
 
-            switch (task.Type)
+            switch (task.TaskType)
             {
-                case TaskType.AlgorithmDescription:
+                case TaskTypeEnum.AlgorithmDescription:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Ustawienie kolorów konkretnych typów tasków
@@ -56,7 +56,7 @@ namespace AutomationProjectManager.Factories
                     break;
 
 
-                case TaskType.DriversProject:
+                case TaskTypeEnum.DriversProject:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400")); 
@@ -64,44 +64,44 @@ namespace AutomationProjectManager.Factories
                     break;
 
 
-                case TaskType.ElectricalProject:
+                case TaskTypeEnum.ElectricalProject:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); 
                     }
                     break;
-                case TaskType.Maintainence:
+                case TaskTypeEnum.Maintainence:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); 
                     }
                     break;
-                case TaskType.Mounting:
+                case TaskTypeEnum.Mounting:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); 
                     }
                     break;
-                case TaskType.OrderList:
+                case TaskTypeEnum.OrderList:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); 
                     }
                     break;
-                case TaskType.ProjectDescription:
+                case TaskTypeEnum.ProjectDescription:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); 
                     }
                     break;
 
-                case TaskType.VarDefTool:
+                case TaskTypeEnum.VarDefTool:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#34495e")); 
                     }
                     break;
-                case TaskType.Workshop:
+                case TaskTypeEnum.Workshop:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
                         this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); 
@@ -119,58 +119,58 @@ namespace AutomationProjectManager.Factories
 
         }
 
-        public string Translate(TaskType type)
+        public string Translate(TaskTypeEnum type)
         {
             string name="";
 
             switch (type)
             {
-                case TaskType.AlgorithmDescription:
+                case TaskTypeEnum.AlgorithmDescription:
                     {
                         name = "Opis algorytmu";
                     }
                     break;
 
 
-                case TaskType.DriversProject:
+                case TaskTypeEnum.DriversProject:
                     {
                         name = "Projekt programu sterownika";
                     }
                     break;
 
 
-                case TaskType.ElectricalProject:
+                case TaskTypeEnum.ElectricalProject:
                     {
                         name = "Schemat Elektryki";
                     }
                     break;
-                case TaskType.Maintainence:
+                case TaskTypeEnum.Maintainence:
                     {
                         name = "Zgłoszenie serwisowe";
                     }
                     break;
-                case TaskType.Mounting:
+                case TaskTypeEnum.Mounting:
                     {
                         name = "Prace montażowe";
                     }
                     break;
-                case TaskType.OrderList:
+                case TaskTypeEnum.OrderList:
                     {
                         name = "Zapotrzebowania materiałowe";
                     }
                     break;
-                case TaskType.ProjectDescription:
+                case TaskTypeEnum.ProjectDescription:
                     {
                         name = "Opis projektu";
                     }
                     break;
 
-                case TaskType.VarDefTool:
+                case TaskTypeEnum.VarDefTool:
                     {
                         name = "Definicje zmiennych procesowych";
                     }
                     break;
-                case TaskType.Workshop:
+                case TaskTypeEnum.Workshop:
                     {
                         name = "Prace warsztatowe";
                     }

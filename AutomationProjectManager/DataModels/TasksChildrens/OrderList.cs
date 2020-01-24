@@ -13,14 +13,14 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = -1;
             this.TaskId = -1;
-            this.Type = TaskType.OrderList;
+            this.TaskType = TaskTypeEnum.OrderList;
         }
 
         public OrderList(int BoardId, string Content, int TaskId)
         {
             this.BoardId = BoardId;
             this.TaskId = TaskId;
-            this.Type = TaskType.OrderList;
+            this.TaskType = TaskTypeEnum.OrderList;
         }
 
         public override void UpdateContent()

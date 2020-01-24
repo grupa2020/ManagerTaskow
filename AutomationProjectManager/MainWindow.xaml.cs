@@ -119,7 +119,7 @@ namespace AutomationProjectManager
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco");
+           // ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco",2);
 
             AddProject projWnd = new AddProject();
             projWnd.Show();

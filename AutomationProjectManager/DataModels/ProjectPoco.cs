@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutomationProjectManager.DataModels;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace AutomationProjectManager.Model
         //public string CustomerName { get; set; }
 
 
-        public ProjectPoco(string name, DateTime startTime,int status, int orgId,string customer)
+        public ProjectPoco(string name, DateTime startTime,int status, int orgId,string customer,int projectId)
         {
-            ProjectId = -1;
+            ProjectId = projectId;
             Name = name;
             StartDate = startTime;
             Status = status;
@@ -43,7 +44,7 @@ namespace AutomationProjectManager.Model
                     client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
                 client.serviceUri += "Projects";
-                string response = client.PostMethod(this);
+                string response = client.PostMethod(this.ToNewProjectPOST());
 
                 return response;
             }
@@ -54,6 +55,12 @@ namespace AutomationProjectManager.Model
 
 
             return "Something was going wrong .." ;
+        }
+
+        public NewProjectPoco ToNewProjectPOST()
+        {
+            NewProjectPoco newProject = new NewProjectPoco(this.Name, this.StartDate, this.Status, this.OrganizationId);
+            return newProject;            
         }
   
     }

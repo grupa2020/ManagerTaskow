@@ -26,10 +26,12 @@ namespace AutomationProjectManager
     /// </summary>
     public partial class ProjectWindow : Window
     {
-        public ProjectWindow(int ProjectId)
+        int ProjectId;
+        public ProjectWindow(int projectId)
         {
             InitializeComponent();
-            updateComboBox(ProjectId);
+            updateComboBox(projectId);
+            ProjectId = projectId;
             loadTasks();                      
         }
 
@@ -74,7 +76,7 @@ namespace AutomationProjectManager
             {
                 client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Tasks/" + boardId; //W serwisie musiałaby być 0- to id projektu do którego board należy
+            client.serviceUri += "Tasks/" + boardId; 
             string response = client.getRequest();
 
             var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
@@ -82,17 +84,17 @@ namespace AutomationProjectManager
 
 
             ///////////////DO TESTÓW
-
             /*
-            taskList.Add(new ElectricalProject(12,"bla bla",12));
-            taskList.Add(new Maintainence(12, "bla bla", 12));
-            taskList.Add(new Mounting(12, "bla bla", 12));
-            taskList.Add(new OrderList(12, "bla bla", 12));
-            taskList.Add(new ProjectDescription(12, "bla bla", 12));
-            taskList.Add(new Workshop(12, "bla bla", 12));
-            taskList.Add(new ElectricalProject(12,"bla bla",12));
-            taskList.Add(new DriversProject(12, "bla bla", 12));
-            taskList.Add(new VarDefTool(12, "bla bla", 12));
+            taskList.Value.Add(new AlgorithmDescriptionTask(12, "bla bla", 12));
+            taskList.Value.Add(new ElectricalProject(12,"bla bla",12));
+            taskList.Value.Add(new Maintainence(12, "bla bla", 12));
+            taskList.Value.Add(new Mounting(12, "bla bla", 12));
+            taskList.Value.Add(new OrderList(12, "bla bla", 12));
+            taskList.Value.Add(new ProjectDescription(12, "bla bla", 12));
+            taskList.Value.Add(new Workshop(12, "bla bla", 12));
+            taskList.Value.Add(new ElectricalProject(12,"bla bla",12));
+            taskList.Value.Add(new DriversProject(12, "bla bla", 12));
+            taskList.Value.Add(new VarDefTool(12, "bla bla", 12));
             */
             ///
 
@@ -112,9 +114,9 @@ namespace AutomationProjectManager
                 TaskButton taskButton = new TaskButton(task);
                 taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
                 
-                int dstRow = location.GetDestinationRow(task.Type);
+                int dstRow = location.GetDestinationRow(task.TaskType);
                 
-                Grid.SetColumn(taskButton, location.GetColumn(task.Type));
+                Grid.SetColumn(taskButton, location.GetColumn(task.TaskType));
                 Grid.SetRow(taskButton, dstRow-1);
  
                 tasksGrid.Children.Add(taskButton);
@@ -135,6 +137,25 @@ namespace AutomationProjectManager
             //   throw new NotImplementedException();
         }
 
-     
+        private void AddTaskBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddTaskWindow newTaskWindow = new AddTaskWindow(1);//Tu zmienić na wybrany board w comboboxie
+            newTaskWindow.Show();
+        }
+
+        private void AddBoardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddBoardWindow newBoardWnd = new AddBoardWindow(ProjectId);
+            newBoardWnd.Show();
+        }
+
+        private void selectBoardBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tasksGrid.Children.Clear();
+            tasksGrid.RowDefinitions.Clear();
+            tasksGrid.ColumnDefinitions.Clear();
+            loadTasks();
+
+        }
     }
 }

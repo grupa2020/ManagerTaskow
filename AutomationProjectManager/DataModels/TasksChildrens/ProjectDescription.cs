@@ -14,7 +14,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.BoardId = -1;
             this.Description = "";
             this.TaskId = -1;
-            this.Type = TaskType.ProjectDescription;
+            this.TaskType = TaskTypeEnum.ProjectDescription;
         }
 
         public ProjectDescription(int BoardId, string Content, int TaskId)
@@ -22,7 +22,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.BoardId = BoardId;
             this.Description = Content;
             this.TaskId = TaskId;
-            this.Type = TaskType.ProjectDescription;
+            this.TaskType = TaskTypeEnum.ProjectDescription;
         }
 
         public override void UpdateContent()

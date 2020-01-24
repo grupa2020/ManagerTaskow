@@ -21,10 +21,10 @@ namespace AutomationProjectManager.Connection.Responses
         }
 
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         [JsonProperty(PropertyName = "succeeded")]
-        public bool Succeeded { get; }
+        public bool Succeeded { get; set; }
 
     }
 }

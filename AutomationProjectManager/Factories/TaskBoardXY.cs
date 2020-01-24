@@ -14,20 +14,20 @@ namespace AutomationProjectManager.Factories
         {
             itemsCountInColumn = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
         }
-        public int GetDestinationRow(TaskType taskType)
+        public int GetDestinationRow(TaskTypeEnum taskType)
         {
             
 
             switch (taskType)
             {
-                case TaskType.AlgorithmDescription:
+                case TaskTypeEnum.AlgorithmDescription:
                     {
                         itemsCountInColumn[0]++;
                         return itemsCountInColumn[0];
                     }
 
 
-                case TaskType.DriversProject:
+                case TaskTypeEnum.DriversProject:
                     {
                         itemsCountInColumn[1]++;
                         return itemsCountInColumn[1];
@@ -35,44 +35,44 @@ namespace AutomationProjectManager.Factories
 
 
 
-                case TaskType.ElectricalProject:
+                case TaskTypeEnum.ElectricalProject:
                     {
                         itemsCountInColumn[1]++;
                         return itemsCountInColumn[1];
                     }
 
-                case TaskType.Maintainence:
+                case TaskTypeEnum.Maintainence:
                     {
                         itemsCountInColumn[5]++;
                         return itemsCountInColumn[5];
                     }
 
-                case TaskType.Mounting:
+                case TaskTypeEnum.Mounting:
                     {
                         itemsCountInColumn[4]++;
                         return itemsCountInColumn[4];
                     }
 
-                case TaskType.OrderList:
+                case TaskTypeEnum.OrderList:
                     {
                         itemsCountInColumn[2]++;
                         return itemsCountInColumn[2];
                     }
 
-                case TaskType.ProjectDescription:
+                case TaskTypeEnum.ProjectDescription:
                     {
                         itemsCountInColumn[0]++;
                         return itemsCountInColumn[0];
                     }
 
 
-                case TaskType.VarDefTool:
+                case TaskTypeEnum.VarDefTool:
                     {
                         itemsCountInColumn[1]++;
                         return itemsCountInColumn[1];
                     }
 
-                case TaskType.Workshop:
+                case TaskTypeEnum.Workshop:
                     {
                         itemsCountInColumn[3]++;
                         return itemsCountInColumn[3];
@@ -106,36 +106,36 @@ namespace AutomationProjectManager.Factories
             
         }
 
-        public int GetColumn(TaskType type)
+        public int GetColumn(TaskTypeEnum type)
         {
             
 
-            if (type==TaskType.AlgorithmDescription || type==TaskType.ProjectDescription)
+            if (type==TaskTypeEnum.AlgorithmDescription || type==TaskTypeEnum.ProjectDescription)
             {
                 return 0;
             }
 
-            if (type == TaskType.DriversProject || type == TaskType.ElectricalProject || type == TaskType.VarDefTool)
+            if (type == TaskTypeEnum.DriversProject || type == TaskTypeEnum.ElectricalProject || type == TaskTypeEnum.VarDefTool)
             {
                 return 1;
             }
 
-            if (type == TaskType.OrderList)
+            if (type == TaskTypeEnum.OrderList)
             {
                 return 2;
             }
 
-            if (type == TaskType.Workshop)
+            if (type == TaskTypeEnum.Workshop)
             {
                 return 3;
             }
 
-            if (type == TaskType.Mounting)
+            if (type == TaskTypeEnum.Mounting)
             {
                 return 4;
             }
 
-            if (type == TaskType.Maintainence)
+            if (type == TaskTypeEnum.Maintainence)
             {
                 return 5;
             }

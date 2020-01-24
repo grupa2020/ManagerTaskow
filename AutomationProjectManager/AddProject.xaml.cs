@@ -30,7 +30,7 @@ namespace AutomationProjectManager
         {
             DateTime startTime;
             startTime = DateTime.Now;
-            ProjectPoco newProject = new ProjectPoco(this.nameTextBox.Text,startTime,2,1,"name");
+            ProjectPoco newProject = new ProjectPoco(this.nameTextBox.Text,startTime,1,1,"name",2);
 
             newProject.SaveProjectPOST();
         }

@@ -13,14 +13,14 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = -1;
             this.TaskId = -1;
-            this.Type = TaskType.Maintainence;
+            this.TaskType = TaskTypeEnum.Maintainence;
         }
 
         public Maintainence(int BoardId, string Content, int TaskId)
         {
             this.BoardId = BoardId;
             this.TaskId = TaskId;
-            this.Type = TaskType.Maintainence;
+            this.TaskType = TaskTypeEnum.Maintainence;
         }
 
         public override void UpdateContent()
