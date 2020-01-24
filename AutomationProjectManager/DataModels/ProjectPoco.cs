@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +17,44 @@ namespace AutomationProjectManager.Model
         public DateTime StartDate { get; set; }
         public int Status { get; set; }
         public int OrganizationId { get; set; }
+        //public string CustomerName { get; set; }
 
+
+        public ProjectPoco(string name, DateTime startTime,int status, int orgId,string customer)
+        {
+            ProjectId = -1;
+            Name = name;
+            StartDate = startTime;
+            Status = status;
+            OrganizationId = orgId;
+          //  CustomerName = customer;
+            
+        }
+
+        public string SaveProjectPOST()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.POST;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.serviceUri += "Projects";
+                string response = client.PostMethod(this);
+
+                return response;
+            }
+            catch(Exception e)
+            {
+                Debug.Write(e.ToString());
+            }
+
+
+            return "Something was going wrong .." ;
+        }
   
     }
 }

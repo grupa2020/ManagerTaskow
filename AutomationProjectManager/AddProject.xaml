@@ -1,0 +1,28 @@
+﻿<Window x:Name="AddProjectWindow" x:Class="AutomationProjectManager.AddProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutomationProjectManager"
+        mc:Ignorable="d"
+        Title="AddProject" Height="400" Width="600" Background="#FF2C3E50">
+    <Grid>
+        <Border CornerRadius="20" BorderBrush="#FFECF0F1" BorderThickness="1" Margin="10">
+            <StackPanel>
+                <TextBox x:Name="nameTextBox" 
+                        Padding="5,5,5,5"  Margin="100,20,100,20" TextWrapping="Wrap" Text="Nazwa projektu" FontSize="14" FontFamily="CalibriLight"/>
+                <Label Content="Data rozpoczecia projektu:" 
+                       Margin="5,5,5,5"  Foreground="#ecf0f1"></Label>
+                <DatePicker Name="datePicker"  Margin="100,5,100,20" FontFamily="CalibriLight"/>
+                <Button x:Name="saveBtn" MinHeight="50" Content="Zapisz" Click="saveBtn_Click"  ></Button>
+                
+                
+                <Separator></Separator>
+
+            </StackPanel>
+            
+
+        </Border>
+
+    </Grid>
+</Window>

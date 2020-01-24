@@ -13,9 +13,12 @@ namespace AutomationProjectManager.Factories
     class TaskButton : Button
     {
         public int taskId { get; set; }
-      
+        string taskContent { get; set;}
+
         public TaskButton(TaskPoco task)
         {
+            this.taskContent = task.Content;
+
             string taskLabel = Translate(task.Type);
             this.taskId = task.TaskId;
             this.Name = task.Type.ToString();
@@ -28,6 +31,7 @@ namespace AutomationProjectManager.Factories
                 Text = taskLabel
             };
 
+            this.MaxHeight = 50;
 
             Style roundedCorners = new Style(typeof(Border));
             roundedCorners.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(12)));
@@ -47,7 +51,7 @@ namespace AutomationProjectManager.Factories
                 case TaskType.AlgorithmDescription:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Ustawienie kolorów konkretnych typów tasków
                     }
                     break;
 
@@ -55,7 +59,7 @@ namespace AutomationProjectManager.Factories
                 case TaskType.DriversProject:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400")); 
                     }
                     break;
 
@@ -63,51 +67,51 @@ namespace AutomationProjectManager.Factories
                 case TaskType.ElectricalProject:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); 
                     }
                     break;
                 case TaskType.Maintainence:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); 
                     }
                     break;
                 case TaskType.Mounting:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); 
                     }
                     break;
                 case TaskType.OrderList:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); 
                     }
                     break;
                 case TaskType.ProjectDescription:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); 
                     }
                     break;
 
                 case TaskType.VarDefTool:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("##34495e")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#34495e")); 
                     }
                     break;
                 case TaskType.Workshop:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); 
                     }
                     break;
 
                 default:
                     {
                         this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f8c8d")); //Tutaj też dodać switch case tak żeby kolo był inny dla każdego tasku
+                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f8c8d")); 
                     }
                     break;
             }
@@ -181,6 +185,12 @@ namespace AutomationProjectManager.Factories
 
 
             return name;
+        }
+
+
+        public string GetContent()
+        {
+            return this.taskContent;
         }
 
     }

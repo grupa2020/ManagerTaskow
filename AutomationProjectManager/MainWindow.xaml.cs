@@ -1,4 +1,6 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.Connection;
+using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.Model;
 using AutomationProjectManager.ToolsWindows;
 using Newtonsoft.Json;
 using System;
@@ -45,13 +47,16 @@ namespace AutomationProjectManager
             {
                 client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri +="Projects/0";
+            client.serviceUri +="Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
             string response = client.getRequest();
-            List<ProjectPoco> projectList;
-            projectList = JsonConvert.DeserializeObject<List<ProjectPoco>>(response);
-            projectDataGrid.ItemsSource = projectList;
 
-           
+            var rsponseLst =new ValueResponse<List<ProjectPoco>>(true,string.Empty,null);
+            rsponseLst=JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
+            projectDataGrid.ItemsSource = rsponseLst.Value;
+
+            
+
+
         }
 
         private void projectDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -110,6 +115,16 @@ namespace AutomationProjectManager
                     return true;
             }
             return false;
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco");
+
+            AddProject projWnd = new AddProject();
+            projWnd.Show();
+            
+            //newProject.SaveProjectPOST();
         }
 
         /////////////////////////////////////////////////

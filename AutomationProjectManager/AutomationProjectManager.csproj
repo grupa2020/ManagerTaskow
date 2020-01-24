@@ -60,6 +60,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddProject.xaml.cs">
+      <DependentUpon>AddProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Connection\Responses\SimpleResponse.cs" />
+    <Compile Include="Connection\Responses\ValueResponse.cs" />
     <Compile Include="Connection\RestClient.cs" />
     <Compile Include="DataModels\TasksChildrens\AlgorithmDescriptionTask.cs" />
     <Compile Include="DataModels\TasksChildrens\DriversProject.cs" />
@@ -68,6 +73,7 @@
     <Compile Include="DataModels\TasksChildrens\Mounting.cs" />
     <Compile Include="DataModels\TasksChildrens\OrderList.cs" />
     <Compile Include="DataModels\TasksChildrens\ProjectDescription.cs" />
+    <Compile Include="DataModels\TasksChildrens\VarDefTool.cs" />
     <Compile Include="DataModels\TasksChildrens\Workshop.cs" />
     <Compile Include="Factories\TaskBoardXY.cs" />
     <Compile Include="Factories\TaskButton.cs" />
@@ -110,6 +116,10 @@
     <Compile Include="TasksWindows\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

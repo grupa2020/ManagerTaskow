@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.DataModels.TasksChildrens;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels.TasksChildrens;
 using AutomationProjectManager.Factories;
 using AutomationProjectManager.Model;
 using Newtonsoft.Json;
@@ -43,10 +44,11 @@ namespace AutomationProjectManager
             }
             client.serviceUri += "Boards/"+ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
-            List<BoardPoco> boardList;
-            boardList = JsonConvert.DeserializeObject<List<BoardPoco>>(response);
 
-            foreach(BoardPoco board in boardList)
+            var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
+            rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<BoardPoco>>>(response);
+
+            foreach(BoardPoco board in rsponseLst.Value)
             {
                 selectBoardBox.Items.Add(board.Name+"/"+board.BoardId.ToString());
             }
@@ -74,13 +76,14 @@ namespace AutomationProjectManager
             }
             client.serviceUri += "Tasks/" + boardId; //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
-            List<TaskPoco> taskList;
-            taskList = JsonConvert.DeserializeObject<List<TaskPoco>>(response);
+
+            var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
+            taskList = JsonConvert.DeserializeObject<ValueResponse<List<TaskPoco>>>(response);
 
 
             ///////////////DO TESTÓW
 
-
+            /*
             taskList.Add(new ElectricalProject(12,"bla bla",12));
             taskList.Add(new Maintainence(12, "bla bla", 12));
             taskList.Add(new Mounting(12, "bla bla", 12));
@@ -89,13 +92,9 @@ namespace AutomationProjectManager
             taskList.Add(new Workshop(12, "bla bla", 12));
             taskList.Add(new ElectricalProject(12,"bla bla",12));
             taskList.Add(new DriversProject(12, "bla bla", 12));
+            taskList.Add(new VarDefTool(12, "bla bla", 12));
+            */
             ///
-
-
-
-
-
-
 
             // Tworzenie przycisków tasków i dodawanie ich do DataGrid 
 
@@ -103,19 +102,19 @@ namespace AutomationProjectManager
             TaskBoardXY location=new TaskBoardXY();
 
             
-            for(int columnCount=1; columnCount < 9; columnCount++)  //Ilość Kolumn tasków
+            for(int columnCount=1; columnCount < 7; columnCount++)  //Ilość Kolumn tasków
             {
                 tasksGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            foreach (TaskPoco task in taskList)
+            foreach (TaskPoco task in taskList.Value)
             {
                 TaskButton taskButton = new TaskButton(task);
                 taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
                 
                 int dstRow = location.GetDestinationRow(task.Type);
                 
-                Grid.SetColumn(taskButton, Convert.ToInt32(task.Type));
+                Grid.SetColumn(taskButton, location.GetColumn(task.Type));
                 Grid.SetRow(taskButton, dstRow-1);
  
                 tasksGrid.Children.Add(taskButton);
@@ -132,7 +131,7 @@ namespace AutomationProjectManager
         private void openTaskWindow(object sender, RoutedEventArgs e)
         {
             TaskButton taskSender= sender as TaskButton;
-            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString()+" "+taskSender.Content);
+            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString()+" "+taskSender.GetContent());
             //   throw new NotImplementedException();
         }
 

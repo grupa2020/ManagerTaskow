@@ -9,10 +9,10 @@ namespace AutomationProjectManager.Factories
 {
     class TaskBoardXY
     {
-        int[] itemsCountInColumn { get; set; }  //przechowuje ile tasków konkretnego typu już jest w gridzie
+        public int[] itemsCountInColumn { get; set; }  //przechowuje ile tasków konkretnego typu już jest w gridzie
         public TaskBoardXY()
         {
-            itemsCountInColumn = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0,0 };
+            itemsCountInColumn = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
         }
         public int GetDestinationRow(TaskType taskType)
         {
@@ -37,14 +37,14 @@ namespace AutomationProjectManager.Factories
 
                 case TaskType.ElectricalProject:
                     {
-                        itemsCountInColumn[2]++;
-                        return itemsCountInColumn[2];
+                        itemsCountInColumn[1]++;
+                        return itemsCountInColumn[1];
                     }
 
                 case TaskType.Maintainence:
                     {
-                        itemsCountInColumn[3]++;
-                        return itemsCountInColumn[3];
+                        itemsCountInColumn[5]++;
+                        return itemsCountInColumn[5];
                     }
 
                 case TaskType.Mounting:
@@ -55,27 +55,27 @@ namespace AutomationProjectManager.Factories
 
                 case TaskType.OrderList:
                     {
-                        itemsCountInColumn[5]++;
-                        return itemsCountInColumn[5];
+                        itemsCountInColumn[2]++;
+                        return itemsCountInColumn[2];
                     }
 
                 case TaskType.ProjectDescription:
                     {
-                        itemsCountInColumn[6]++;
-                        return itemsCountInColumn[6];
+                        itemsCountInColumn[0]++;
+                        return itemsCountInColumn[0];
                     }
 
 
                 case TaskType.VarDefTool:
                     {
-                        itemsCountInColumn[7]++;
-                        return itemsCountInColumn[7];
+                        itemsCountInColumn[1]++;
+                        return itemsCountInColumn[1];
                     }
 
                 case TaskType.Workshop:
                     {
-                        itemsCountInColumn[8]++;
-                        return itemsCountInColumn[8];
+                        itemsCountInColumn[3]++;
+                        return itemsCountInColumn[3];
                     }
 
 
@@ -104,6 +104,43 @@ namespace AutomationProjectManager.Factories
 
             return max;
             
+        }
+
+        public int GetColumn(TaskType type)
+        {
+            
+
+            if (type==TaskType.AlgorithmDescription || type==TaskType.ProjectDescription)
+            {
+                return 0;
+            }
+
+            if (type == TaskType.DriversProject || type == TaskType.ElectricalProject || type == TaskType.VarDefTool)
+            {
+                return 1;
+            }
+
+            if (type == TaskType.OrderList)
+            {
+                return 2;
+            }
+
+            if (type == TaskType.Workshop)
+            {
+                return 3;
+            }
+
+            if (type == TaskType.Mounting)
+            {
+                return 4;
+            }
+
+            if (type == TaskType.Maintainence)
+            {
+                return 5;
+            }
+
+            return 0;
         }
     }
 }
