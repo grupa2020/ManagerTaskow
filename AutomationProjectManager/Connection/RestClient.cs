@@ -65,7 +65,7 @@ namespace AutomationProjectManager
         public string PostMethod(object ObjectToSend) //Wysłanie obiektu do serwisu
         {
 
-            
+
             string Json = JsonConvert.SerializeObject(ObjectToSend);
             string info = string.Empty;
 
@@ -73,6 +73,7 @@ namespace AutomationProjectManager
 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
             httpWebRequest.ContentType = "application/json";
+
             httpWebRequest.Method = this.method.ToString();
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -88,9 +89,42 @@ namespace AutomationProjectManager
             }
 
 
-            
+
             return info;
 
+        }
+
+        public string DeleteMethod(object ObjectToDel)   // np: "/Tasks/23  gdzie 23 to id tasku do usunięcia "
+        {
+           // string Json = JsonConvert.SerializeObject(ObjectToDel);
+            string info = string.Empty;
+                                                                //Zakomentowane na wypadek gdyby trzebabyło dawać całe body 
+           // Debug.WriteLine(Json);
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
+            httpWebRequest.ContentType = "application/json";
+
+            httpWebRequest.Method = this.method.ToString();
+
+            httpWebRequest.GetRequestStream();
+
+            /*
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(Json);
+            }
+            */
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                info = result.ToString();
+            }
+
+    
+
+            return info;
         }
 
 

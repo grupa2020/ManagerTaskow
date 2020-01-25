@@ -27,14 +27,27 @@ namespace AutomationProjectManager
     public partial class ProjectWindow : Window
     {
         int ProjectId;
+        int BoardId;
+        List<BoardPoco> BoardList;
         public ProjectWindow(int projectId)
         {
             InitializeComponent();
-            updateComboBox(projectId);
             ProjectId = projectId;
-            loadTasks();                      
+            load();
         }
 
+        public void load()
+        {
+            tasksGrid.Children.Clear();
+            tasksGrid.RowDefinitions.Clear();
+            tasksGrid.ColumnDefinitions.Clear();
+            selectBoardBox.Items.Clear();
+
+            BoardList = new List<BoardPoco>();
+
+            updateComboBox(ProjectId);
+            loadTasks();
+        }
 
         public void updateComboBox(int ProjectId)
         {
@@ -44,18 +57,19 @@ namespace AutomationProjectManager
             {
                 client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Boards/"+ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
+            client.serviceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
 
             var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
             rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<BoardPoco>>>(response);
 
-            foreach(BoardPoco board in rsponseLst.Value)
+            foreach (BoardPoco board in rsponseLst.Value)
             {
-                selectBoardBox.Items.Add(board.Name+"/"+board.BoardId.ToString());
+                selectBoardBox.Items.Add(board.Name + "/" + board.BoardId.ToString());
+                BoardList.Add(board);
             }
 
-            if(selectBoardBox.Items.Count>=1)
+            if (selectBoardBox.Items.Count >= 1)
             {
                 selectBoardBox.SelectedIndex = 0;
             }
@@ -63,90 +77,91 @@ namespace AutomationProjectManager
 
         public void loadTasks()
         {
-            string[] list = selectBoardBox.SelectedItem.ToString().Split('/');
-            string boardId = "-1";
-            if(list.Length>=2)
+            tasksGrid.Children.Clear();
+            tasksGrid.RowDefinitions.Clear();
+            tasksGrid.ColumnDefinitions.Clear();
+
+            if (selectBoardBox.SelectedItem != null)
             {
-                boardId =list[1];
+
+
+                string[] list = selectBoardBox.SelectedItem.ToString().Split('/');
+
+                if (list.Length >= 2)
+                {
+                    BoardId = Convert.ToInt32(list[1]);
+                }
+
+                RestClient client = new RestClient();
+                client.method = httpVerb.GET;
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.serviceUri += "Tasks/" + BoardId;
+                string response = client.getRequest();
+
+                var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
+                taskList = JsonConvert.DeserializeObject<ValueResponse<List<TaskPoco>>>(response);
+
+                TaskBoardXY location = new TaskBoardXY();
+
+                for (int columnCount = 0; columnCount < 6; columnCount++)  //Ilość Kolumn tasków
+                {
+                    ColumnDefinition colDef = new ColumnDefinition();
+                    //colDef.Width = GridLength.Auto;
+                    
+                    tasksGrid.ColumnDefinitions.Add(colDef);
+                }
+
+                foreach (TaskPoco task in taskList.Value)
+                {
+                    TaskButton taskButton = new TaskButton(task);
+                    taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
+
+                    int dstRow = location.GetDestinationRow(task.TaskType);
+
+                    Grid.SetColumn(taskButton, location.GetColumn(task.TaskType));
+                    Grid.SetRow(taskButton, dstRow - 1);
+
+                    tasksGrid.Children.Add(taskButton);
+                }
+
+                int rowsCount = location.GetMax();
+                for (int i = 0; i < rowsCount; i++)
+                {
+                    RowDefinition rowDef = new RowDefinition();
+                    rowDef.Height = GridLength.Auto;
+                    tasksGrid.RowDefinitions.Add(rowDef);
+                }
             }
 
-            RestClient client = new RestClient();
-            client.method = httpVerb.GET;
-            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
-            {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
-            }
-            client.serviceUri += "Tasks/" + boardId; 
-            string response = client.getRequest();
-
-            var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
-            taskList = JsonConvert.DeserializeObject<ValueResponse<List<TaskPoco>>>(response);
-
-
-            ///////////////DO TESTÓW
-            /*
-            taskList.Value.Add(new AlgorithmDescriptionTask(12, "bla bla", 12));
-            taskList.Value.Add(new ElectricalProject(12,"bla bla",12));
-            taskList.Value.Add(new Maintainence(12, "bla bla", 12));
-            taskList.Value.Add(new Mounting(12, "bla bla", 12));
-            taskList.Value.Add(new OrderList(12, "bla bla", 12));
-            taskList.Value.Add(new ProjectDescription(12, "bla bla", 12));
-            taskList.Value.Add(new Workshop(12, "bla bla", 12));
-            taskList.Value.Add(new ElectricalProject(12,"bla bla",12));
-            taskList.Value.Add(new DriversProject(12, "bla bla", 12));
-            taskList.Value.Add(new VarDefTool(12, "bla bla", 12));
-            */
-            ///
-
-            // Tworzenie przycisków tasków i dodawanie ich do DataGrid 
-
-
-            TaskBoardXY location=new TaskBoardXY();
-
-            
-            for(int columnCount=1; columnCount < 7; columnCount++)  //Ilość Kolumn tasków
-            {
-                tasksGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-
-            foreach (TaskPoco task in taskList.Value)
-            {
-                TaskButton taskButton = new TaskButton(task);
-                taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
-                
-                int dstRow = location.GetDestinationRow(task.TaskType);
-                
-                Grid.SetColumn(taskButton, location.GetColumn(task.TaskType));
-                Grid.SetRow(taskButton, dstRow-1);
- 
-                tasksGrid.Children.Add(taskButton);
-            }
-
-            int rowsCount = location.GetMax();
-            for(int i=0;i<rowsCount;i++)
-            {
-                tasksGrid.RowDefinitions.Add(new RowDefinition());
-            }
         }
 
 
         private void openTaskWindow(object sender, RoutedEventArgs e)
         {
-            TaskButton taskSender= sender as TaskButton;
-            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString()+" "+taskSender.GetContent());
+            TaskButton taskSender = sender as TaskButton;
+            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString() + " " + taskSender.GetContent());
             //   throw new NotImplementedException();
         }
 
         private void AddTaskBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddTaskWindow newTaskWindow = new AddTaskWindow(1);//Tu zmienić na wybrany board w comboboxie
+            AddTaskWindow newTaskWindow = new AddTaskWindow(BoardId);//Tu zmienić na wybrany board w comboboxie
             newTaskWindow.Show();
         }
 
         private void AddBoardBtn_Click(object sender, RoutedEventArgs e)
         {
             AddBoardWindow newBoardWnd = new AddBoardWindow(ProjectId);
+            newBoardWnd.AddBoardWindow_Closing += new EventHandler(AddBoardWnd_Closing);
             newBoardWnd.Show();
+        }
+        void AddBoardWnd_Closing(object sender, EventArgs e)
+        {
+            //Łapanie zdarzenia wyłączenia okna dodawania AddBoardWindow
+            load();
         }
 
         private void selectBoardBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,6 +171,35 @@ namespace AutomationProjectManager
             tasksGrid.ColumnDefinitions.Clear();
             loadTasks();
 
+        }
+
+        private void DeleteBoardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.DELETE;
+            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+            {
+                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+            }
+            client.serviceUri += "Boards/" + BoardId.ToString();
+
+            int index = BoardList.FindIndex(x => x.BoardId == BoardId);
+
+            MessageBox.Show(client.DeleteMethod(BoardList[index]));
+
+            load();
+
+        }
+
+     
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void tasksGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

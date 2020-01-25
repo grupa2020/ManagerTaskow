@@ -21,18 +21,24 @@ namespace AutomationProjectManager
     /// </summary>
     public partial class AddProject : Window
     {
-        public AddProject()
+        int OrganizationId;
+        public AddProject(int organizationId)
         {
             InitializeComponent();
+            OrganizationId = organizationId;
+            datePicker.SelectedDate = DateTime.Now;
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DateTime startTime;
-            startTime = DateTime.Now;
-            ProjectPoco newProject = new ProjectPoco(this.nameTextBox.Text,startTime,1,1,"name",2);
-
-            newProject.SaveProjectPOST();
+            DateTime startTime;           
+            if(datePicker.SelectedDate!=null)
+            {
+                startTime = (DateTime)datePicker.SelectedDate;
+                ProjectPoco newProject = new ProjectPoco(this.nameTextBox.Text, startTime, 1, OrganizationId, "name", 0);
+                MessageBox.Show(newProject.SaveProjectPOST());
+            }
+            
         }
     }
 }

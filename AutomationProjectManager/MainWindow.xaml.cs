@@ -28,6 +28,7 @@ namespace AutomationProjectManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        int OrganizationId;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,28 +36,31 @@ namespace AutomationProjectManager
             {
                 this.serviceUriTextBox.Text = ConfigurationSettings.AppSettings["ServerPatch"];
             }
+
+            OrganizationId = 1;
         }
        
 
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
+            refresh();
+        }
+
+        public void refresh()
+        {
             RestClient client = new RestClient();
             client.method = httpVerb.GET;
-           
+
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
                 client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri +="Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
+            client.serviceUri += "Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
             string response = client.getRequest();
 
-            var rsponseLst =new ValueResponse<List<ProjectPoco>>(true,string.Empty,null);
-            rsponseLst=JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
+            var rsponseLst = new ValueResponse<List<ProjectPoco>>(true, string.Empty, null);
+            rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
             projectDataGrid.ItemsSource = rsponseLst.Value;
-
-            
-
-
         }
 
         private void projectDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -121,10 +125,22 @@ namespace AutomationProjectManager
         {
            // ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco",2);
 
-            AddProject projWnd = new AddProject();
+            AddProject projWnd = new AddProject(OrganizationId);
             projWnd.Show();
             
             //newProject.SaveProjectPOST();
+        }
+
+        private void delButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(projectDataGrid.SelectedItem!=null)
+            {
+                ProjectPoco toDelete = (ProjectPoco)projectDataGrid.SelectedItem;
+                MessageBox.Show(toDelete.ProjectDELETE());
+                refresh();
+            }
+           
+            
         }
 
         /////////////////////////////////////////////////

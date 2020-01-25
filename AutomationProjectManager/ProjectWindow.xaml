@@ -5,27 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="ProjectWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10" >
-            <WrapPanel>
-                <Label x:Name="lblInfo1" Content="Wybór Tablicy Projektu:"  />
-                <ComboBox x:Name="selectBoardBox" Margin="10,10,10,10" VerticalAlignment="Top"
-                         SelectionChanged="selectBoardBox_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400"/>
-                <Button Content="Dodaj nową tablicę" Name="AddBoardBtn" Click="AddBoardBtn_Click"/>
-            </WrapPanel>
-            <ScrollViewer>
-            <Grid x:Name="tasksGrid" ShowGridLines="true" Height="244">
-           
-            </Grid>
-            </ScrollViewer>
-            <Grid>
-                <Button Content="Dodaj" Name="AddTaskBtn" Click="AddTaskBtn_Click"/>
-            </Grid>
-            
+        Title="ProjectWindow" MouseDown="tasksGrid_MouseRightButtonDown" Height="410" Width="930.5" SizeToContent="WidthAndHeight" WindowStyle="None" >
+    <ScrollViewer Margin="5" CanContentScroll="False"
+              HorizontalScrollBarVisibility="Auto">
+        <Grid Background="#FF223140" >
+            <Button Name="CloseBtn" Margin="0,7,10,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource RoundedButton}" Click="CloseBtn_Click" Height="28" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+            <StackPanel Margin="10" >
+                <Grid Margin="0,0,30,0" Height="54">
+                    <Label x:Name="lblInfo1" Foreground="White" Content="Wybór Tablicy Projektu:" RenderTransformOrigin="0.13,0.548" Margin="10,10,0,10" HorizontalAlignment="Left" Width="197"  />
+                    <ComboBox x:Name="selectBoardBox" Margin="149,10,0,0" VerticalAlignment="Top"
+                         SelectionChanged="selectBoardBox_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400" Height="34" HorizontalAlignment="Left" Width="414"/>
+                    <Button Margin="599,10,0,10" Content="Dodaj nową tablicę"  Style="{StaticResource RoundedButton}" Name="AddBoardBtn" Click="AddBoardBtn_Click" HorizontalAlignment="Left" Width="144"/>
+                    <Button Margin="748,10,0,10" Content="Usuń tablicę" Padding="4,4,4,4" Name="DeleteBoardBtn" Style="{StaticResource RoundedButton}" Click="DeleteBoardBtn_Click" HorizontalAlignment="Left" Width="80"/>
+                </Grid>
+
+                <Grid x:Name="tasksGrid" ShowGridLines="false"
+                      MouseRightButtonDown="tasksGrid_MouseRightButtonDown"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      MinHeight="200"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.CanContentScroll="True" >
+
+                </Grid>
 
 
-
-        </StackPanel>
-    </Grid>
+                <Grid Margin="5,5,5,5" Height="85">
+                    <Button Content="Dodaj Zadanie"  Style="{StaticResource RoundedButton}" Name="AddTaskBtn" Click="AddTaskBtn_Click" Margin="0,20,20,10"  HorizontalAlignment="Right" Width="147"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>

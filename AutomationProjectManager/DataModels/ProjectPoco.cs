@@ -18,7 +18,7 @@ namespace AutomationProjectManager.Model
         public DateTime StartDate { get; set; }
         public int Status { get; set; }
         public int OrganizationId { get; set; }
-        //public string CustomerName { get; set; }
+        public string CustomerName { get; set; }
 
 
         public ProjectPoco(string name, DateTime startTime,int status, int orgId,string customer,int projectId)
@@ -28,7 +28,7 @@ namespace AutomationProjectManager.Model
             StartDate = startTime;
             Status = status;
             OrganizationId = orgId;
-          //  CustomerName = customer;
+            CustomerName = customer;
             
         }
 
@@ -59,8 +59,21 @@ namespace AutomationProjectManager.Model
 
         public NewProjectPoco ToNewProjectPOST()
         {
-            NewProjectPoco newProject = new NewProjectPoco(this.Name, this.StartDate, this.Status, this.OrganizationId);
+            NewProjectPoco newProject = new NewProjectPoco(this.Name, this.StartDate, this.Status, this.OrganizationId,this.CustomerName);
             return newProject;            
+        }
+
+        public string ProjectDELETE()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.DELETE;
+            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+            {
+                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+            }
+            client.serviceUri += "Projects/" + this.ProjectId.ToString();
+
+            return(client.DeleteMethod(this));
         }
   
     }

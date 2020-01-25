@@ -31,6 +31,8 @@ namespace AutomationProjectManager.Factories
                 Text = taskLabel
             };
 
+            this.MinHeight = 50;
+            
             this.MaxHeight = 50;
 
             Style roundedCorners = new Style(typeof(Border));

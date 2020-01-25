@@ -29,7 +29,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Projekty">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid Background="#34495e">
                         <StackPanel Margin="10,10,10,10" >
                             <DataGrid Name="projectDataGrid" Margin="10,10,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False"  IsReadOnly="True"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="400" MouseDoubleClick="projectDataGrid_MouseDoubleClick">
                                 <DataGrid.Columns>
@@ -41,8 +41,9 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
-                        <Button x:Name="refreshButton" Content="Odśwież" HorizontalAlignment="Left" Margin="399,440,0,0" VerticalAlignment="Top" Width="75" Click="refresh_Click"/>
-                        <Button x:Name="addButton" Content="+" HorizontalAlignment="Left" Margin="286,440,0,0" VerticalAlignment="Top" Width="75" Click="addButton_Click"/>
+                        <Button x:Name="addButton" Content="Nowy" Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Margin="138,0,0,19" Width="83" Click="addButton_Click" Height="36" VerticalAlignment="Bottom"/>
+                        <Button x:Name="delButton" Style="{StaticResource RoundedButton}" Content="Usuń" HorizontalAlignment="Left" Margin="26,0,0,19" Width="93" Click="delButton_Click" Height="36" VerticalAlignment="Bottom"/>
+                        <Button x:Name="refreshButton" Content="Odśwież" Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Margin="238,0,0,19" Width="83" Click="refresh_Click" Height="36" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Ustawienia">

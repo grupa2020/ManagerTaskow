@@ -1,4 +1,5 @@
 ﻿using AutomationProjectManager.DataModels.TasksChildrens;
+using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +21,40 @@ namespace AutomationProjectManager
     /// </summary>
     public partial class AddTaskWindow : Window
     {
-        int BoardId = 0;
+        int BoardId;
         public AddTaskWindow(int boardId)
         {
             InitializeComponent();
             BoardId = boardId;
+            fillComboBox();
         }
 
+        public void fillComboBox()
+        {
+            foreach(TaskTypeEnum taskType in Enum.GetValues(typeof(TaskTypeEnum)))
+            {
+                selectTypeCmbox.Items.Add(taskType);
+            }
+        }
         private void saveTaskBtn_Click(object sender, RoutedEventArgs e)
         {
-            AlgorithmDescriptionTask newTask = new AlgorithmDescriptionTask(BoardId, "Jakiś content tasku opisujący algorytm", 12);
-            newTask.UpdateContent();
+            if(selectTypeCmbox.SelectedItem!=null)
+            {
+                TaskPoco newTask = new TaskPoco();
+                newTask.BoardId = BoardId;
+                newTask.Content = "Something witch make You Smile :)";
+                newTask.TaskId = 0;
+                newTask.TaskType = (TaskTypeEnum)selectTypeCmbox.SelectedItem;
+                newTask.UpdateContent();
+                newTask.SaveTaskPOST();
+            }
+            else
+            {
+                MessageBox.Show("Proszę wybrać typ zadania :)");
+            }
+            
 
-
-
-            newTask.SaveTaskPOST();
+           
         }
     }
 }

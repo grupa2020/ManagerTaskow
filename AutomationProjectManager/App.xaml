@@ -6,22 +6,66 @@
     <Application.Resources>
 
         <Style x:Key="RoundButtonTemplate" TargetType="Button" >
-           <Setter Property="Background" Value="{Binding Path=Background}"/>
+            <Setter Property="Background" Value="{Binding Path=Background}"/>
             <Setter Property="Foreground" Value="{Binding Path=Foreground}" />
-           
-            <Setter Property="Margin" Value="5,10,5,10"/>   
-          
+
+            <Setter Property="Margin" Value="5,10,5,10"/>
+
             <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border CornerRadius="5" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" >
                             <ContentPresenter Content="{Binding Path=Content}"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="RoundedButton" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="button" CornerRadius="5" BorderBrush="White" BorderThickness="1" Background="#2c3e50">
+                                <TextBlock Foreground="White"   Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
+                            
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="#c0392b" />
+                                    <Setter TargetName="button" Property="Background"  Value="#d35400"/>
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="button"  Property="Background" Value="#e67e22"/>
+                                </Trigger>
+                               
+                                <!--   <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="#e74c3c" />
+                                    <Setter TargetName="button" Property="Background"  Value="#34495e"/>
+                                </Trigger> -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
-        </Application.Resources>
+            </Style.Setters>
+        </Style>
+
+
+        <Style x:Key="BorderTextBlockStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Grid.Column" Value="{Binding}"/>
+            <Setter Property="Grid.Row" Value="{Binding}"/>
+        </Style>
+        
+    </Application.Resources>
   
 </Application>
 

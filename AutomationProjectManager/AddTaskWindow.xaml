@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="AddTaskWindow" Height="152" Width="215.5">
     <Grid>
-        <Button x:Name="saveTaskBtn" Content="Zapisz" HorizontalAlignment="Left" Margin="19,27,0,0" VerticalAlignment="Top" Width="75" Click="saveTaskBtn_Click"/>
+        <Button x:Name="saveTaskBtn" Content="Dalej" HorizontalAlignment="Left" Margin="123,91,0,0" VerticalAlignment="Top" Width="75" Click="saveTaskBtn_Click"/>
+        <ComboBox Name="selectTypeCmbox" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="188"/>
+        <Label Content="Typ zadania:" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

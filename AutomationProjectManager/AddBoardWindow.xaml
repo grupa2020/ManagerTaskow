@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="AddBoardWindow" Height="245.346" Width="462.5">
+        Title="AddBoardWindow" Height="245.346" Width="462.5" Closing="Window_Closing">
     <Grid>
-        <TextBox x:Name="boardNameTxtBox" Margin="31,28,37,132" TextWrapping="Wrap" Text="TextBox"/>
+        <TextBox x:Name="boardNameTxtBox" Margin="31,28,37,132" TextWrapping="Wrap" Text="Nazwa Tablicy"/>
         <Button Content="Dodaj" Name="addBoardBtn" Click="addBoardBtn_Click" Margin="296,151,37,27"/>
        
         <ComboBox Name="selectRoleCombobox" Margin="31,118,191,0" VerticalAlignment="Top" >

@@ -20,14 +20,21 @@ namespace AutomationProjectManager
     /// <summary>
     /// Logika interakcji dla klasy AddBoardWindow.xaml
     /// </summary>
+    /// 
     public partial class AddBoardWindow : Window
     {
         int ProjectId;
+
+        public event EventHandler AddBoardWindow_Closing;
+
+
         public AddBoardWindow(int projectId)
         {
             InitializeComponent();
             ProjectId = projectId;
             selectRoleCombobox.SelectedItem = 0;
+
+            
         }
 
         private void addBoardBtn_Click(object sender, RoutedEventArgs e)
@@ -49,6 +56,11 @@ namespace AutomationProjectManager
             }
 
 
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.AddBoardWindow_Closing(this, EventArgs.Empty);
         }
     }
 }
