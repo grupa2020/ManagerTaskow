@@ -86,6 +86,7 @@
     <Compile Include="DataModels\TasksChildrens\Workshop.cs" />
     <Compile Include="Factories\TaskBoardXY.cs" />
     <Compile Include="Factories\TaskButton.cs" />
+    <Compile Include="Factories\TaskWindowMaker.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>

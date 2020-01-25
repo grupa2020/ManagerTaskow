@@ -142,7 +142,9 @@ namespace AutomationProjectManager
         private void openTaskWindow(object sender, RoutedEventArgs e)
         {
             TaskButton taskSender = sender as TaskButton;
-            MessageBox.Show("Otwarcie okna Tasku: " + taskSender.taskId.ToString() + " " + taskSender.GetContent());
+            TaskWindowMaker maker = new TaskWindowMaker(taskSender.Task);
+            Window newTaskWindow = maker.GetWindow();
+            newTaskWindow.Show();
             //   throw new NotImplementedException();
         }
 

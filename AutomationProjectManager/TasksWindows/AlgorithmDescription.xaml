@@ -6,8 +6,16 @@
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
         Title="AlgorithmDescription" Height="450" Width="800">
-    <Grid>
-        <Button Content="Save" x:Name="saveBtn" HorizontalAlignment="Left" Margin="315,154,0,0" VerticalAlignment="Top" Width="75" Click="saveBtn_Click"/>
+    <Grid Background="#FF4B4B4B">
+        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}" Margin="0,0,10,12" Click="saveBtn_Click" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153"/>
+        <RichTextBox Margin="10,10,10,119" Name="algDescRichTextBox">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Opis algorytmu"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}" HorizontalAlignment="Left" Margin="10,0,0,10" Width="153" Click="delBtn_Click" Height="35" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

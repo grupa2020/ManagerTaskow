@@ -13,12 +13,13 @@ namespace AutomationProjectManager.Factories
     class TaskButton : Button
     {
         public int taskId { get; set; }
-        string taskContent { get; set;}
+        string taskContent { get; set; }
+        public TaskPoco Task {get;set;}
 
         public TaskButton(TaskPoco task)
         {
             this.taskContent = task.Content;
-
+            this.Task = task;
             string taskLabel = Translate(task.TaskType);
             this.taskId = task.TaskId;
             this.Name = task.TaskType.ToString();

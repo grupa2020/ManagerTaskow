@@ -8,7 +8,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
 {
     public class AlgorithmDescriptionTask:TaskPoco
     {
-        string Description { get; set; }
+       public string Description { get; set; }
 
 
         public AlgorithmDescriptionTask()
@@ -31,7 +31,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.Content = Description;
         }
-
+     
 
     }
 }

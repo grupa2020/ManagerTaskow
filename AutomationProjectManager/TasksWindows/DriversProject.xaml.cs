@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutomationProjectManager.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace AutomationProjectManager.ToolsWindows
     /// </summary>
     public partial class DriversProject : Window
     {
-        public DriversProject()
+        public DriversProject(TaskPoco task)
         {
             InitializeComponent();
         }

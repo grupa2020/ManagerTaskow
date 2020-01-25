@@ -25,8 +25,6 @@ namespace AutomationProjectManager.Model
         }
 
       
-
-
         public string SaveTaskPOST()
         {
             RestClient client = new RestClient();
@@ -62,6 +60,18 @@ namespace AutomationProjectManager.Model
 
             return newTask;
         }
+
+        public TaskPoco ToTaskPoco()
+        {
+            TaskPoco newPoco = new TaskPoco();
+            newPoco.BoardId = this.BoardId;
+            newPoco.Content = this.Content;
+            newPoco.TaskId = this.TaskId;
+            newPoco.TaskType = this.TaskType;
+
+            return newPoco;
+        }
+
         public string SaveTaskPUT()
         {
             RestClient client = new RestClient();
@@ -73,9 +83,9 @@ namespace AutomationProjectManager.Model
                 {
                     client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks";
+                client.serviceUri += "Tasks/"+ this.BoardId.ToString();
 
-                string response = client.PostMethod(this);
+                string response = client.PutMethod(this.ToTaskPoco());
 
                 return response;
             }
