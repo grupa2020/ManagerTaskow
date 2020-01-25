@@ -149,7 +149,13 @@ namespace AutomationProjectManager
         private void AddTaskBtn_Click(object sender, RoutedEventArgs e)
         {
             AddTaskWindow newTaskWindow = new AddTaskWindow(BoardId);//Tu zmienić na wybrany board w comboboxie
+            newTaskWindow.AddTaskWnd_Closing += new EventHandler(AddTaskWnd_Closing);
             newTaskWindow.Show();
+        }
+
+        private void AddTaskWnd_Closing(object sender, EventArgs e)
+        {
+            loadTasks();
         }
 
         private void AddBoardBtn_Click(object sender, RoutedEventArgs e)
@@ -200,6 +206,27 @@ namespace AutomationProjectManager
         private void tasksGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.WindowState==WindowState.Maximized)
+            {
+                this.SizeToContent = SizeToContent.WidthAndHeight;
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.SizeToContent = SizeToContent.Manual;
+                this.WindowState = WindowState.Maximized;
+            }
+           
+            
+        }
+
+        private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }

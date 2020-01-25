@@ -1,4 +1,6 @@
-﻿using AutomationProjectManager.DataModels;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,8 +49,10 @@ namespace AutomationProjectManager.Model
                 Debug.Write(e.ToString());
             }
 
-
-            return "Something was going wrong ..";
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
         }
 
 
@@ -57,6 +61,33 @@ namespace AutomationProjectManager.Model
             NewTaskPoco newTask = new NewTaskPoco(this.TaskType, this.BoardId, this.Content);
 
             return newTask;
+        }
+        public string SaveTaskPUT()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.PUT;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.serviceUri += "Tasks";
+
+                string response = client.PostMethod(this);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.ToString());
+            }
+
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
         }
     }
 }

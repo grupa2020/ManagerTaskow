@@ -64,7 +64,109 @@
             <Setter Property="Grid.Column" Value="{Binding}"/>
             <Setter Property="Grid.Row" Value="{Binding}"/>
         </Style>
-        
+
+        <Style x:Key="CloseButton" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="button" CornerRadius="3" BorderBrush="#c0392b" BorderThickness="1" Background="#c0392b">
+                                <TextBlock Foreground="White"   Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="White" />
+                                    <Setter TargetName="button" Property="Background"  Value="#e74c3c"/>
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="button"  Property="Background" Value="#e67e22"/>
+                                </Trigger>
+
+                                <!--   <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="#e74c3c" />
+                                    <Setter TargetName="button" Property="Background"  Value="#34495e"/>
+                                </Trigger> -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="MaximizeButton" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="button" CornerRadius="3" BorderBrush="#e67e22" BorderThickness="1" Background="#d35400">
+                                <TextBlock Foreground="White"   Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="White" />
+                                    <Setter TargetName="button" Property="Background"  Value="#e67e22"/>
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="button"  Property="Background" Value="#e67e22"/>
+                                </Trigger>
+
+                                <!--   <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="#e74c3c" />
+                                    <Setter TargetName="button" Property="Background"  Value="#34495e"/>
+                                </Trigger> -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="MinimizeButton" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="button" CornerRadius="3" BorderBrush="#2ecc71" BorderThickness="1" Background="#27ae60">
+                                <TextBlock Foreground="White"  Text="{TemplateBinding Button.Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="White" />
+                                    <Setter TargetName="button" Property="Background"  Value="#2ecc71"/>
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="button"  Property="Background" Value="#e67e22"/>
+                                </Trigger>
+
+                                <!--   <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="button" Property="BorderBrush" Value="#e74c3c" />
+                                    <Setter TargetName="button" Property="Background"  Value="#34495e"/>
+                                </Trigger> -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
     </Application.Resources>
   
 </Application>

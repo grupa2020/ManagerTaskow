@@ -37,6 +37,10 @@ namespace AutomationProjectManager
                 this.serviceUriTextBox.Text = ConfigurationSettings.AppSettings["ServerPatch"];
             }
 
+            addButton.IsEnabled = false;
+            delButton.IsEnabled = false;
+            editButton.IsEnabled = false;
+
             OrganizationId = 1;
         }
        
@@ -136,11 +140,44 @@ namespace AutomationProjectManager
             if(projectDataGrid.SelectedItem!=null)
             {
                 ProjectPoco toDelete = (ProjectPoco)projectDataGrid.SelectedItem;
-                MessageBox.Show(toDelete.ProjectDELETE());
+                SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(toDelete.ProjectDELETE());
+                if(response.Succeeded)
+                {
+                    MessageBox.Show("Pomyślnie usunięto projekt");
+                }
+                else
+                {
+                    MessageBox.Show("Coś poszło nie tak... \n"+ response.Message);
+                }
                 refresh();
             }
            
             
+        }
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            ProjectPoco selected = (ProjectPoco)projectDataGrid.SelectedItem;
+            AddProject projWnd = new AddProject(OrganizationId,selected);
+            projWnd.Show();
+        }
+
+        
+
+        private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(projectDataGrid.SelectedItem==null)
+            {
+                addButton.IsEnabled = false;
+                delButton.IsEnabled = false;
+                editButton.IsEnabled = false;
+            }
+            else
+            {
+                addButton.IsEnabled = true;
+                delButton.IsEnabled = true;
+                editButton.IsEnabled = true;
+            }
         }
 
         /////////////////////////////////////////////////

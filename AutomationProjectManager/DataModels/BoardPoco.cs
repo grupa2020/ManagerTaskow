@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.DataModels;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -48,13 +49,44 @@ namespace AutomationProjectManager.Model
             }
 
 
-            return "Something was going wrong ..";
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
         }
 
         public NewBoardPoco ToNewBoardPOST()
         {
             NewBoardPoco newBoard = new NewBoardPoco(this.Name,this.ProjectId,this.RoleAccess);
             return newBoard;
+        }
+
+        public string SaveBoardPUT()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.PUT;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.serviceUri += "Boards";
+                string response = client.PostMethod(this);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.ToString());
+            }
+
+
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
         }
     }
 }

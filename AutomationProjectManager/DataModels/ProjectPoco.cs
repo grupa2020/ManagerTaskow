@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.DataModels;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AutomationProjectManager.Model
 {
-    class ProjectPoco
+    public class ProjectPoco
     {
         public int ProjectId { get; set; }
         public string Name { get; set; }
@@ -54,7 +55,10 @@ namespace AutomationProjectManager.Model
             }
 
 
-            return "Something was going wrong .." ;
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
         }
 
         public NewProjectPoco ToNewProjectPOST()
@@ -74,7 +78,35 @@ namespace AutomationProjectManager.Model
             client.serviceUri += "Projects/" + this.ProjectId.ToString();
 
             return(client.DeleteMethod(this));
+
         }
-  
+
+        public string SaveProjectPUT()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.PUT;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.serviceUri += "Projects";
+                string response = client.PutMethod(this);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.ToString());
+            }
+
+            SimpleResponse serverBad = new SimpleResponse();
+            serverBad.Succeeded = false;
+            serverBad.Message = "Serwer nie odpowiedział...";
+            return JsonConvert.SerializeObject(serverBad);
+        }
+
     }
 }

@@ -127,6 +127,37 @@ namespace AutomationProjectManager
             return info;
         }
 
+        public string PutMethod(object ObjectToSend) //Wysłanie obiektu do serwisu
+        {
+
+
+            string Json = JsonConvert.SerializeObject(ObjectToSend);
+            string info = string.Empty;
+
+            Debug.WriteLine(Json);
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
+            httpWebRequest.ContentType = "application/json";
+
+            httpWebRequest.Method = this.method.ToString();
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(Json);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                info = result.ToString();
+            }
+
+
+
+            return info;
+
+        }
 
 
     }

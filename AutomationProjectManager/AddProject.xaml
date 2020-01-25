@@ -5,22 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="AddProject" Height="400" Width="600" Background="#FF2C3E50">
+        Title="AddProject" Height="486" Width="600" Background="#FF2C3E50">
     <Grid>
         <Border CornerRadius="20" BorderBrush="#FFECF0F1" BorderThickness="1" Margin="10">
             <StackPanel>
                 <TextBox x:Name="nameTextBox" 
                         Padding="5,5,5,5"  Margin="100,20,100,20" TextWrapping="Wrap" Text="Nazwa projektu" FontSize="14" FontFamily="CalibriLight"/>
                 <Label Content="Data rozpoczecia projektu:" 
-                       Margin="5,5,5,5"  Foreground="#ecf0f1"></Label>
-                <DatePicker Name="datePicker"  Margin="100,5,100,20" FontFamily="CalibriLight"/>
-                <Button x:Name="saveBtn" MinHeight="50" Content="Zapisz" Click="saveBtn_Click"  ></Button>
-                
-                
-                <Separator></Separator>
+                       Margin="100,5"  Foreground="#ecf0f1" FontSize="14"></Label>
+                <DatePicker Name="datePicker"  Margin="100,5,100,20" FontFamily="CalibriLight" FontSize="14"/>
+                <Label Content="Dane klienta:" 
+                    Margin="100,5"  Foreground="#ecf0f1" FontSize="14"/>
+                <RichTextBox x:Name="customerTextBox" 
+                        Padding="5,5,5,5"  Margin="100,5,100,20"  FontSize="14" FontFamily="CalibriLight" Height="130"/>
+
+
+
+
+                <Button x:Name="saveBtn" Style="{StaticResource MinimizeButton}" FontSize="16" MinHeight="50" Content="Zapisz" Click="saveBtn_Click" Margin="100,0"  />
 
             </StackPanel>
-            
+
 
         </Border>
 

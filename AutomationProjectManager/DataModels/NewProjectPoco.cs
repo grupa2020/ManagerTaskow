@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomationProjectManager.DataModels
 {
-    class NewProjectPoco
+    public class NewProjectPoco
     {
         
         public string Name { get; set; }

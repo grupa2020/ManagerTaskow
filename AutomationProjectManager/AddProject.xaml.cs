@@ -1,4 +1,6 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,23 +24,112 @@ namespace AutomationProjectManager
     public partial class AddProject : Window
     {
         int OrganizationId;
-        public AddProject(int organizationId)
+        ProjectPoco Project;
+        bool isNew;
+        public AddProject(int organizationId)   //For new project
         {
             InitializeComponent();
             OrganizationId = organizationId;
             datePicker.SelectedDate = DateTime.Now;
+            isNew = true;
+
+            DateTime startTime;
+            startTime = (DateTime)datePicker.SelectedDate;
+            Project = new ProjectPoco(this.nameTextBox.Text, startTime, 1, OrganizationId, AboutClientString(), 0);
+        }
+        public AddProject(int organizationId, ProjectPoco project)  //For existing projects
+        {
+            InitializeComponent();
+            isNew = false;
+            OrganizationId = organizationId;
+            datePicker.SelectedDate = DateTime.Now;
+            Project = project;
+
+            fillWindow();
+
+           
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DateTime startTime;           
-            if(datePicker.SelectedDate!=null)
+            if(isNew)
             {
-                startTime = (DateTime)datePicker.SelectedDate;
-                ProjectPoco newProject = new ProjectPoco(this.nameTextBox.Text, startTime, 1, OrganizationId, "name", 0);
-                MessageBox.Show(newProject.SaveProjectPOST());
+                saveNew();
+                this.Close();
             }
-            
+            else
+            {
+                updateChanges();
+            }
+        }
+
+        string AboutClientString()
+        {
+            TextRange textRange = new TextRange(customerTextBox.Document.ContentStart, customerTextBox.Document.ContentEnd);
+            return textRange.Text;
+        }
+
+        private void fillWindow()
+        {
+            nameTextBox.Text = Project.Name;
+            datePicker.SelectedDate = Project.StartDate;
+            customerTextBox.AppendText(Project.CustomerName);
+        }
+
+        private void saveNew()
+        {
+            if (datePicker.SelectedDate != null)
+            {
+                string info = string.Empty;
+                Project.StartDate = (DateTime)datePicker.SelectedDate;
+                Project.Name = nameTextBox.Text;
+                Project.CustomerName = AboutClientString();
+
+                info = Project.SaveProjectPOST();
+
+                SimpleResponse responseMsg = JsonConvert.DeserializeObject<SimpleResponse>(info);
+
+                if (responseMsg.Succeeded)
+                {
+                    MessageBox.Show("Pomyślnie dodano nowy projekt");
+
+                    isNew = false;
+
+                }
+                else
+                {
+                    MessageBox.Show("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                }
+
+            }
+        }
+
+        private void updateChanges()
+        {
+            if (datePicker.SelectedDate != null)
+            {
+                string info = string.Empty;
+                Project.StartDate = (DateTime)datePicker.SelectedDate;
+                Project.Name = nameTextBox.Text;
+                Project.CustomerName = AboutClientString();
+
+                info = Project.SaveProjectPUT();
+
+                SimpleResponse responseMsg = JsonConvert.DeserializeObject<SimpleResponse>(info);
+
+                if (responseMsg.Succeeded)
+                {
+                    MessageBox.Show("Pomyślnie zapisano zmiany");
+
+                    isNew = false;
+
+                }
+                else
+                {
+                    MessageBox.Show("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                }
+
+            }
         }
     }
 }

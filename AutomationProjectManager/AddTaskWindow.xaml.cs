@@ -22,6 +22,7 @@ namespace AutomationProjectManager
     public partial class AddTaskWindow : Window
     {
         int BoardId;
+        public event EventHandler AddTaskWnd_Closing;
         public AddTaskWindow(int boardId)
         {
             InitializeComponent();
@@ -42,11 +43,14 @@ namespace AutomationProjectManager
             {
                 TaskPoco newTask = new TaskPoco();
                 newTask.BoardId = BoardId;
-                newTask.Content = "Something witch make You Smile :)";
+                newTask.Content = string.Empty;
                 newTask.TaskId = 0;
                 newTask.TaskType = (TaskTypeEnum)selectTypeCmbox.SelectedItem;
                 newTask.UpdateContent();
                 newTask.SaveTaskPOST();
+
+                this.Close();
+                
             }
             else
             {
@@ -55,6 +59,11 @@ namespace AutomationProjectManager
             
 
            
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            AddTaskWnd_Closing(this, EventArgs.Empty);  //Wywołanie zdarzenia informującego o zamykaniu w oknie właścicielu okna;
         }
     }
 }
