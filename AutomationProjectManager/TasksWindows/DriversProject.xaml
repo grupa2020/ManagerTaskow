@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="DriversProject" Height="450" Width="800">
-    <Grid>
-        
+        Title="DriversProject" 
+        MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent" SizeToContent="WidthAndHeight" Width="499.7" >
+    <Border Height="200" Width="500" BorderBrush="{DynamicResource GlobalBordersBrush}" BorderThickness="1" CornerRadius="2">
+    <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
+        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}" Margin="0,0,10,12" Click="saveBtn_Click" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153"/>
+        <StackPanel Orientation="Horizontal" Height="38" Margin="10,69,10,0" VerticalAlignment="Top">
+            <Border CornerRadius="1" BorderThickness="0.8" BorderBrush="{DynamicResource GlobalBordersBrush}">
+            <TextBox Width="324" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}" Margin="0,0,0,0"></TextBox>
+            </Border>
+            <Button Width="124" Content="Browse" Command="{Binding CommandInViewModel}" Margin="20,3,0,3"/>
+        </StackPanel>
+        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}" HorizontalAlignment="Left" Margin="10,0,0,10" Width="153" Click="delBtn_Click" Height="35" VerticalAlignment="Bottom"/>
+        <Button x:Name="CloseBtn" Margin="0,10,12,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <Button x:Name="MaksimizeBtn" Margin="0,10,43,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+        <Button x:Name="MinimizeBtn" Margin="0,10,74,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
+
     </Grid>
+    </Border>
 </Window>

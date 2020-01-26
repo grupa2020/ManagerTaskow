@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.DataModels.TasksChildrens;
+using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,18 @@ using System.Windows.Shapes;
 namespace AutomationProjectManager.ToolsWindows
 {
     /// <summary>
-    /// Logika interakcji dla klasy DriversProject.xaml
+    /// Logika interakcji dla klasy Maintainence.xaml
     /// </summary>
-    public partial class DriversProject : Window
+    public partial class MaintainenceWnd : Window
     {
-        public DriversProject(TaskPoco task)
+        public MaintainenceWnd(TaskPoco task)
         {
             InitializeComponent();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-         /*   thisTask.Description = projDescription();
+          /*  thisTask.Description = projDescription();
             thisTask.UpdateContent();
             thisTask.SaveTaskPUT(); */
         }
@@ -37,6 +38,7 @@ namespace AutomationProjectManager.ToolsWindows
 
         }
 
+
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -44,7 +46,7 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState==WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Normal;
             }
@@ -52,7 +54,7 @@ namespace AutomationProjectManager.ToolsWindows
             {
                 this.WindowState = WindowState.Maximized;
             }
-            
+
         }
 
         private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
@@ -64,6 +66,16 @@ namespace AutomationProjectManager.ToolsWindows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            lstBox.Items.Remove(lstBox.SelectedItem);
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

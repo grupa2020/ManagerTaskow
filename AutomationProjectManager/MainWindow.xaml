@@ -16,7 +16,8 @@
                     <Grid Background="{DynamicResource MaterialDesignBackground}">
                         <Border Background="Transparent" CornerRadius="20" Margin="40">
                             <StackPanel>
-                                <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="{DynamicResource GlobalForeColor}"></Label>
+                                <Label x:Name="loginLbl" Content="Zaloguj" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="{DynamicResource GlobalForeColor}"></Label>
+                                
                                 <Separator></Separator>
                                 <Label Content="Nazwa użytkownika:" Foreground="{DynamicResource GlobalForeColor}" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
                                 <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"></TextBox>

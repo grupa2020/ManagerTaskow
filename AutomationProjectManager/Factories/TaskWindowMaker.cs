@@ -44,7 +44,7 @@ namespace AutomationProjectManager.Factories
                     
                 case TaskTypeEnum.Maintainence:
                     {
-                        newWindow = new Maintainence(Task);
+                        newWindow = new MaintainenceWnd(Task);
                         return newWindow;
                     }
                     

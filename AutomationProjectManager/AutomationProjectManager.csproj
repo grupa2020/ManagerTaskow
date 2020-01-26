@@ -140,8 +140,9 @@
     <Compile Include="TasksWindows\ElectricalProject.xaml.cs">
       <DependentUpon>ElectricalProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TasksWindows\Maintainence.xaml.cs">
-      <DependentUpon>Maintainence.xaml</DependentUpon>
+    <Compile Include="TasksWindows\MaintainenceWnd.xaml.cs">
+      <DependentUpon>MaintainenceWnd.xaml</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="TasksWindows\Mounting.xaml.cs">
       <DependentUpon>Mounting.xaml</DependentUpon>
@@ -210,9 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TasksWindows\Maintainence.xaml">
+    <Page Include="TasksWindows\MaintainenceWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="TasksWindows\Mounting.xaml">
       <SubType>Designer</SubType>
