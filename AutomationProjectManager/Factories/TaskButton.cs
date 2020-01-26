@@ -1,4 +1,5 @@
 ﻿using AutomationProjectManager.Model;
+using SharpVectors.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace AutomationProjectManager.Factories
 {
@@ -16,6 +18,8 @@ namespace AutomationProjectManager.Factories
         string taskContent { get; set; }
         public TaskPoco Task {get;set;}
 
+        string Snap { get; set; }
+        
         public TaskButton(TaskPoco task)
         {
             this.taskContent = task.Content;
@@ -23,101 +27,162 @@ namespace AutomationProjectManager.Factories
             string taskLabel = Translate(task.TaskType);
             this.taskId = task.TaskId;
             this.Name = task.TaskType.ToString();
-            this.Content = new TextBlock()
+            
+            
+
+            Style style = this.FindResource("MaterialDesignRaisedDarkButton") as Style;   
+            this.Style = style;
+
+            this.BorderBrush = this.FindResource("GlobalBordersBrush") as Brush;
+
+            StackPanel panelInButton = new StackPanel();
+            panelInButton.Background = Brushes.Transparent;
+
+            SvgViewbox viewbox = new SvgViewbox();
+            viewbox.Source = new System.Uri("Resources/create-24px.svg", UriKind.Relative); //create-24px.svg dla algorytmu
+
+            viewbox.Margin= new Thickness(5,5,5,5);
+            viewbox.MinHeight = 30;
+            viewbox.MinWidth = 30;
+           
+            //svgc: SvgViewbox
+
+            TextBlock txtBox = new TextBlock()
             {
                 FontSize = 14,
                 FontStyle = FontStyles.Normal,
                 TextAlignment = TextAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
-                Text = taskLabel
+                Text = taskLabel,
+               // Foreground = this.FindResource("GlobalForeColor") as Brush,
+                //Background = Brushes.Transparent,
+                Margin= new Thickness(5, 5, 5, 5),
+                Padding = new Thickness(5, 5, 5, 5)
+
+
             };
 
-            this.MinHeight = 50;
-            
-            this.MaxHeight = 50;
+            Rectangle rectangle = new Rectangle();
+            rectangle.Fill =this.FindResource("PrimaryHueMidBrush") as Brush;
+            rectangle.Height = 20;
+            rectangle.Margin=new Thickness(0,0,0,0);
 
-            Style roundedCorners = new Style(typeof(Border));
-            roundedCorners.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(12)));
+            this.Background = this.FindResource("TextAreasBacground") as Brush;
 
-            this.Resources.Add(typeof(Border), roundedCorners);
+            Snap = "Jakś zajawka";
+            if(task.Content.Length<99)
+            {
+                Snap = task.Content;
+            }
+            else
+            {
+                Snap = task.Content.Substring(0, 100);
+            }
 
-            
-            //this.Resources.Add()
-           
+
+            TextBlock txtBox2 = new TextBlock()
+            {
+                FontSize = 12,
+               
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                Text = "__________________",
+                Foreground= this.FindResource("GlobalBordersBrush") as Brush,
+                Background = Brushes.Transparent,
+                Margin = new Thickness(5, 5, 5, 5),
+            };
+
+           // panelInButton.Children.Add(rectangle);
+            panelInButton.Children.Add(viewbox);
+            panelInButton.Children.Add(txtBox);            
+            panelInButton.Children.Add(txtBox2);
+            this.Content = panelInButton;
+
+            panelInButton.Margin = new Thickness(0, 0, 0, 0);
             this.Margin = new Thickness(10, 10, 10, 10);
-            //this.Width = 300;
-            //this.Height = 200;
-            this.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+            this.MinHeight = 120;
+            this.MaxHeight = 300;
+
+            this.Padding= new Thickness(0,0,0,0);
+
+           
+
 
             switch (task.TaskType)
             {
                 case TaskTypeEnum.AlgorithmDescription:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Ustawienie kolorów konkretnych typów tasków
+                       txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                       
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Ustawienie kolorów konkretnych typów tasków
+                        txtBox2.Text =Snap;
+                        
                     }
                     break;
 
 
                 case TaskTypeEnum.DriversProject:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400"));
+
+                       // viewbox.Source = new System.Uri("Resources/developer_mode-24px.svg", UriKind.Relative);
                     }
                     break;
 
 
                 case TaskTypeEnum.ElectricalProject:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); 
                     }
                     break;
                 case TaskTypeEnum.Maintainence:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); 
                     }
                     break;
                 case TaskTypeEnum.Mounting:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); 
                     }
                     break;
                 case TaskTypeEnum.OrderList:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); 
                     }
                     break;
                 case TaskTypeEnum.ProjectDescription:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); 
                     }
                     break;
 
                 case TaskTypeEnum.VarDefTool:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#34495e")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#34495e")); 
                     }
                     break;
                 case TaskTypeEnum.Workshop:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); 
                     }
                     break;
 
                 default:
                     {
-                        this.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        this.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f8c8d")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f8c8d")); 
                     }
                     break;
             }
+            
 
 
         }
@@ -130,58 +195,58 @@ namespace AutomationProjectManager.Factories
             {
                 case TaskTypeEnum.AlgorithmDescription:
                     {
-                        name = "Opis algorytmu";
+                        name = " Opis algorytmu ";
                     }
                     break;
 
 
                 case TaskTypeEnum.DriversProject:
                     {
-                        name = "Projekt programu sterownika";
+                        name = " Projekt programu sterownika ";
                     }
                     break;
 
 
                 case TaskTypeEnum.ElectricalProject:
                     {
-                        name = "Schemat Elektryki";
+                        name = " Schemat Elektryki ";
                     }
                     break;
                 case TaskTypeEnum.Maintainence:
                     {
-                        name = "Zgłoszenie serwisowe";
+                        name = " Zgłoszenie serwisowe ";
                     }
                     break;
                 case TaskTypeEnum.Mounting:
                     {
-                        name = "Prace montażowe";
+                        name = " Prace montażowe ";
                     }
                     break;
                 case TaskTypeEnum.OrderList:
                     {
-                        name = "Zapotrzebowania materiałowe";
+                        name = " Zapotrzebowania materiałowe ";
                     }
                     break;
                 case TaskTypeEnum.ProjectDescription:
                     {
-                        name = "Opis projektu";
+                        name = " Opis projektu ";
                     }
                     break;
 
                 case TaskTypeEnum.VarDefTool:
                     {
-                        name = "Definicje zmiennych procesowych";
+                        name = " Definicje zmiennych procesowych ";
                     }
                     break;
                 case TaskTypeEnum.Workshop:
                     {
-                        name = "Prace warsztatowe";
+                        name = " Prace warsztatowe ";
                     }
                     break;
 
                 default:
                     {
-                        name = "Nieznany typ";
+                        name = " Nieznany typ ";
                     }
                     break;
             }

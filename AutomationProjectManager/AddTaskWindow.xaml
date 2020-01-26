@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="AddTaskWindow" Height="152" Width="215.5" Closing="Window_Closing">
-    <Grid>
-        <Button x:Name="saveTaskBtn" Content="Dalej" HorizontalAlignment="Left" Margin="123,91,0,0" VerticalAlignment="Top" Width="75" Click="saveTaskBtn_Click"/>
-        <ComboBox Name="selectTypeCmbox" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="188"/>
-        <Label Content="Typ zadania:" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
+        Title="AddTaskWindow"  MouseDown="Window_MouseDown" Background="Transparent" WindowStyle="None" AllowsTransparency="True" Height="186" Width="227.5" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource GlobalBordersBrush}"
+            CornerRadius="9" Margin="0,0,0,0"
+            Background="{DynamicResource MaterialDesignBackground}">
+        <Grid>
+            <Button x:Name="saveTaskBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="74,122,0,0" VerticalAlignment="Top" Width="74" Click="saveTaskBtn_Click"/>
+            <ComboBox Name="selectTypeCmbox" Margin="19,60,19,0" VerticalAlignment="Top" Foreground="{DynamicResource GlobalForeColor}" BorderBrush="{DynamicResource GlobalBordersBrush}"/>
+            <Label Content="Typ zadania:" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Foreground="{DynamicResource GlobalForeColor}"/>
+            <Button x:Name="CloseBtn" Margin="0,10,16,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click"  Height="24" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <Button x:Name="MaksimizeBtn" Margin="0,10,48,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="24" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" Visibility="Hidden" />
+            <Button x:Name="MinimizeBtn" Margin="0,10,78,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="24" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" Visibility="Hidden"/>
 
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

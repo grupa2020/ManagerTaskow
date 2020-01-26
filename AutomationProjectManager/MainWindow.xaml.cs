@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using MaterialDesignColors;
 
 namespace AutomationProjectManager
 {
@@ -72,7 +73,7 @@ namespace AutomationProjectManager
             if(projectDataGrid.SelectedItem!=null)
             {
                 ProjectPoco selected = (ProjectPoco)projectDataGrid.SelectedItem;
-                ProjectWindow projectWindow = new ProjectWindow(selected.ProjectId);
+                ProjectWindow projectWindow = new ProjectWindow(selected.ProjectId,selected.Name);
                 projectWindow.Show();
             }
           
@@ -180,6 +181,68 @@ namespace AutomationProjectManager
             }
         }
 
+        private void DarkMode_Checked(object sender, RoutedEventArgs e)
+        {
+            //Ustawienia Ciemego motywu
+
+            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromArgb(250,18, 18, 18));
+            SolidColorBrush textAreaColor = new SolidColorBrush(Color.FromArgb(120, 18, 18, 18));
+            SolidColorBrush foreColor = new SolidColorBrush(Color.FromRgb(236, 240, 241));
+            ResourceDictionary myResourceDictionary = Application.Current.Resources;
+                ///MessageBox.Show(myResourceDictionary.Values.ToString());
+                myResourceDictionary.Remove("MaterialDesignBackground");
+               myResourceDictionary.Add("MaterialDesignBackground", backgroundColor);   //"#121212"       rgb(22, 160, 133)
+            myResourceDictionary.Remove("GlobalForeColor");
+               myResourceDictionary.Add("GlobalForeColor", foreColor);      
+            myResourceDictionary.Remove("TextAreasBacground");
+            myResourceDictionary.Add("TextAreasBacground", textAreaColor); //TextAreasBacground
+
+        }
+
+        private void DarkMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //Jasny motyw
+
+            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromRgb(224,224,224));
+            //SolidColorBrush whiteSmoke = new SolidColorBrush(Color.FromRgb(225, 229, 229));
+            SolidColorBrush textAreaColor = new SolidColorBrush(Color.FromRgb(245,245,245));
+            ResourceDictionary myResourceDictionary = Application.Current.Resources;
+            myResourceDictionary.Remove("MaterialDesignBackground");
+            myResourceDictionary.Add("MaterialDesignBackground",backgroundColor);     //  #FFE5E5E5
+            myResourceDictionary.Remove("GlobalForeColor");
+            myResourceDictionary.Add("GlobalForeColor", Brushes.Black); //Black
+            myResourceDictionary.Remove("TextAreasBacground");
+            myResourceDictionary.Add("TextAreasBacground", textAreaColor); //FFA6A0A0
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.WindowState==WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+          
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
         /////////////////////////////////////////////////
     }
 }

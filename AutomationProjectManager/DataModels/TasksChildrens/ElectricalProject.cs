@@ -23,7 +23,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.ElectricalProject;
         }
 
-        public override void UpdateContent()
+        public  void UpdateContent()
         {
 
         }

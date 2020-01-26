@@ -4,39 +4,79 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ProjectWindow" MouseDown="tasksGrid_MouseRightButtonDown" Height="410" Width="930.5" SizeToContent="WidthAndHeight" WindowStyle="None" >
-    <ScrollViewer Margin="5" CanContentScroll="False"
-              HorizontalScrollBarVisibility="Auto">
-        <Grid Background="#FF223140" >
-            <Button Name="CloseBtn" Margin="0,10,10,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <Button x:Name="MaksimizeBtn" Margin="0,10,41,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
-            <Button x:Name="MinimizeBtn" Margin="0,10,72,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
+        Title="ProjectWindow" BorderBrush="#FF223140"
+        AllowsTransparency="True" 
+        MouseDown="Window_MouseDown" Background="Transparent"   SizeToContent="Width" WindowStyle="None"
+        WindowStartupLocation="CenterScreen" ScrollViewer.CanContentScroll="True" >
+    <Border  CornerRadius="2" BorderThickness="1" Background="{DynamicResource MaterialDesignBackground}"  BorderBrush="{DynamicResource GlobalBordersBrush}">
+        <ScrollViewer CanContentScroll="False" Margin="0,20,0,20"
+              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
+            <Border  CornerRadius="3" BorderThickness="40" MouseDown="Window_MouseDown"  BorderBrush="Transparent" >
+                <Grid Background="Transparent">
+                    <Button Name="CloseBtn" Margin="0,-30,10,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    <Button x:Name="MaksimizeBtn" Margin="0,-30,41,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+                    <Button x:Name="MinimizeBtn" Margin="0,-30,72,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
 
-            <StackPanel Margin="10" >
-                <Grid Margin="0,0,95,0" Height="54">
-                    <Label x:Name="lblInfo1" Foreground="White" Content="Wybór Tablicy Projektu:" RenderTransformOrigin="0.13,0.548" Margin="10,10,0,10" HorizontalAlignment="Left" Width="197"  />
-                    <ComboBox x:Name="selectBoardBox" Margin="149,10,0,0" VerticalAlignment="Top"
-                         SelectionChanged="selectBoardBox_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinWidth="400" Height="34" HorizontalAlignment="Left" Width="371"/>
-                    <Button Margin="561,10,0,10" Content="Dodaj nową tablicę"  Style="{StaticResource RoundedButton}" Name="AddBoardBtn" Click="AddBoardBtn_Click" HorizontalAlignment="Left" Width="126"/>
-                    <Button Margin="692,10,0,10" Content="Usuń tablicę" Padding="4,4,4,4" Name="DeleteBoardBtn" Style="{StaticResource RoundedButton}" Click="DeleteBoardBtn_Click" HorizontalAlignment="Left" Width="80"/>
-                </Grid>
+                    <StackPanel Margin="10" >
+                        <Border Margin="0,0,0,0" BorderBrush="{DynamicResource GlobalBordersBrush}" CornerRadius="0.8" BorderThickness="1">
+                            <Grid   Height="52">
+                                <Label x:Name="lblInfo1" Foreground="{DynamicResource GlobalForeColor}" Content="Wybór Tablicy Projektu:"
+                             Margin="10,15,713,10"  />
+                                <ComboBox x:Name="selectBoardBox" Foreground="{DynamicResource GlobalForeColor}" Style="{DynamicResource MaterialDesignComboBox}"
+                                  Margin="142,10,350,0" BorderBrush="{DynamicResource GlobalBordersBrush}" 
+                                 
+                                  VerticalAlignment="Top" 
+                         SelectionChanged="selectBoardBox_SelectionChanged"
+                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                  MinWidth="350" Height="34" FontSize="16" />
+                                <Button Margin="0,0,293,7" 
+                                        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" 
+                                        Background="#1976d2" BorderBrush="#1976d2" Name="AddBoardBtn"
+                                        VerticalAlignment="Bottom"
+                                        Click="AddBoardBtn_Click" HorizontalAlignment="Right"
+                                        Height="35" Width="36"
+                                         Padding="4,4,4,4" >
+                                    <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
+                                </Button>
+                                <Button Margin="0,0,252,7"  
+                                        Padding="4,4,4,4" Name="DeleteBoardBtn"
+                                        Click="DeleteBoardBtn_Click" VerticalAlignment="Bottom" 
+                                        HorizontalAlignment="Right"                                       
+                                        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
+                                        Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
+                                    <svgc:SvgViewbox Source="Resources/clear-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
+                                </Button>
+                            </Grid>
+                        </Border>
 
-                <Grid x:Name="tasksGrid" ShowGridLines="false"
+                        <Grid x:Name="tasksGrid" ShowGridLines="false"
                       MouseRightButtonDown="tasksGrid_MouseRightButtonDown"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                       MinHeight="200"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      ScrollViewer.CanContentScroll="True" >
+                      ScrollViewer.CanContentScroll="True" />
+
+
+                        <Grid Margin="5,5,5,5" Height="85">
+                            <Button Margin="0,10,10,30"
+                                    Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"  
+                                    Background="#27ae60" BorderBrush="#27ae60"  x:Name="AddTaskBtn"
+                                    Click="AddTaskBtn_Click" Width="47" FontSize="12" Height="Auto" HorizontalAlignment="Right">
+                                <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
+                            </Button>
+
+                        </Grid>
+                    </StackPanel>
+                    <Label  Content="Projekt" FontSize="22" Name="projectNameLbl"
+                            FontStyle="Normal" Foreground="{DynamicResource GlobalForeColor}"
+                           
+                           HorizontalAlignment="Left" Margin="10,-45,0,0" VerticalAlignment="Top" Width="668" Height="39" FontFamily="Calibri" FontWeight="Bold"/>
 
                 </Grid>
-
-
-                <Grid Margin="5,5,5,5" Height="85">
-                    <Button Content="Dodaj Zadanie"  Style="{StaticResource RoundedButton}" Name="AddTaskBtn" Click="AddTaskBtn_Click" Margin="0,20,20,10"  HorizontalAlignment="Right" Width="147"/>
-                </Grid>
-            </StackPanel>
-
-        </Grid>
-    </ScrollViewer>
+            </Border>
+        </ScrollViewer>
+    </Border>
 </Window>

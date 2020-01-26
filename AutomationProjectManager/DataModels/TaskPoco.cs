@@ -19,11 +19,12 @@ namespace AutomationProjectManager.Model
         public TaskTypeEnum TaskType { get; set; }
         public int BoardId { get; set; }
         public string Content { get; set; }
-        public virtual void UpdateContent()
+      
+
+        public void UpdateContent()
         {
             Content = "";
         }
-
       
         public string SaveTaskPOST()
         {
@@ -83,7 +84,7 @@ namespace AutomationProjectManager.Model
                 {
                     client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks/"+ this.BoardId.ToString();
+                client.serviceUri += "Tasks";
 
                 string response = client.PutMethod(this.ToTaskPoco());
 
@@ -98,6 +99,19 @@ namespace AutomationProjectManager.Model
             serverBad.Succeeded = false;
             serverBad.Message = "Serwer nie odpowiedział...";
             return JsonConvert.SerializeObject(serverBad);
+        }
+
+        public string DeleteTask()
+        {
+            RestClient client = new RestClient();
+            client.method = httpVerb.DELETE;
+            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+            {
+                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+            }
+            client.serviceUri += "Tasks/" + this.TaskId.ToString();
+
+            return client.DeleteMethod(this);
         }
     }
 }

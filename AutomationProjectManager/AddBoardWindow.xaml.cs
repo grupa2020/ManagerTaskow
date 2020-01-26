@@ -62,5 +62,39 @@ namespace AutomationProjectManager
         {
             this.AddBoardWindow_Closing(this, EventArgs.Empty);
         }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+
+                this.WindowState = WindowState.Maximized;
+            }
+
+
+        }
+
+        private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
     }
 }

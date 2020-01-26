@@ -22,16 +22,20 @@ namespace AutomationProjectManager.ToolsWindows
     public partial class AlgorithmDescription : Window
     {
         AlgorithmDescriptionTask thisTask;
+
+       
         public AlgorithmDescription(TaskPoco task)
         {
             InitializeComponent();
             thisTask = new AlgorithmDescriptionTask(task.BoardId,task.Content,task.TaskId);
+           
             fillContent();
         }
 
         private void fillContent()
         {   // UZUPEŁNIANIE KONTROLEK OKNA
-            algDescRichTextBox.AppendText(thisTask.Content);
+            algDescRichTextBox.Document.Blocks.Clear();
+            algDescRichTextBox.Document.Blocks.Add(new Paragraph(new Run(thisTask.Description)));
         }
         string algDescription() //ZWRACA ZAWARTOŚĆ RICHTEXTBOX W STRING
         {
@@ -47,7 +51,50 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(thisTask.DeleteTask());
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+           
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
 
         }
+
+        private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+               
+                this.WindowState = WindowState.Maximized;
+            }
+
+
+        }
+
+        private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+    
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+       
     }
 }

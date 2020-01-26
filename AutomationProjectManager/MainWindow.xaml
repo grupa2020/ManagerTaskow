@@ -5,39 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="Automation Projects Manager" Height="600" Width="800" Background="#FFEDF2E7">
-    <Window.Foreground>
-        <SolidColorBrush Color="#FFEDF2E7" Opacity="0.2"/>
-    </Window.Foreground>
+        Title="Automation Projects Manager" MouseDown="Window_MouseDown" 
+        WindowStyle="None" AllowsTransparency="False" Background="Transparent"
+        Height="600" Width="800" WindowStartupLocation="CenterScreen" >
+
     <Grid x:Name="Bottom">
-        <Grid x:Name="MenuBar" Height="50" VerticalAlignment="Top" Margin="0,0,0,0" Background="#FF2980B9"/>
-        <Grid x:Name="MainGrid" Background="#FF2C3E50" Margin="0,55,0,0">
-            <TabControl  Margin="0,0,0,0" >
-                <TabItem Header="Login">
-                    <Grid Background="#16a085">
-                        <Border Background="#2c3e50" CornerRadius="20" Margin="40">
+        <Grid x:Name="MainGrid" Background="Transparent" Margin="0,10,0,0">
+            <TabControl  Margin="0,0,0,0" Background="Transparent" >
+                <TabItem Header="Login" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource MaterialDesignBackground}">
+                    <Grid Background="{DynamicResource MaterialDesignBackground}">
+                        <Border Background="Transparent" CornerRadius="20" Margin="40">
                             <StackPanel>
-                                <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="#FFE8E8F2"></Label>
+                                <Label x:Name="loginLbl" Content="Logowanie do systemu" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="{DynamicResource GlobalForeColor}"></Label>
                                 <Separator></Separator>
-                                <Label Content="Nazwa użytkownika:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
-                                <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light"></TextBox>
-                                <Label Content="Hasło:" Foreground="White" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
-                                <PasswordBox x:Name="passTextBox"  FontSize="18" Margin="150,15,150,15"></PasswordBox>
-                                <Button x:Name="submitLoginBtn" Background="#27ae60" Foreground="White" Content="Zaloguj" FontSize="16" FontFamily="Calibri" Margin="150,15,150,0" />
+                                <Label Content="Nazwa użytkownika:" Foreground="{DynamicResource GlobalForeColor}" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                                <TextBox x:Name="usrNameTextBox" Margin="150,15,150,15" FontSize="18" FontFamily="Calibri Light" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"></TextBox>
+                                <Label Content="Hasło:" Foreground="{DynamicResource GlobalForeColor}" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"></Label>
+                                <PasswordBox x:Name="passTextBox"  FontSize="18" Margin="150,15,150,15" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"></PasswordBox>
+                                <Button x:Name="submitLoginBtn"  Content="Zaloguj" Margin="150,15,150,0" />
                             </StackPanel>
                         </Border>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Projekty">
-                    <Grid Background="#34495e">
+                <TabItem Header="Projekty" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}">
+                    <Grid Background="{DynamicResource MaterialDesignBackground}">
                         <StackPanel Margin="10,10,10,10" >
-                            <DataGrid Name="projectDataGrid" Margin="10,10,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False"  IsReadOnly="True"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="400" MouseDoubleClick="projectDataGrid_MouseDoubleClick" SelectionChanged="projectDataGrid_SelectionChanged">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding ProjectId}" Header="ID Projektu" />
-                                    <DataGridTextColumn Binding="{Binding Name}" Header="Nazwa projektu" />
-                                    <DataGridTextColumn Binding="{Binding StartDate}" Header="Rozpoczęcie" />
-                                    <DataGridTextColumn Binding="{Binding Status}" Header="Status" />
-                                    <DataGridTextColumn Binding="{Binding CustomerName}" Header="Klient" />
+                            <DataGrid Name="projectDataGrid" Background="{DynamicResource MaterialDesignBackground}"  Foreground="{DynamicResource GlobalForeColor}" Margin="10,10,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False"  IsReadOnly="True"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="400" MouseDoubleClick="projectDataGrid_MouseDoubleClick" SelectionChanged="projectDataGrid_SelectionChanged" VerticalGridLinesBrush="{DynamicResource GlobalBordersBrush}">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn  Binding="{Binding ProjectId}" Header="ID Projektu" />
+                                    <DataGridTextColumn  Binding="{Binding Name}" Header="Nazwa projektu" />
+                                    <DataGridTextColumn  Binding="{Binding StartDate}" Header="Rozpoczęcie" />
+                                    <DataGridTextColumn  Binding="{Binding Status}" Header="Status" />
+                                    <DataGridTextColumn  Binding="{Binding CustomerName}" Header="Klient" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -47,14 +46,18 @@
                         <Button x:Name="editButton" Content="Edytuj" Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Margin="212,0,0,19" Width="83" Click="editButton_Click" Height="36" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Ustawienia">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="savePropertiesbtn" Content="Zapisz  ustawienia" Margin="0,0,25,34" Click="saveBtn_Click" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="107"/>
-                        <Label Content="Adres serwera REST:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="194"/>
-                        <TextBox x:Name="serviceUriTextBox" Height="26" Margin="225,10,25,0" TextWrapping="Wrap" Text="ścieżka" VerticalAlignment="Top"/>
+                <TabItem Header="Ustawienia" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource MaterialDesignBackground}">
+                    <Grid Background="{DynamicResource MaterialDesignBackground}">
+                        <Button x:Name="savePropertiesbtn" Content="Zapisz  ustawienia" Margin="0,0,25,34" Click="saveBtn_Click" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="159"/>
+                        <Label Content="Adres serwera REST:" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Width="194" Foreground="{DynamicResource GlobalForeColor}"/>
+                        <TextBox x:Name="serviceUriTextBox" Height="26" Margin="142,46,108,0" TextWrapping="Wrap" Text="ścieżka" VerticalAlignment="Top" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"/>
+                        <CheckBox x:Name="DarkMode" Content="Ciemny Motyw" FontSize="14" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Height="30" Width="179" Checked="DarkMode_Checked" Unchecked="DarkMode_Unchecked" Foreground="{DynamicResource GlobalForeColor}"/>
                     </Grid>
                 </TabItem>
             </TabControl>
         </Grid>
+        <Button x:Name="CloseBtn" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,4,0"/>
+        <Button x:Name="MaksimizeBtn" Margin="0,4,34,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+        <Button x:Name="MinimizeBtn" Margin="0,4,66,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
     </Grid>
 </Window>

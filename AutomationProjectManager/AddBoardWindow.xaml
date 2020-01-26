@@ -5,18 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager"
         mc:Ignorable="d"
-        Title="AddBoardWindow" Height="245.346" Width="462.5" Closing="Window_Closing">
-    <Grid>
-        <TextBox x:Name="boardNameTxtBox" Margin="31,28,37,132" TextWrapping="Wrap" Text="Nazwa Tablicy"/>
-        <Button Content="Dodaj" Name="addBoardBtn" Click="addBoardBtn_Click" Margin="296,151,37,27"/>
-       
-        <ComboBox Name="selectRoleCombobox" Margin="31,118,191,0" VerticalAlignment="Top" >
-            <ComboBoxItem TextBlock.TextAlignment="Center" Content="Wszyscy"></ComboBoxItem>
-            <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Projektantów"></ComboBoxItem>
-            <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Zakupów"></ComboBoxItem>
-            <ComboBoxItem TextBlock.TextAlignment="Center" Content="Warsztat"></ComboBoxItem>
-        </ComboBox>
-        <Label Content="Poziom widoczności:" HorizontalAlignment="Left" Margin="31,87,0,0" VerticalAlignment="Top"/>
+        Title="AddBoardWindow" MouseDown="Window_MouseDown" AllowsTransparency="True" Background="Transparent" Height="271.667" Width="416.333" Closing="Window_Closing" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource GlobalBordersBrush}"
+          CornerRadius="9"  >
+        <Border BorderThickness="10" BorderBrush="{DynamicResource MaterialDesignBackground}" CornerRadius="3" >
+            <Grid Margin="0,0,0,0" Background="{DynamicResource MaterialDesignBackground}">
+                <Border BorderThickness="1" CornerRadius="3" BorderBrush="#bdc3c7" Margin="10,37,15,0" Height="50" VerticalAlignment="Top">
+                    <TextBox x:Name="boardNameTxtBox" Foreground="{DynamicResource GlobalForeColor}"  BorderBrush="{DynamicResource GlobalBordersBrush}" BorderThickness="2" Style="{DynamicResource MaterialDesignComboBoxEditableTextBox}" TextWrapping="Wrap" Text="Nazwa Tablicy" Margin="0,0,0,0"/>
+                </Border>
+                <Button Content="Dodaj" x:Name="addBoardBtn" 
+                Style="{DynamicResource MaterialDesignFlatDarkBgButton}" 
+                Background="#16a085" BorderBrush="#16a085"
+                Click="addBoardBtn_Click" Margin="82,181,87,0" VerticalAlignment="Top"/>
 
-    </Grid>
+                <ComboBox BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}" x:Name="selectRoleCombobox" Style="{DynamicResource MaterialDesignComboBox}" Margin="31,118,10,0" VerticalAlignment="Top" >
+                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Wszyscy"/>
+                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Projektantów"/>
+                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Zakupów"/>
+                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Warsztat"/>
+                </ComboBox>
+                <Label Foreground="{DynamicResource GlobalForeColor}" Content="Poziom widoczności:" HorizontalAlignment="Left" Margin="31,94,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="CloseBtn" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <Button x:Name="MaksimizeBtn" Margin="0,0,30,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+                <Button x:Name="MinimizeBtn" Margin="0,0,62,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
+                <Label Foreground="{DynamicResource GlobalForeColor}" Content="Nowa zablica zadań" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontWeight="Bold" FontSize="16"/>
+
+            </Grid>
+        </Border>
+    </Border>
+
 </Window>

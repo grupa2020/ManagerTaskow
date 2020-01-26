@@ -29,11 +29,14 @@ namespace AutomationProjectManager
         int ProjectId;
         int BoardId;
         List<BoardPoco> BoardList;
-        public ProjectWindow(int projectId)
+      
+        public ProjectWindow(int projectId,string projectName)
         {
             InitializeComponent();
             ProjectId = projectId;
+            projectNameLbl.Content = projectName;
             load();
+            
         }
 
         public void load()
@@ -144,6 +147,7 @@ namespace AutomationProjectManager
             TaskButton taskSender = sender as TaskButton;
             TaskWindowMaker maker = new TaskWindowMaker(taskSender.Task);
             Window newTaskWindow = maker.GetWindow();
+            newTaskWindow.Closed += new EventHandler(AddTaskWnd_Closing);
             newTaskWindow.Show();
             //   throw new NotImplementedException();
         }
@@ -214,7 +218,7 @@ namespace AutomationProjectManager
         {
             if(this.WindowState==WindowState.Maximized)
             {
-                this.SizeToContent = SizeToContent.WidthAndHeight;
+                this.SizeToContent = SizeToContent.Width;
                 this.WindowState = WindowState.Normal;
             }
             else
@@ -229,6 +233,17 @@ namespace AutomationProjectManager
         private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void DragWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }
