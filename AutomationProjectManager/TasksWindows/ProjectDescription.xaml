@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
         Title="ProjectDescription" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Background="#FF4B4B4B">
+        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}" Margin="0,0,10,12" Click="saveBtn_Click" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153"/>
+        <RichTextBox Margin="10,10,10,119" Name="algDescRichTextBox">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Opis projektu"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}" HorizontalAlignment="Left" Margin="10,0,0,10" Width="153" Click="delBtn_Click" Height="35" VerticalAlignment="Bottom"/>
+
     </Grid>
 </Window>

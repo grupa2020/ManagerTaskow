@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.DataModels.TasksChildrens;
+using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,33 @@ namespace AutomationProjectManager.ToolsWindows
     /// </summary>
     public partial class ProjectDescription : Window
     {
+        AlgorithmDescriptionTask thisTask;
+
         public ProjectDescription(TaskPoco task)
         {
             InitializeComponent();
+            thisTask = new AlgorithmDescriptionTask(task.BoardId, task.Content, task.TaskId);
+            fillContent();
+        }
+        private void fillContent()
+        {   
+            algDescRichTextBox.AppendText(thisTask.Content);
+        }
+        string projDescription()
+        {
+            TextRange textRange = new TextRange(algDescRichTextBox.Document.ContentStart, algDescRichTextBox.Document.ContentEnd);
+            return textRange.Text;
+        }
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            thisTask.Description = projDescription();
+            thisTask.UpdateContent();
+            thisTask.SaveTaskPUT();
+        }
+
+        private void delBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

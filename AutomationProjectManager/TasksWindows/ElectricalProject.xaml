@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="ElectricalProject" Height="450" Width="800">
-    <Grid>
-        
+        Title="ElectricalProject" Height="120" Width="400">
+    <Grid Background="#FF4B4B4B">
+        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}" Margin="0,0,10,12" Click="saveBtn_Click" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153"/>
+        <StackPanel Orientation="Horizontal" Height="24" Margin="10,10,10,10" VerticalAlignment="Top">
+            <TextBox Width="150"></TextBox>
+            <Button Width="50" Content="Browse" Command="{Binding Path=CommandInViewModel}"></Button>
+        </StackPanel>
+        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}" HorizontalAlignment="Left" Margin="10,0,0,10" Width="153" Click="delBtn_Click" Height="35" VerticalAlignment="Bottom"/>
+
     </Grid>
 </Window>
