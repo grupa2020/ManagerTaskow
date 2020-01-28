@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutomationProjectManager.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +12,12 @@ namespace AutomationProjectManager
     /// <summary>
     /// Logika interakcji dla klasy App.xaml
     /// </summary>
+    /// 
     public partial class App : Application
     {
+      
     }
+
+   
+
 }

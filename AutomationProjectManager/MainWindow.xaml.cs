@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using MaterialDesignColors;
+using AutomationProjectManager.DataModels;
 
 namespace AutomationProjectManager
 {
@@ -30,6 +31,8 @@ namespace AutomationProjectManager
     public partial class MainWindow : Window
     {
         int OrganizationId;
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +46,11 @@ namespace AutomationProjectManager
             editButton.IsEnabled = false;
 
             OrganizationId = 1;
+
+            ////TESTY BEZ TOKENA
+            Global.LoggedUser = new UsersPoco(1, "Niezalogowany", "","Niezalogowany Użytkownik", 2, 2);
+            Global.LoggedUser.AccessToken = "dsfdsf";
+  
         }
 
 
@@ -54,18 +62,22 @@ namespace AutomationProjectManager
         public void refresh()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.GET;
+            client.Method = httpVerb.GET;
 
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
+            client.ServiceUri += "Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
             string response = client.getRequest();
 
-            var rsponseLst = new ValueResponse<List<ProjectPoco>>(true, string.Empty, null);
-            rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
-            projectDataGrid.ItemsSource = rsponseLst.Value;
+            if(response!=null)
+            {
+                var rsponseLst = new ValueResponse<List<ProjectPoco>>(true, string.Empty, null);
+                rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
+                projectDataGrid.ItemsSource = rsponseLst.Value;
+            }
+           
         }
 
         private void projectDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -247,6 +259,18 @@ namespace AutomationProjectManager
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void UserImg_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UserWindow newWindow = new UserWindow(Global.LoggedUser);
+            newWindow.Show();
+        }
+
+        private void submitLoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Authorization sesion = new Authorization(this.usrNameTextBox.Text, this.passTextBox.Password);
+            sesion.GetAccess();
         }
         /////////////////////////////////////////////////
     }

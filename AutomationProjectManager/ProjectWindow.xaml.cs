@@ -36,7 +36,7 @@ namespace AutomationProjectManager
             ProjectId = projectId;
             projectNameLbl.Content = projectName;
             load();
-
+                        
         }
 
         public void load()
@@ -55,12 +55,12 @@ namespace AutomationProjectManager
         public void updateComboBox(int ProjectId)
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.GET;
+            client.Method = httpVerb.GET;
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
+            client.ServiceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
 
             var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
@@ -96,12 +96,12 @@ namespace AutomationProjectManager
                 }
 
                 RestClient client = new RestClient();
-                client.method = httpVerb.GET;
+                client.Method = httpVerb.GET;
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks/" + BoardId;
+                client.ServiceUri += "Tasks/" + BoardId;
                 string response = client.getRequest();
 
                 var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
@@ -194,12 +194,12 @@ namespace AutomationProjectManager
             {
 
                 RestClient client = new RestClient();
-                client.method = httpVerb.DELETE;
+                client.Method = httpVerb.DELETE;
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Boards/" + BoardId.ToString();
+                client.ServiceUri += "Boards/" + BoardId.ToString();
 
                 int index = BoardList.FindIndex(x => x.BoardId == BoardId);
 

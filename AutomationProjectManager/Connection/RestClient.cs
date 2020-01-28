@@ -1,4 +1,5 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.DataModels;
+using AutomationProjectManager.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace AutomationProjectManager
 {
@@ -25,137 +26,247 @@ namespace AutomationProjectManager
     }
     class RestClient
     {
-        public string serviceUri { get; set; }
-        public httpVerb method { get; set; }
+        public string ServiceUri { get; set; }
+        public httpVerb Method { get; set; }
+        private string AccessToken { get; set; }
 
-        static HttpClient clientHttp = new HttpClient();
+        //static HttpClient clientHttp = new HttpClient();
 
         public RestClient()
         {
-            serviceUri = string.Empty;
-            method = httpVerb.NONE;
+            if (Global.LoggedUser != null)
+            {
+                if (Global.LoggedUser.AccessToken != null)
+                {
+                    ServiceUri = string.Empty;
+                    Method = httpVerb.NONE;
+                    AccessToken = Global.LoggedUser.AccessToken;
+                }
+                else
+                {
+                   
+                }
+            }
+            else
+            {
+            
+
+            }
+
+
         }
 
         public string getRequest()
         {
-            string responseStr = string.Empty;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serviceUri);
-            request.Method = method.ToString();
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            if (Global.LoggedUser != null)
             {
-                if (response.StatusCode != HttpStatusCode.OK)
+                if (Global.LoggedUser.AccessToken != null)
                 {
-                    throw new ApplicationException("Nie uzyskano odpowiedzi od serwera REST, error code:" + response.StatusCode.ToString());
-                }
 
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    using (StreamReader reader = new StreamReader(responseStream))
+                    string responseStr = string.Empty;
+
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(ServiceUri);
+                    httpWebRequest.Method = Method.ToString();
+                    httpWebRequest.PreAuthenticate = true;
+                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                    using (HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse())
                     {
-                        responseStr = reader.ReadToEnd();
+                        if (response.StatusCode != HttpStatusCode.OK)
+                        {
+                            throw new ApplicationException("Nie uzyskano odpowiedzi od serwera REST, error code:" + response.StatusCode.ToString());
+                        }
+
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            using (StreamReader reader = new StreamReader(responseStream))
+                            {
+                                responseStr = reader.ReadToEnd();
+                            }
+                            responseStream.Close();
+                        }
                     }
+
+
+                    return responseStr;
+
+                }
+                else
+                {
+                    MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                    messageWindow.Show();
                 }
             }
+            else
+            {
+                MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                messageWindow.Show();
 
-            return responseStr;
+            }
+
+            return null;
         }
 
         public string PostMethod(object ObjectToSend) //Wysłanie obiektu do serwisu
         {
 
-
-            string Json = JsonConvert.SerializeObject(ObjectToSend);
-            string info = string.Empty;
-
-            Debug.WriteLine(Json);
-
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
-            httpWebRequest.ContentType = "application/json";
-
-            httpWebRequest.Method = this.method.ToString();
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            if (Global.LoggedUser != null)
             {
-                streamWriter.Write(Json);
+                if (Global.LoggedUser.AccessToken != null)
+                {
+
+                    string Json = JsonConvert.SerializeObject(ObjectToSend);
+                    string info = string.Empty;
+
+                    Debug.WriteLine(Json);
+
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = this.Method.ToString();
+                    httpWebRequest.PreAuthenticate = true;
+                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        streamWriter.Write(Json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        info = result.ToString();
+                    }
+
+                    httpResponse.Close();
+                    return info;
+
+                }
+                else
+                {
+                    MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                    messageWindow.Show();
+                }
+            }
+            else
+            {
+                MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                messageWindow.Show();
+
             }
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                info = result.ToString();
-            }
-
-
-
-            return info;
+            return null;
 
         }
 
         public string DeleteMethod(object ObjectToDel)   // np: "/Tasks/23  gdzie 23 to id tasku do usunięcia "
         {
-           // string Json = JsonConvert.SerializeObject(ObjectToDel);
-            string info = string.Empty;
-                                                                //Zakomentowane na wypadek gdyby trzebabyło dawać całe body 
-           // Debug.WriteLine(Json);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
-            httpWebRequest.ContentType = "application/json";
-
-            httpWebRequest.Method = this.method.ToString();
-
-            httpWebRequest.GetRequestStream();
-
-            /*
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            if (Global.LoggedUser != null)
             {
-                streamWriter.Write(Json);
-            }
-            */
+                if (Global.LoggedUser.AccessToken != null)
+                {
+                    // string Json = JsonConvert.SerializeObject(ObjectToDel);
+                    string info = string.Empty;
+                    //Zakomentowane na wypadek gdyby trzebabyło dawać całe body 
+                    // Debug.WriteLine(Json);
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = this.Method.ToString();
+                    httpWebRequest.PreAuthenticate = true;
+                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                    httpWebRequest.GetRequestStream();
+
+                    /*
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        streamWriter.Write(Json);
+                    }
+                    */
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        info = result.ToString();
+                    }
+
+
+                    httpResponse.Close();
+                    return info;
+
+                }
+                else
+                {
+                    MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                    messageWindow.Show();
+                }
+            }
+            else
             {
-                var result = streamReader.ReadToEnd();
-                info = result.ToString();
+                MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                messageWindow.Show();
+
             }
-
-    
-
-            return info;
+            return null;
         }
 
         public string PutMethod(object ObjectToSend) //Wysłanie obiektu do serwisu
         {
 
-
-            string Json = JsonConvert.SerializeObject(ObjectToSend);
-            string info = string.Empty;
-
-            Debug.WriteLine(Json);
-
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.serviceUri);
-            httpWebRequest.ContentType = "application/json";
-
-            httpWebRequest.Method = this.method.ToString();
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            if (Global.LoggedUser != null)
             {
-                streamWriter.Write(Json);
+                if (Global.LoggedUser.AccessToken != null)
+                {
+
+                    string Json = JsonConvert.SerializeObject(ObjectToSend);
+                    string info = string.Empty;
+
+                    Debug.WriteLine(Json);
+
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = this.Method.ToString();
+                    httpWebRequest.PreAuthenticate = true;
+                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        streamWriter.Write(Json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        info = result.ToString();
+                    }
+
+                    httpResponse.Close();
+
+                    return info;
+
+                }
+                else
+                {
+                    MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                    messageWindow.Show();
+                }
+            }
+            else
+            {
+                MessageWindow messageWindow = new MessageWindow("Aby poruszuszać się po systemie należy być zalogowanym :)");
+                messageWindow.Show();
+
             }
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                info = result.ToString();
-            }
-
-
-
-            return info;
+            return null;
 
         }
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AutomationProjectManager.Model
 {
-    class UsersPoco
+    public class UsersPoco
     {
             public int UserId { get; set; }
             public string Login { get; set; }
@@ -19,6 +19,7 @@ namespace AutomationProjectManager.Model
             public string Name { get; set; }
             public int Role { get; set; }
             public int OrganizationId { get; set; }
+            public string AccessToken { get; set; }
 
         public UsersPoco(int userId, string login, string password, string name, int role, int organizationId)
         {
@@ -28,20 +29,23 @@ namespace AutomationProjectManager.Model
             Name = name;
             Role = role;
             OrganizationId = organizationId;
+            AccessToken = null;
+
+            
         }
 
         public string AddUserPOST()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.POST;
+            client.Method = httpVerb.POST;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Users";
+                client.ServiceUri += "Users";
 
                 string response = client.PostMethod(this.ToUserToPOST());
 
@@ -70,15 +74,15 @@ namespace AutomationProjectManager.Model
         public string SaveUserPUT()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.PUT;
+            client.Method = httpVerb.PUT;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Users";
+                client.ServiceUri += "Users";
 
                 string response = client.PutMethod(this);
 
@@ -98,12 +102,12 @@ namespace AutomationProjectManager.Model
         public string DeleteUser()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.DELETE;
+            client.Method = httpVerb.DELETE;
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Users/" + this.UserId.ToString();
+            client.ServiceUri += "Users/" + this.UserId.ToString();
 
             return client.DeleteMethod(this);
         }
