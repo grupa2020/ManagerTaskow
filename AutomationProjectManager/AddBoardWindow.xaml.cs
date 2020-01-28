@@ -47,12 +47,16 @@ namespace AutomationProjectManager
             
             if (response.Succeeded)
             {
-                MessageBox.Show("Pomyślnie dodano nową Tablicę do bazy");
+                MessageWindow message2 = new MessageWindow("Pomyślnie dodano nową Tablicę do bazy");
+                message2.Show();
+               
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Serwer zwrócił błąd: "+ response.Message + "  "+ info);
+                MessageWindow message2 = new MessageWindow("Serwer zwrócił błąd: " + response.Message + "  " + info);
+                message2.Show();
+               
             }
 
 

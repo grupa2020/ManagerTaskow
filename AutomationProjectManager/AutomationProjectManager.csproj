@@ -107,6 +107,7 @@
     <Compile Include="DataModels\NewBoardPoco.cs" />
     <Compile Include="DataModels\NewProjectPoco.cs" />
     <Compile Include="DataModels\NewTaskPoco.cs" />
+    <Compile Include="DataModels\NewUserPoco.cs" />
     <Compile Include="DataModels\TasksChildrens\AlgorithmDescriptionTask.cs" />
     <Compile Include="DataModels\TasksChildrens\DriversProject.cs" />
     <Compile Include="DataModels\TasksChildrens\ElectricalProject.cs" />
@@ -121,6 +122,9 @@
     <Compile Include="Factories\TaskWindowMaker.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProjectLabel.xaml.cs">
       <DependentUpon>ProjectLabel.xaml</DependentUpon>
@@ -187,6 +191,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProjectLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
