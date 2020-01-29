@@ -40,6 +40,17 @@
                                         Height="35" Width="36"
                                          Padding="4,4,4,4" >
                                     <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
+                                    <Button.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Dodaj tablicę</TextBlock>
+                                            <TextBlock>
+                                                         Otwiera okno dodania 
+                                            <LineBreak />
+                                                        nowej tablicy zadań.
+                                            </TextBlock>
+                                            <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />                                           
+                                        </StackPanel>
+                                    </Button.ToolTip>
                                 </Button>
                                 <Button Margin="0,0,252,7"  
                                         Padding="4,4,4,4" Name="DeleteBoardBtn"
@@ -48,6 +59,17 @@
                                         Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
                                         Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
                                     <svgc:SvgViewbox Source="Resources/clear-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
+                                    <Button.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Usuń tablicę</TextBlock>
+                                            <TextBlock>
+                                                         Usuwa aktualnie
+                                            <LineBreak />
+                                                        wyświetlaną tablicę.
+                                            </TextBlock>
+                                            <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
+                                        </StackPanel>
+                                    </Button.ToolTip>
                                 </Button>
                             </Grid>
                         </Border>
@@ -66,6 +88,17 @@
                                     Background="#27ae60" BorderBrush="#27ae60"  x:Name="AddTaskBtn"
                                     Click="AddTaskBtn_Click" Width="47" FontSize="12" Height="Auto" HorizontalAlignment="Right">
                                 <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Dodaj zadanie</TextBlock>
+                                        <TextBlock>
+                                                         Otwiera okno 
+                                            <LineBreak />
+                                                        wyboru nowego zadania.
+                                        </TextBlock>
+                                        <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
+                                    </StackPanel>
+                                </Button.ToolTip>
                             </Button>
 
                         </Grid>

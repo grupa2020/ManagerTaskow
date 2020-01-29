@@ -30,15 +30,15 @@ namespace AutomationProjectManager.Model
         public string SaveBoardPOST()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.POST;
+            client.Method = httpVerb.POST;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Boards";
+                client.ServiceUri += "Boards";
                 string response = client.PostMethod(this.ToNewBoardPOST());
 
                 return response;
@@ -64,15 +64,15 @@ namespace AutomationProjectManager.Model
         public string SaveBoardPUT()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.PUT;
+            client.Method = httpVerb.PUT;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Boards";
+                client.ServiceUri += "Boards";
                 string response = client.PostMethod(this);
 
                 return response;

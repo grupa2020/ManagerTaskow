@@ -29,14 +29,14 @@ namespace AutomationProjectManager
         int ProjectId;
         int BoardId;
         List<BoardPoco> BoardList;
-      
-        public ProjectWindow(int projectId,string projectName)
+
+        public ProjectWindow(int projectId, string projectName)
         {
             InitializeComponent();
             ProjectId = projectId;
             projectNameLbl.Content = projectName;
             load();
-            
+                        
         }
 
         public void load()
@@ -55,12 +55,12 @@ namespace AutomationProjectManager
         public void updateComboBox(int ProjectId)
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.GET;
+            client.Method = httpVerb.GET;
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
+            client.ServiceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
 
             var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
@@ -96,12 +96,12 @@ namespace AutomationProjectManager
                 }
 
                 RestClient client = new RestClient();
-                client.method = httpVerb.GET;
+                client.Method = httpVerb.GET;
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks/" + BoardId;
+                client.ServiceUri += "Tasks/" + BoardId;
                 string response = client.getRequest();
 
                 var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
@@ -113,7 +113,7 @@ namespace AutomationProjectManager
                 {
                     ColumnDefinition colDef = new ColumnDefinition();
                     //colDef.Width = GridLength.Auto;
-                    
+
                     tasksGrid.ColumnDefinitions.Add(colDef);
                 }
 
@@ -187,23 +187,43 @@ namespace AutomationProjectManager
 
         private void DeleteBoardBtn_Click(object sender, RoutedEventArgs e)
         {
-            RestClient client = new RestClient();
-            client.method = httpVerb.DELETE;
-            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+
+            MessageWindow message = new MessageWindow("Czy napewno chcesz usunąć widoczną tablicę?", true);
+
+            if (message.ShowDialog() == true)
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+
+                RestClient client = new RestClient();
+                client.Method = httpVerb.DELETE;
+                if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                {
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                }
+                client.ServiceUri += "Boards/" + BoardId.ToString();
+
+                int index = BoardList.FindIndex(x => x.BoardId == BoardId);
+
+
+
+                SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(client.DeleteMethod(BoardList[index]));
+                if (response.Succeeded)
+                {
+                    MessageWindow message2 = new MessageWindow("Pomyślnie usunięto tablicę");
+                    message2.Show();
+                }
+                else
+                {
+                    MessageWindow message2 = new MessageWindow("Wystąpił problem: \n serwer odpowiedział: \n" + response.Message);
+                    message2.Show();
+
+                }
+
+                load();
             }
-            client.serviceUri += "Boards/" + BoardId.ToString();
-
-            int index = BoardList.FindIndex(x => x.BoardId == BoardId);
-
-            MessageBox.Show(client.DeleteMethod(BoardList[index]));
-
-            load();
 
         }
 
-     
+
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -216,7 +236,7 @@ namespace AutomationProjectManager
 
         private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState==WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized)
             {
                 this.SizeToContent = SizeToContent.Width;
                 this.WindowState = WindowState.Normal;
@@ -226,8 +246,8 @@ namespace AutomationProjectManager
                 this.SizeToContent = SizeToContent.Manual;
                 this.WindowState = WindowState.Maximized;
             }
-           
-            
+
+
         }
 
         private void MinimizeBtn_Click(object sender, RoutedEventArgs e)

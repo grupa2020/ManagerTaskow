@@ -70,13 +70,14 @@ namespace AutomationProjectManager.Factories
             this.Background = this.FindResource("TextAreasBacground") as Brush;
 
             Snap = "Jakś zajawka";
-            if(task.Content.Length<99)
+            if(task.Content.Length<40)
             {
                 Snap = task.Content;
             }
             else
             {
-                Snap = task.Content.Substring(0, 100);
+                Snap = task.Content.Substring(0,39);
+                Snap += "...";
             }
 
 
@@ -112,9 +113,9 @@ namespace AutomationProjectManager.Factories
             {
                 case TaskTypeEnum.AlgorithmDescription:
                     {
-                       txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                       txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
                        
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f39c12")); //Ustawienie kolorów konkretnych typów tasków
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#4caf50")); //Ustawienie kolorów konkretnych typów tasków
                         txtBox2.Text =Snap;
                         
                     }
@@ -123,8 +124,8 @@ namespace AutomationProjectManager.Factories
 
                 case TaskTypeEnum.DriversProject:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#d35400"));
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff9800"));
 
                        // viewbox.Source = new System.Uri("Resources/developer_mode-24px.svg", UriKind.Relative);
                     }
@@ -133,51 +134,51 @@ namespace AutomationProjectManager.Factories
 
                 case TaskTypeEnum.ElectricalProject:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8e44ad")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffc107")); 
                     }
                     break;
                 case TaskTypeEnum.Maintainence:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fafafa"));
                         txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2980b9")); 
                     }
                     break;
                 case TaskTypeEnum.Mounting:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#27ae60")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8bc34a")); 
                     }
                     break;
                 case TaskTypeEnum.OrderList:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fafafa"));
                         txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#16a085")); 
                     }
                     break;
                 case TaskTypeEnum.ProjectDescription:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2c3e50")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#8bc34a")); 
                     }
                     break;
 
                 case TaskTypeEnum.VarDefTool:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#34495e")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#4caf50")); 
                     }
                     break;
                 case TaskTypeEnum.Workshop:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
-                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c0392b")); 
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fafafa"));
+                        txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#c79100")); 
                     }
                     break;
 
                 default:
                     {
-                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ecf0f1"));
+                        txtBox.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
                         txtBox.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7f8c8d")); 
                     }
                     break;

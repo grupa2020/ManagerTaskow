@@ -29,15 +29,15 @@ namespace AutomationProjectManager.Model
         public string SaveTaskPOST()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.POST;
+            client.Method = httpVerb.POST;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks";
+                client.ServiceUri += "Tasks";
 
                 string response = client.PostMethod(this.TotaskToPOST());
 
@@ -76,15 +76,15 @@ namespace AutomationProjectManager.Model
         public string SaveTaskPUT()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.PUT;
+            client.Method = httpVerb.PUT;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Tasks";
+                client.ServiceUri += "Tasks";
 
                 string response = client.PutMethod(this.ToTaskPoco());
 
@@ -104,12 +104,12 @@ namespace AutomationProjectManager.Model
         public string DeleteTask()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.DELETE;
+            client.Method = httpVerb.DELETE;
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Tasks/" + this.TaskId.ToString();
+            client.ServiceUri += "Tasks/" + this.TaskId.ToString();
 
             return client.DeleteMethod(this);
         }

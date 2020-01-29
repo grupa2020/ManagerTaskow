@@ -11,7 +11,7 @@
     <Border  BorderBrush="{DynamicResource GlobalBordersBrush}" BorderThickness="1" CornerRadius="2">
         <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
 
-            <ListView x:Name="lstBox" Margin="10,55,10,160" VerticalContentAlignment="Top" MinHeight="250">
+            <ListView x:Name="lstBox" Margin="10,55,10,160" VerticalContentAlignment="Top" MinHeight="250" Style="{x:Null}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Zamówienia" Width="300"                                           
@@ -20,7 +20,7 @@
                 </ListView.View>
             </ListView>
             <StackPanel Orientation="Horizontal" Width="700" Margin="54,0,53,85" Height="50" VerticalAlignment="Bottom" >
-                <TextBox Width="500" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"/>
+                <TextBox Name="orderText"  Width="500" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"/>
                 <Button Margin="5,5,5,5" 
         Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" 
         Background="#1976d2" BorderBrush="#1976d2" x:Name="AddBtn"

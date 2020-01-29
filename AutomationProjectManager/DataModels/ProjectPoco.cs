@@ -36,15 +36,15 @@ namespace AutomationProjectManager.Model
         public string SaveProjectPOST()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.POST;
+            client.Method = httpVerb.POST;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Projects";
+                client.ServiceUri += "Projects";
                 string response = client.PostMethod(this.ToNewProjectPOST());
 
                 return response;
@@ -70,12 +70,12 @@ namespace AutomationProjectManager.Model
         public string ProjectDELETE()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.DELETE;
+            client.Method = httpVerb.DELETE;
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Projects/" + this.ProjectId.ToString();
+            client.ServiceUri += "Projects/" + this.ProjectId.ToString();
 
             return(client.DeleteMethod(this));
 
@@ -84,15 +84,15 @@ namespace AutomationProjectManager.Model
         public string SaveProjectPUT()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.PUT;
+            client.Method = httpVerb.PUT;
 
             try
             {
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
-                    client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.serviceUri += "Projects";
+                client.ServiceUri += "Projects";
                 string response = client.PutMethod(this);
 
                 return response;

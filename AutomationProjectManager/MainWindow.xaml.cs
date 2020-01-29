@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using MaterialDesignColors;
+using AutomationProjectManager.DataModels;
 
 namespace AutomationProjectManager
 {
@@ -30,6 +31,8 @@ namespace AutomationProjectManager
     public partial class MainWindow : Window
     {
         int OrganizationId;
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,8 +46,13 @@ namespace AutomationProjectManager
             editButton.IsEnabled = false;
 
             OrganizationId = 1;
+
+            ////TESTY BEZ TOKENA
+            Global.LoggedUser = new UsersPoco(1, "Niezalogowany", "","Niezalogowany Użytkownik", 2, 2);
+            //Global.LoggedUser.AccessToken = "dsfdsf";
+  
         }
-       
+
 
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
@@ -54,43 +62,47 @@ namespace AutomationProjectManager
         public void refresh()
         {
             RestClient client = new RestClient();
-            client.method = httpVerb.GET;
+            client.Method = httpVerb.GET;
 
             if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
             {
-                client.serviceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.serviceUri += "Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
+            client.ServiceUri += "Projects/1";           ///TODO: TUTAJ USTAWIĆ ORG ID JAK JUŻ BĘDZIE GLOBALNE
             string response = client.getRequest();
 
-            var rsponseLst = new ValueResponse<List<ProjectPoco>>(true, string.Empty, null);
-            rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
-            projectDataGrid.ItemsSource = rsponseLst.Value;
+            if(response!=null)
+            {
+                var rsponseLst = new ValueResponse<List<ProjectPoco>>(true, string.Empty, null);
+                rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<ProjectPoco>>>(response);
+                projectDataGrid.ItemsSource = rsponseLst.Value;
+            }
+           
         }
 
         private void projectDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(projectDataGrid.SelectedItem!=null)
+            if (projectDataGrid.SelectedItem != null)
             {
                 ProjectPoco selected = (ProjectPoco)projectDataGrid.SelectedItem;
-                ProjectWindow projectWindow = new ProjectWindow(selected.ProjectId,selected.Name);
+                ProjectWindow projectWindow = new ProjectWindow(selected.ProjectId, selected.Name);
                 projectWindow.Show();
             }
-          
+
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
             //Utworzyć i w tym miejscu wywołać metodę która będzie sprawdzac połączenie z serwerem REST
-            if(savePropertiesbtn.Content!=null)
+            if (savePropertiesbtn.Content != null)
             {
                 UpdateSettings("ServerPatch", serviceUriTextBox.Text);
             }
-            
+
         }
 
 
-       /////Zapis ustawień
+        /////Zapis ustawień
         public void UpdateSettings(string strKey, string newValue)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -128,46 +140,51 @@ namespace AutomationProjectManager
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-           // ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco",2);
+            // ProjectPoco newProject = new ProjectPoco("Nowy projekt",DateTime.Now,0,1,"Tenneco",2);
 
             AddProject projWnd = new AddProject(OrganizationId);
             projWnd.Show();
-            
+
             //newProject.SaveProjectPOST();
         }
 
         private void delButton_Click(object sender, RoutedEventArgs e)
         {
-            if(projectDataGrid.SelectedItem!=null)
+            if (projectDataGrid.SelectedItem != null)
             {
-                ProjectPoco toDelete = (ProjectPoco)projectDataGrid.SelectedItem;
-                SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(toDelete.ProjectDELETE());
-                if(response.Succeeded)
+
+                MessageWindow message = new MessageWindow("Czy napewno chcesz usunąć zaznaczony projekt?", true);
+
+                if (message.ShowDialog() == true)
                 {
-                    MessageBox.Show("Pomyślnie usunięto projekt");
+                    ProjectPoco toDelete = (ProjectPoco)projectDataGrid.SelectedItem;
+                    SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(toDelete.ProjectDELETE());
+                    if (response.Succeeded)
+                    {
+                        MessageBox.Show("Pomyślnie usunięto projekt");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Coś poszło nie tak... \n" + response.Message);
+                    }
+                    refresh();
                 }
-                else
-                {
-                    MessageBox.Show("Coś poszło nie tak... \n"+ response.Message);
-                }
-                refresh();
             }
-           
-            
+
         }
 
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
             ProjectPoco selected = (ProjectPoco)projectDataGrid.SelectedItem;
-            AddProject projWnd = new AddProject(OrganizationId,selected);
+            AddProject projWnd = new AddProject(OrganizationId, selected);
             projWnd.Show();
         }
 
-        
+
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(projectDataGrid.SelectedItem==null)
+            if (projectDataGrid.SelectedItem == null)
             {
                 addButton.IsEnabled = false;
                 delButton.IsEnabled = false;
@@ -185,15 +202,15 @@ namespace AutomationProjectManager
         {
             //Ustawienia Ciemego motywu
 
-            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromArgb(250,18, 18, 18));
+            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromArgb(250, 18, 18, 18));
             SolidColorBrush textAreaColor = new SolidColorBrush(Color.FromArgb(120, 18, 18, 18));
             SolidColorBrush foreColor = new SolidColorBrush(Color.FromRgb(236, 240, 241));
             ResourceDictionary myResourceDictionary = Application.Current.Resources;
-                ///MessageBox.Show(myResourceDictionary.Values.ToString());
-                myResourceDictionary.Remove("MaterialDesignBackground");
-               myResourceDictionary.Add("MaterialDesignBackground", backgroundColor);   //"#121212"       rgb(22, 160, 133)
+            ///MessageBox.Show(myResourceDictionary.Values.ToString());
+            myResourceDictionary.Remove("MaterialDesignBackground");
+            myResourceDictionary.Add("MaterialDesignBackground", backgroundColor);   //"#121212"       rgb(22, 160, 133)
             myResourceDictionary.Remove("GlobalForeColor");
-               myResourceDictionary.Add("GlobalForeColor", foreColor);      
+            myResourceDictionary.Add("GlobalForeColor", foreColor);
             myResourceDictionary.Remove("TextAreasBacground");
             myResourceDictionary.Add("TextAreasBacground", textAreaColor); //TextAreasBacground
 
@@ -203,12 +220,12 @@ namespace AutomationProjectManager
         {
             //Jasny motyw
 
-            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromRgb(224,224,224));
+            SolidColorBrush backgroundColor = new SolidColorBrush(Color.FromRgb(224, 224, 224));
             //SolidColorBrush whiteSmoke = new SolidColorBrush(Color.FromRgb(225, 229, 229));
-            SolidColorBrush textAreaColor = new SolidColorBrush(Color.FromRgb(245,245,245));
+            SolidColorBrush textAreaColor = new SolidColorBrush(Color.FromRgb(245, 245, 245));
             ResourceDictionary myResourceDictionary = Application.Current.Resources;
             myResourceDictionary.Remove("MaterialDesignBackground");
-            myResourceDictionary.Add("MaterialDesignBackground",backgroundColor);     //  #FFE5E5E5
+            myResourceDictionary.Add("MaterialDesignBackground", backgroundColor);     //  #FFE5E5E5
             myResourceDictionary.Remove("GlobalForeColor");
             myResourceDictionary.Add("GlobalForeColor", Brushes.Black); //Black
             myResourceDictionary.Remove("TextAreasBacground");
@@ -228,7 +245,7 @@ namespace AutomationProjectManager
 
         private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState==WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Normal;
             }
@@ -236,12 +253,24 @@ namespace AutomationProjectManager
             {
                 this.WindowState = WindowState.Maximized;
             }
-          
+
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void UserImg_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UserWindow newWindow = new UserWindow(Global.LoggedUser);
+            newWindow.Show();
+        }
+
+        private void submitLoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Authorization sesion = new Authorization(this.usrNameTextBox.Text, this.passTextBox.Password);
+            sesion.GetAccess();
         }
         /////////////////////////////////////////////////
     }

@@ -19,25 +19,56 @@ namespace AutomationProjectManager.ToolsWindows
     /// <summary>
     /// Logika interakcji dla klasy Maintainence.xaml
     /// </summary>
+    using ChildTasks = DataModels.TasksChildrens;
     public partial class MaintainenceWnd : Window
     {
+        ChildTasks.Maintainence maintainenceTask;
         public MaintainenceWnd(TaskPoco task)
         {
             InitializeComponent();
+            maintainenceTask = new ChildTasks.Maintainence(task.BoardId, task.Content, task.TaskId);
+            fillContent();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-          /*  thisTask.Description = projDescription();
-            thisTask.UpdateContent();
-            thisTask.SaveTaskPUT(); */
+            maintainenceTask.Content = GetListsAsString();
+            maintainenceTask.SaveTaskPUT();
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            lstBox.Items.Clear();
+            maintainenceTask.Content = "";
+            maintainenceTask.SaveTaskPUT();
         }
 
+        private String GetListsAsString()
+        {
+            foreach (String str in lstBox.Items)
+            {
+                str.Trim('|');
+            }
+            List<string> tasks = new List<string>();
+            foreach (string str in lstBox.Items)
+            {
+                tasks.Add(str);
+            }
+
+            return string.Join("|", tasks);
+        }
+        private void fillContent()
+        {
+            lstBox.Items.Clear();
+            if (maintainenceTask.Content != null && (maintainenceTask.Content.Length > 0))
+            {
+                string[] items = maintainenceTask.Content.Split('|');
+                foreach (string itm in items)
+                {
+                    lstBox.Items.Add(itm);
+                }
+            }
+        }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -70,10 +101,29 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            lstBox.Items.Remove(lstBox.SelectedItem);
+            List<String> itemsToRemove = new List<String>();
+            foreach (String item in lstBox.SelectedItems)
+            {
+                itemsToRemove.Add(item);
+            }
+
+            foreach (String inx in itemsToRemove)
+            {
+                lstBox.Items.Remove(inx);
+            }
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (taskText.Text.Length > 0)
+            {
+                taskText.Text.Trim('|');
+                lstBox.Items.Add(taskText.Text);
+                taskText.Clear();
+            }
+        }
+
+        private void lstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

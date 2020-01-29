@@ -20,6 +20,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = BoardId;
             this.TaskId = TaskId;
+            this.Content = Content;
             this.TaskType = TaskTypeEnum.OrderList;
         }
 

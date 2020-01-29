@@ -1,5 +1,4 @@
-﻿using AutomationProjectManager.DataModels.TasksChildrens;
-using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,68 +13,46 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AutomationProjectManager.ToolsWindows
+namespace AutomationProjectManager
 {
     /// <summary>
-    /// Logika interakcji dla klasy ProjectDescription.xaml
+    /// Logika interakcji dla klasy UserWindow.xaml
     /// </summary>
-    public partial class ProjectDescription : Window
+    public partial class UserWindow : Window
     {
-        AlgorithmDescriptionTask thisTask;
-
-        public ProjectDescription(TaskPoco task)
+        UsersPoco CurrentUser;
+        public UserWindow(UsersPoco currentUser)
         {
             InitializeComponent();
-            thisTask = new AlgorithmDescriptionTask(task.BoardId, task.Content, task.TaskId);
-            fillContent();
+            CurrentUser = currentUser;
         }
-        private void fillContent()
-        {
-            algDescRichTextBox.AppendText(thisTask.Content);
-        }
-        string projDescription()
-        {
-            TextRange textRange = new TextRange(algDescRichTextBox.Document.ContentStart, algDescRichTextBox.Document.ContentEnd);
-            return textRange.Text;
-        }
+
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            thisTask.Description = projDescription();
-            thisTask.UpdateContent();
-            thisTask.SaveTaskPUT();
+            
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-            
-            MessageBox.Show(thisTask.DeleteTask());
-            this.Close();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
 
         }
+
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-
         }
 
         private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)
             {
-
                 this.WindowState = WindowState.Normal;
             }
             else
             {
-
                 this.WindowState = WindowState.Maximized;
             }
-
 
         }
 
@@ -84,12 +61,20 @@ namespace AutomationProjectManager.ToolsWindows
             this.WindowState = WindowState.Minimized;
         }
 
-
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
