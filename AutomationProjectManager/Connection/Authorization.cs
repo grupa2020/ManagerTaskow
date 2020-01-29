@@ -16,13 +16,13 @@ namespace AutomationProjectManager.Connection
 
     class Authorization
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public string User { get; set; }
+        public string Pass { get; set; }
 
         public Authorization(string login, string password)
         {
-            Login = login;
-            Password = password;
+            User = login;
+            Pass = password;
         }
 
         public void GetAccess()
@@ -35,7 +35,7 @@ namespace AutomationProjectManager.Connection
 
             ServiceUri += "login";   // TU DODAĆ ADRESS ROUTEA !!
 
-            if(this.Login!=null && this.Password!=null )        //Może sprawdzanie połączenia?
+            if(this.User!=null && this.Pass!=null )        //Może sprawdzanie połączenia?
             {
                 string Json = JsonConvert.SerializeObject(this);
                 string info = string.Empty;
@@ -69,7 +69,7 @@ namespace AutomationProjectManager.Connection
                     if (response.Succeeded)
                     {
                         Global.LoggedUser.AccessToken = response.Value.AccessToken;
-                        MessageWindow message = new MessageWindow(response.Message);
+                        MessageWindow message = new MessageWindow(response.Message+response.Value.AccessToken);
                         message.Show();
 
                     }

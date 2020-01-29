@@ -70,13 +70,14 @@ namespace AutomationProjectManager.Factories
             this.Background = this.FindResource("TextAreasBacground") as Brush;
 
             Snap = "Jakś zajawka";
-            if(task.Content.Length<99)
+            if(task.Content.Length<40)
             {
                 Snap = task.Content;
             }
             else
             {
-                Snap = task.Content.Substring(0, 100);
+                Snap = task.Content.Substring(0,39);
+                Snap += "...";
             }
 
 

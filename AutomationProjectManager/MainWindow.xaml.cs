@@ -49,7 +49,7 @@ namespace AutomationProjectManager
 
             ////TESTY BEZ TOKENA
             Global.LoggedUser = new UsersPoco(1, "Niezalogowany", "","Niezalogowany Użytkownik", 2, 2);
-            Global.LoggedUser.AccessToken = "dsfdsf";
+            //Global.LoggedUser.AccessToken = "dsfdsf";
   
         }
 
