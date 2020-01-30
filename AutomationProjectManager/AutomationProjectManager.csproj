@@ -292,6 +292,9 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\account_box-24px.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\add-24px.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

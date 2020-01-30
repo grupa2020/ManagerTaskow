@@ -35,55 +35,65 @@ namespace AutomationProjectManager.Connection
 
             ServiceUri += "login";   // TU DODAĆ ADRESS ROUTEA !!
 
-            if(this.User!=null && this.Pass!=null )        //Może sprawdzanie połączenia?
+            if (this.User != null && this.Pass != null)        //Może sprawdzanie połączenia?
             {
-                string Json = JsonConvert.SerializeObject(this);
-                string info = string.Empty;
-                
-                Debug.WriteLine(Json);
-
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ServiceUri);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                
-                
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                {
-                    streamWriter.Write(Json);
-                }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    info = result.ToString();
-                }
-
-                if(info!=null)  //Zapis tokena -Deserializacja
+                try
                 {
 
-                    var response = new ValueResponse<TokenType>(true, string.Empty, null);
-                    response= JsonConvert.DeserializeObject<ValueResponse<TokenType>>(info);
-                    
-                    if (response.Succeeded)
+                    string Json = JsonConvert.SerializeObject(this);
+                    string info = string.Empty;
+
+                    Debug.WriteLine(Json);
+
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ServiceUri);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+
+
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                     {
-                        Global.LoggedUser.AccessToken = response.Value.AccessToken;
-                        MessageWindow message = new MessageWindow(response.Message+response.Value.AccessToken);
-                        message.Show();
+                        streamWriter.Write(Json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        info = result.ToString();
+                    }
+
+                    if (info != null)  //Zapis tokena -Deserializacja
+                    {
+
+                        var response = new ValueResponse<TokenType>(true, string.Empty, null);
+                        response = JsonConvert.DeserializeObject<ValueResponse<TokenType>>(info);
+
+                        if (response.Succeeded)
+                        {
+                            Global.LoggedUser.AccessToken = response.Value.AccessToken;
+                            MessageWindow message = new MessageWindow("Zalogowano pomyślnie");
+                            message.Show();
+
+                        }
+                        else
+                        {
+                            MessageWindow message = new MessageWindow(response.Message);
+                            message.Show();
+                        }
 
                     }
-                    else
-                    {
-                        MessageWindow message = new MessageWindow(response.Message);
-                        message.Show();
-                    }
-                                                         
-                }
 
-                httpResponse.Close();
+                    httpResponse.Close();
+
+                }
+                catch (Exception e)
+                {
+                    MessageWindow messageWindow = new MessageWindow(e.Message);
+                    messageWindow.Show();
+                }
             }
-           
+
 
         }
 

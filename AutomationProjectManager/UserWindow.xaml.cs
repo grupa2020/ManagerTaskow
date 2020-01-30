@@ -25,6 +25,15 @@ namespace AutomationProjectManager
         {
             InitializeComponent();
             CurrentUser = currentUser;
+
+            if(CurrentUser!=null)
+            {
+                this.UserNameTxtBox.Text = CurrentUser.Name;
+                this.UserLoginTxtBox.Text = CurrentUser.Login;
+                this.UserPassTxtBox.Password = CurrentUser.Password;
+                
+            }
+            
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)

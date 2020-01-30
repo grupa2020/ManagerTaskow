@@ -44,12 +44,12 @@ namespace AutomationProjectManager
                 }
                 else
                 {
-                   
+
                 }
             }
             else
             {
-            
+
 
             }
 
@@ -65,32 +65,42 @@ namespace AutomationProjectManager
                 if (Global.LoggedUser.AccessToken != null)
                 {
 
-                    string responseStr = string.Empty;
-
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(ServiceUri);
-                    httpWebRequest.Method = Method.ToString();
-                    httpWebRequest.PreAuthenticate = true;
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
-
-                    using (HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse())
+                    try
                     {
-                        if (response.StatusCode != HttpStatusCode.OK)
+                        string responseStr = string.Empty;
+
+                        HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(ServiceUri);
+                        httpWebRequest.Method = Method.ToString();
+                        httpWebRequest.PreAuthenticate = true;
+                        httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                        using (HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse())
                         {
-                            throw new ApplicationException("Nie uzyskano odpowiedzi od serwera REST, error code:" + response.StatusCode.ToString());
+                            if (response.StatusCode != HttpStatusCode.OK)
+                            {
+                                throw new ApplicationException("Nie uzyskano odpowiedzi od serwera REST, error code:" + response.StatusCode.ToString());
+                            }
+
+                            using (Stream responseStream = response.GetResponseStream())
+                            {
+                                using (StreamReader reader = new StreamReader(responseStream))
+                                {
+                                    responseStr = reader.ReadToEnd();
+                                }
+                                responseStream.Close();
+                            }
                         }
 
-                        using (Stream responseStream = response.GetResponseStream())
-                        {
-                            using (StreamReader reader = new StreamReader(responseStream))
-                            {
-                                responseStr = reader.ReadToEnd();
-                            }
-                            responseStream.Close();
-                        }
+
+                        return responseStr;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageWindow messageWindow = new MessageWindow(e.Message);
+                        messageWindow.Show();
                     }
 
 
-                    return responseStr;
 
                 }
                 else
@@ -117,33 +127,44 @@ namespace AutomationProjectManager
                 if (Global.LoggedUser.AccessToken != null)
                 {
 
-                    string Json = JsonConvert.SerializeObject(ObjectToSend);
-                    string info = string.Empty;
-
-                    Debug.WriteLine(Json);
-
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = this.Method.ToString();
-                    httpWebRequest.PreAuthenticate = true;
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
-
-
-
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    try
                     {
-                        streamWriter.Write(Json);
-                    }
 
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+
+                        string Json = JsonConvert.SerializeObject(ObjectToSend);
+                        string info = string.Empty;
+
+                        Debug.WriteLine(Json);
+
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Method = this.Method.ToString();
+                        httpWebRequest.PreAuthenticate = true;
+                        httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+
+
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                        {
+                            streamWriter.Write(Json);
+                        }
+
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+                            info = result.ToString();
+                        }
+
+                        httpResponse.Close();
+                        return info;
+
+                    }
+                    catch (Exception e)
                     {
-                        var result = streamReader.ReadToEnd();
-                        info = result.ToString();
+                        MessageWindow messageWindow = new MessageWindow(e.Message);
+                        messageWindow.Show();
                     }
-
-                    httpResponse.Close();
-                    return info;
 
                 }
                 else
@@ -170,36 +191,46 @@ namespace AutomationProjectManager
             {
                 if (Global.LoggedUser.AccessToken != null)
                 {
-                    // string Json = JsonConvert.SerializeObject(ObjectToDel);
-                    string info = string.Empty;
-                    //Zakomentowane na wypadek gdyby trzebabyło dawać całe body 
-                    // Debug.WriteLine(Json);
 
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = this.Method.ToString();
-                    httpWebRequest.PreAuthenticate = true;
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
-
-                    httpWebRequest.GetRequestStream();
-
-                    /*
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    try
                     {
-                        streamWriter.Write(Json);
-                    }
-                    */
+                        // string Json = JsonConvert.SerializeObject(ObjectToDel);
+                        string info = string.Empty;
+                        //Zakomentowane na wypadek gdyby trzebabyło dawać całe body 
+                        // Debug.WriteLine(Json);
 
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Method = this.Method.ToString();
+                        httpWebRequest.PreAuthenticate = true;
+                        httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                        httpWebRequest.GetRequestStream();
+
+                        /*
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                        {
+                            streamWriter.Write(Json);
+                        }
+                        */
+
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+                            info = result.ToString();
+                        }
+
+
+                        httpResponse.Close();
+                        return info;
+
+                    }
+                    catch (Exception e)
                     {
-                        var result = streamReader.ReadToEnd();
-                        info = result.ToString();
+                        MessageWindow messageWindow = new MessageWindow(e.Message);
+                        messageWindow.Show();
                     }
-
-
-                    httpResponse.Close();
-                    return info;
 
                 }
                 else
@@ -225,32 +256,41 @@ namespace AutomationProjectManager
                 if (Global.LoggedUser.AccessToken != null)
                 {
 
-                    string Json = JsonConvert.SerializeObject(ObjectToSend);
-                    string info = string.Empty;
-
-                    Debug.WriteLine(Json);
-
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = this.Method.ToString();
-                    httpWebRequest.PreAuthenticate = true;
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
-
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    try
                     {
-                        streamWriter.Write(Json);
-                    }
+                        string Json = JsonConvert.SerializeObject(ObjectToSend);
+                        string info = string.Empty;
 
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        Debug.WriteLine(Json);
+
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.ServiceUri);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Method = this.Method.ToString();
+                        httpWebRequest.PreAuthenticate = true;
+                        httpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                        {
+                            streamWriter.Write(Json);
+                        }
+
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+                            info = result.ToString();
+                        }
+
+                        httpResponse.Close();
+
+                        return info;
+
+                    }
+                    catch (Exception e)
                     {
-                        var result = streamReader.ReadToEnd();
-                        info = result.ToString();
+                        MessageWindow messageWindow = new MessageWindow(e.Message);
+                        messageWindow.Show();
                     }
-
-                    httpResponse.Close();
-
-                    return info;
 
                 }
                 else
