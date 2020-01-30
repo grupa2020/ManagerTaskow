@@ -9,10 +9,11 @@ namespace AutomationProjectManager.Connection
     class TokenType
     {
         public string AccessToken { get; set; }
-
+        public int UserId { get; set;}
         public TokenType()
         {
             AccessToken = null;
+            UserId = 0;
         }
     }
 }

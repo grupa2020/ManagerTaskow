@@ -34,6 +34,32 @@ namespace AutomationProjectManager.Model
             
         }
 
+
+        public void GetUserGET()
+        {
+
+            RestClient client = new RestClient();
+            client.Method = httpVerb.GET;
+            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+            {
+                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+            }
+            client.ServiceUri += "Users/" +this.UserId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
+            string response = client.getRequest();
+
+            if(response!=null)
+            {
+                var rsponseUsr = new ValueResponse<UsersPoco>(true, string.Empty, null);
+                rsponseUsr = JsonConvert.DeserializeObject<ValueResponse<UsersPoco>>(response);
+
+                this.Name = rsponseUsr.Value.Name;
+                this.Role = rsponseUsr.Value.Role;
+                
+            }
+
+        }
+
+
         public string AddUserPOST()
         {
             RestClient client = new RestClient();

@@ -72,7 +72,11 @@ namespace AutomationProjectManager.Connection
                         if (response.Succeeded)
                         {
                             Global.LoggedUser.AccessToken = response.Value.AccessToken;
-                            MessageWindow message = new MessageWindow("Zalogowano pomyślnie");
+                            Global.LoggedUser.UserId = response.Value.UserId;
+                            Global.LoggedUser.Login = this.User;
+                            Global.LoggedUser.Password = this.Pass;
+                            Global.LoggedUser.GetUserGET();
+                            MessageWindow message = new MessageWindow("Zalogowano pomyślnie! \n Twoje Id: " + Global.LoggedUser.UserId.ToString());
                             message.Show();
 
                         }

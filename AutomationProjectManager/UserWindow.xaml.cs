@@ -38,7 +38,10 @@ namespace AutomationProjectManager
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            CurrentUser.Login = this.UserLoginTxtBox.Text;
+            CurrentUser.Name = this.UserNameTxtBox.Text;
+            CurrentUser.Password = this.UserPassTxtBox.Password;
+            CurrentUser.SaveUserPUT();
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)

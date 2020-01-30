@@ -1,4 +1,5 @@
 ﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels;
 using AutomationProjectManager.DataModels.TasksChildrens;
 using AutomationProjectManager.Factories;
 using AutomationProjectManager.Model;
@@ -60,7 +61,7 @@ namespace AutomationProjectManager
             {
                 client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
             }
-            client.ServiceUri += "Boards/" + ProjectId.ToString(); //W serwisie musiałaby być 0- to id projektu do którego board należy
+            client.ServiceUri += "Boards/" + ProjectId.ToString()+"/"+Global.LoggedUser.UserId; //W serwisie musiałaby być 0- to id projektu do którego board należy
             string response = client.getRequest();
 
             var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
