@@ -15,7 +15,7 @@
             <TabControl  Margin="0,0,0,0" Background="Transparent" >
                 <TabItem Header="Login" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource MaterialDesignBackground}">
                     <Grid Background="{DynamicResource MaterialDesignBackground}">
-                     
+
                         <svgc:SvgViewbox Source="Resources/account_box-24px.svg"
                                          MouseDown="UserImg_MouseDown"
                                          Margin="40,41,638,441"  Stretch="Uniform"/>
@@ -29,12 +29,12 @@
                             </Ellipse.Fill>
                             
                         </Ellipse> -->
-                        
+
                         <Border Background="Transparent" CornerRadius="20" Margin="40,146,40,84">
                             <StackPanel>
-                                
-                                
-                                
+
+
+
                                 <Label x:Name="loginLbl" Content="Zaloguj" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="36" Foreground="{DynamicResource GlobalForeColor}"></Label>
 
                                 <Separator></Separator>
@@ -45,6 +45,7 @@
                                 <Button x:Name="submitLoginBtn"  Content="Zaloguj" Click="submitLoginBtn_Click" Margin="150,15,150,0" />
                             </StackPanel>
                         </Border>
+                        <Button x:Name="logoutBtn"  Content="Wyloguj" Click="logoutBtn_Click" Margin="679,41,10,481" Height="Auto" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="Projekty" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}">
@@ -74,7 +75,7 @@
                         <CheckBox x:Name="DarkMode" Content="Ciemny Motyw" FontSize="14" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Height="30" Width="179" Checked="DarkMode_Checked" Unchecked="DarkMode_Unchecked" Foreground="{DynamicResource GlobalForeColor}"/>
                     </Grid>
                 </TabItem>
-               
+
             </TabControl>
         </Grid>
         <Button x:Name="CloseBtn" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,4,0"/>

@@ -263,7 +263,7 @@ namespace AutomationProjectManager
 
         private void UserImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            UserWindow newWindow = new UserWindow(Global.LoggedUser);
+            UserWindow newWindow = new UserWindow(Global.LoggedUser,false);
             newWindow.Show();
         }
 
@@ -271,6 +271,16 @@ namespace AutomationProjectManager
         {
             Authorization sesion = new Authorization(this.usrNameTextBox.Text, this.passTextBox.Password);
             sesion.GetAccess();
+        }
+
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Global.LoggedUser= new UsersPoco(1, "Niezalogowany", "", "Niezalogowany Użytkownik", 2, 2);
+            this.usrNameTextBox.Text = "";
+            this.passTextBox.Password = "";
+
+            MessageWindow message = new MessageWindow("Wylogowano!");
+            message.Show();
         }
         /////////////////////////////////////////////////
     }

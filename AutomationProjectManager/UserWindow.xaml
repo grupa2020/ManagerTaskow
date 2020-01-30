@@ -11,9 +11,6 @@
     <Border  BorderBrush="{DynamicResource GlobalBordersBrush}" BorderThickness="1" CornerRadius="2">
         <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
 
-
-
-
             <Grid Background="{DynamicResource MaterialDesignBackground}">
                 <Button x:Name="saveUser" Content="Zapisz  zmiany" Margin="0,0,25,34" Click="saveBtn_Click" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="159"/>
                 <Label Content="Login:" HorizontalAlignment="Left" Margin="432,136,0,0" VerticalAlignment="Top" Width="51" Foreground="{DynamicResource GlobalForeColor}"/>
@@ -34,12 +31,31 @@
                             Background="{DynamicResource TextAreasBacground}"/>
                 <Label Content="Nazwa użytkownika:" HorizontalAlignment="Left" Margin="368,192,0,0" VerticalAlignment="Top" Width="120" Foreground="{DynamicResource GlobalForeColor}"/>
                 <Label Content="Hasło:" HorizontalAlignment="Left" Margin="432,245,0,0" VerticalAlignment="Top" Width="51" Foreground="{DynamicResource GlobalForeColor}"/>
-                <ComboBox Name="userRoleCbox" HorizontalAlignment="Left" Margin="488,294,0,0" VerticalAlignment="Top" Width="182"/>
+                <!-- <ComboBox Name="userRoleCbox" HorizontalAlignment="Left" Margin="488,294,0,0" VerticalAlignment="Top" Width="182"/> -->
                 <Label Content="Rola:" HorizontalAlignment="Left" Margin="432,298,0,0" VerticalAlignment="Top" Width="51" Foreground="{DynamicResource GlobalForeColor}"/>
 
 
 
                 <svgc:SvgViewbox Source="Resources/account_box-24px.svg" Margin="74,141,443,184"  Stretch="Uniform"/>
+                <Button x:Name="AddUser" Content="Dodaj użytkownika" Margin="0,0,523,34" Click="AddUser_Click" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="159"/>
+                <ComboBox HorizontalAlignment="Left" SelectedIndex="0" Name="roleComboBox"
+                          Margin="488,298,0,0" VerticalAlignment="Top"
+                          Foreground="{DynamicResource GlobalForeColor}"
+                          BorderBrush="{DynamicResource GlobalBordersBrush}"
+                          Width="182">
+                    <ComboBoxItem>
+                        Administratorzy
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Projektanci
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Programiści
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Monterzy
+                    </ComboBoxItem>
+                </ComboBox>
 
                 <!--  <Ellipse MaxHeight="200" MaxWidth="200" Margin="435,77,61,202">
                     <Ellipse.Fill>

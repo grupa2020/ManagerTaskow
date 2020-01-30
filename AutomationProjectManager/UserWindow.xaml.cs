@@ -1,4 +1,6 @@
-﻿using AutomationProjectManager.Model;
+﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +23,12 @@ namespace AutomationProjectManager
     public partial class UserWindow : Window
     {
         UsersPoco CurrentUser;
-        public UserWindow(UsersPoco currentUser)
+        bool IsNew;
+        public UserWindow(UsersPoco currentUser, bool isNew)
         {
             InitializeComponent();
             CurrentUser = currentUser;
+            IsNew = isNew;
 
             if(CurrentUser!=null)
             {
@@ -32,7 +36,21 @@ namespace AutomationProjectManager
                 this.UserLoginTxtBox.Text = CurrentUser.Login;
                 this.UserPassTxtBox.Password = CurrentUser.Password;
                 
+                if(this.CurrentUser.Role!=0)
+                {
+                    this.AddUser.Visibility = Visibility.Hidden;
+                    this.roleComboBox.IsEnabled = false;
+                }
+
+
+                this.roleComboBox.SelectedIndex = CurrentUser.Role;
             }
+
+            if(IsNew)
+            {
+                this.saveUser.Content = "Dodaj użytkownika";
+            }
+            
             
         }
 
@@ -41,7 +59,39 @@ namespace AutomationProjectManager
             CurrentUser.Login = this.UserLoginTxtBox.Text;
             CurrentUser.Name = this.UserNameTxtBox.Text;
             CurrentUser.Password = this.UserPassTxtBox.Password;
-            CurrentUser.SaveUserPUT();
+            if(IsNew)
+            {
+                CurrentUser.Role = this.roleComboBox.SelectedIndex;
+                SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(CurrentUser.AddUserPOST());
+                if(response.Succeeded)
+                {
+                    MessageWindow message = new MessageWindow("Pomyślnie dodano użytkownika.");
+                    message.Show();
+                }
+                else
+                {
+                    MessageWindow message = new MessageWindow("Coś poszło nie tak .... :("+ response.Message);
+                    message.Show();
+                }
+              
+            }
+            else
+            {
+                SimpleResponse response = JsonConvert.DeserializeObject<SimpleResponse>(CurrentUser.SaveUserPUT());
+                
+                if(response.Succeeded)
+                {
+                    MessageWindow message = new MessageWindow("Pomyślnie zapisano zmiany :)");
+                    message.Show();
+                }
+                else
+                {
+                    MessageWindow message = new MessageWindow("Coś poszło nie tak .... :(" + response.Message);
+                    message.Show();
+                }
+              
+            }
+          
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
@@ -87,6 +137,13 @@ namespace AutomationProjectManager
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void AddUser_Click(object sender, RoutedEventArgs e)
+        {
+            UsersPoco newUser = new UsersPoco(0, "new user login", "", "new user name", 1, 1);
+            UserWindow addUserWindow = new UserWindow(newUser,true);
+            addUserWindow.Show();
         }
     }
 }
