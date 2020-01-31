@@ -1,4 +1,5 @@
 ﻿using AutomationProjectManager.Connection.Responses;
+using AutomationProjectManager.DataModels;
 using AutomationProjectManager.Model;
 using Newtonsoft.Json;
 using System;
@@ -32,9 +33,51 @@ namespace AutomationProjectManager
         {
             InitializeComponent();
             ProjectId = projectId;
-            selectRoleCombobox.SelectedItem = 0;
+            selectRoleCombobox.SelectedIndex = Global.LoggedUser.Role;
+            setPermisions();
 
             
+        }
+
+        private void setPermisions()
+        {
+            switch (Global.LoggedUser.Role)
+            {
+                case 0:
+                    {
+                        //Nie robi nic użytkownik ma prawo do wszystkiego
+                    }
+                    break;
+
+                case 1:
+                    {
+                        item0.IsEnabled = false;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        item0.IsEnabled = false;
+                        item1.IsEnabled = false;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        item0.IsEnabled = false;
+                        item1.IsEnabled = false;
+                        item2.IsEnabled = false;
+                    }
+                    break;
+
+                default:
+                    {
+
+                    }
+                    break;
+            }
+
+
         }
 
         private void addBoardBtn_Click(object sender, RoutedEventArgs e)

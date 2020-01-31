@@ -19,10 +19,10 @@
                 Click="addBoardBtn_Click" Margin="82,181,87,0" VerticalAlignment="Top"/>
 
                 <ComboBox BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}" x:Name="selectRoleCombobox" Style="{DynamicResource MaterialDesignComboBox}" Margin="31,118,10,0" VerticalAlignment="Top" >
-                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Wszyscy"/>
-                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Projektantów"/>
-                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Tylko Dział Zakupów"/>
-                    <ComboBoxItem TextBlock.TextAlignment="Center" Content="Warsztat"/>
+                    <ComboBoxItem Name="item0" TextBlock.TextAlignment="Center" Content="Tylko Administratorzy"/>
+                    <ComboBoxItem Name="item1" TextBlock.TextAlignment="Center" Content="Tylko Dział Projektantów"/>
+                    <ComboBoxItem Name="item2" TextBlock.TextAlignment="Center" Content="Tylko Dział Zakupów"/>
+                    <ComboBoxItem Name="item3" TextBlock.TextAlignment="Center" Content="Wszyscy"/>
                 </ComboBox>
                 <Label Foreground="{DynamicResource GlobalForeColor}" Content="Poziom widoczności:" HorizontalAlignment="Left" Margin="31,94,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="CloseBtn" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="25" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>

@@ -37,7 +37,7 @@ namespace AutomationProjectManager
             ProjectId = projectId;
             projectNameLbl.Content = projectName;
             load();
-                        
+
         }
 
         public void load()
@@ -55,89 +55,107 @@ namespace AutomationProjectManager
 
         public void updateComboBox(int ProjectId)
         {
-            RestClient client = new RestClient();
-            client.Method = httpVerb.GET;
-            if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+
+            try
             {
-                client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
-            }
-            client.ServiceUri += "Boards/" + ProjectId.ToString()+"/"+Global.LoggedUser.UserId; //W serwisie musiałaby być 0- to id projektu do którego board należy
-            string response = client.getRequest();
-
-            var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
-            rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<BoardPoco>>>(response);
-
-            foreach (BoardPoco board in rsponseLst.Value)
-            {
-                selectBoardBox.Items.Add(board.Name + "/" + board.BoardId.ToString());
-                BoardList.Add(board);
-            }
-
-            if (selectBoardBox.Items.Count >= 1)
-            {
-                selectBoardBox.SelectedIndex = 0;
-            }
-        }
-
-        public void loadTasks()
-        {
-            tasksGrid.Children.Clear();
-            tasksGrid.RowDefinitions.Clear();
-            tasksGrid.ColumnDefinitions.Clear();
-
-            if (selectBoardBox.SelectedItem != null)
-            {
-
-
-                string[] list = selectBoardBox.SelectedItem.ToString().Split('/');
-
-                if (list.Length >= 2)
-                {
-                    BoardId = Convert.ToInt32(list[1]);
-                }
-
                 RestClient client = new RestClient();
                 client.Method = httpVerb.GET;
                 if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
                 {
                     client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
                 }
-                client.ServiceUri += "Tasks/" + BoardId;
+                client.ServiceUri += "Boards/" + ProjectId.ToString() + "/" + Global.LoggedUser.UserId; //W serwisie musiałaby być 0- to id projektu do którego board należy
                 string response = client.getRequest();
 
-                var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
-                taskList = JsonConvert.DeserializeObject<ValueResponse<List<TaskPoco>>>(response);
+                var rsponseLst = new ValueResponse<List<BoardPoco>>(true, string.Empty, null);
+                rsponseLst = JsonConvert.DeserializeObject<ValueResponse<List<BoardPoco>>>(response);
 
-                TaskBoardXY location = new TaskBoardXY();
-
-                for (int columnCount = 0; columnCount < 6; columnCount++)  //Ilość Kolumn tasków
+                foreach (BoardPoco board in rsponseLst.Value)
                 {
-                    ColumnDefinition colDef = new ColumnDefinition();
-                    //colDef.Width = GridLength.Auto;
-
-                    tasksGrid.ColumnDefinitions.Add(colDef);
+                    selectBoardBox.Items.Add(board.Name + "/" + board.BoardId.ToString());
+                    BoardList.Add(board);
                 }
 
-                foreach (TaskPoco task in taskList.Value)
+                if (selectBoardBox.Items.Count >= 1)
                 {
-                    TaskButton taskButton = new TaskButton(task);
-                    taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
-
-                    int dstRow = location.GetDestinationRow(task.TaskType);
-
-                    Grid.SetColumn(taskButton, location.GetColumn(task.TaskType));
-                    Grid.SetRow(taskButton, dstRow - 1);
-
-                    tasksGrid.Children.Add(taskButton);
+                    selectBoardBox.SelectedIndex = 0;
                 }
+            }
+            catch (Exception e)
+            {
+                MessageWindow message = new MessageWindow(e.Message);
+                message.Show();
+            }
+        }
 
-                int rowsCount = location.GetMax();
-                for (int i = 0; i < rowsCount; i++)
+        public void loadTasks()
+        {
+
+            try
+            {
+                tasksGrid.Children.Clear();
+                tasksGrid.RowDefinitions.Clear();
+                tasksGrid.ColumnDefinitions.Clear();
+
+                if (selectBoardBox.SelectedItem != null)
                 {
-                    RowDefinition rowDef = new RowDefinition();
-                    rowDef.Height = GridLength.Auto;
-                    tasksGrid.RowDefinitions.Add(rowDef);
+
+
+                    string[] list = selectBoardBox.SelectedItem.ToString().Split('/');
+
+                    if (list.Length >= 2)
+                    {
+                        BoardId = Convert.ToInt32(list[1]);
+                    }
+
+                    RestClient client = new RestClient();
+                    client.Method = httpVerb.GET;
+                    if (!string.IsNullOrEmpty(ConfigurationSettings.AppSettings["ServerPatch"]))
+                    {
+                        client.ServiceUri = ConfigurationSettings.AppSettings["ServerPatch"];
+                    }
+                    client.ServiceUri += "Tasks/" + BoardId;
+                    string response = client.getRequest();
+
+                    var taskList = new ValueResponse<List<TaskPoco>>(true, string.Empty, null);
+                    taskList = JsonConvert.DeserializeObject<ValueResponse<List<TaskPoco>>>(response);
+
+                    TaskBoardXY location = new TaskBoardXY();
+
+                    for (int columnCount = 0; columnCount < 6; columnCount++)  //Ilość Kolumn tasków
+                    {
+                        ColumnDefinition colDef = new ColumnDefinition();
+                        //colDef.Width = GridLength.Auto;
+
+                        tasksGrid.ColumnDefinitions.Add(colDef);
+                    }
+
+                    foreach (TaskPoco task in taskList.Value)
+                    {
+                        TaskButton taskButton = new TaskButton(task);
+                        taskButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(openTaskWindow));
+
+                        int dstRow = location.GetDestinationRow(task.TaskType);
+
+                        Grid.SetColumn(taskButton, location.GetColumn(task.TaskType));
+                        Grid.SetRow(taskButton, dstRow - 1);
+
+                        tasksGrid.Children.Add(taskButton);
+                    }
+
+                    int rowsCount = location.GetMax();
+                    for (int i = 0; i < rowsCount; i++)
+                    {
+                        RowDefinition rowDef = new RowDefinition();
+                        rowDef.Height = GridLength.Auto;
+                        tasksGrid.RowDefinitions.Add(rowDef);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                MessageWindow message = new MessageWindow(e.Message);
+                message.Show();
             }
 
         }

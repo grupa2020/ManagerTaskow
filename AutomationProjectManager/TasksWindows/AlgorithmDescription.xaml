@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d" MouseDown="Window_MouseDown"
-        Title="AlgorithmDescription" AllowsTransparency="True" Background="Transparent"  Height="450" Width="800" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="AlgorithmDescription" AllowsTransparency="True" Background="Transparent"  Height="450" Width="800" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True">
     <Border  CornerRadius="2" BorderThickness="1" Background="{DynamicResource MaterialDesignBackground}"  BorderBrush="{DynamicResource GlobalBordersBrush}">
         <Border CornerRadius="1" BorderThickness="40"  BorderBrush="{DynamicResource MaterialDesignBackground}">
             <Grid>

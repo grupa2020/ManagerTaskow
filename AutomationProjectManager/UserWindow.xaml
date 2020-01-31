@@ -7,7 +7,7 @@
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="UserWindow" 
-        MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Width="736.5" Height="508" WindowStartupLocation="CenterScreen" >
+        MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Width="736.5" Height="508" WindowStartupLocation="CenterScreen" Topmost="True" >
     <Border  BorderBrush="{DynamicResource GlobalBordersBrush}" BorderThickness="1" CornerRadius="2">
         <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
 
@@ -50,10 +50,10 @@
                         Projektanci
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        Programiści
+                        Dział zakupów
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        Monterzy
+                        Wszyscy
                     </ComboBoxItem>
                 </ComboBox>
 
