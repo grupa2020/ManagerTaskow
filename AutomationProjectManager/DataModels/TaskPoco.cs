@@ -111,7 +111,32 @@ namespace AutomationProjectManager.Model
             }
             client.ServiceUri += "Tasks/" + this.TaskId.ToString();
 
-            return client.DeleteMethod(this);
+            string response=client.DeleteMethod(this);
+
+            SimpleResponse simpleResponse = new SimpleResponse();
+
+           simpleResponse = JsonConvert.DeserializeObject<SimpleResponse>(response);
+            
+            if(simpleResponse!=null)
+            {
+                if (simpleResponse.Succeeded)
+                {
+                    return "Pomyślnie usunięto element";
+
+                }
+                else
+                {
+                    return "Coś poszło nie tak... " + simpleResponse.Message;
+                }
+            }
+            else
+            {
+                return "Coś posżło nie tak...";
+            }
+          
+
+
+            
         }
     }
 }

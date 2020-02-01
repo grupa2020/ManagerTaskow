@@ -10,7 +10,7 @@
         Title="ProjectWindow" BorderBrush="#FF223140"
         AllowsTransparency="True" 
         MouseDown="Window_MouseDown" Background="Transparent"   SizeToContent="Width" WindowStyle="None"
-        WindowStartupLocation="CenterScreen" ScrollViewer.CanContentScroll="True" Topmost="True" >
+        WindowStartupLocation="CenterOwner" ScrollViewer.CanContentScroll="True" >
     <Border  CornerRadius="2" BorderThickness="1" Background="{DynamicResource MaterialDesignBackground}"  BorderBrush="{DynamicResource GlobalBordersBrush}">
         <ScrollViewer CanContentScroll="False" Margin="0,20,0,20"
               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">

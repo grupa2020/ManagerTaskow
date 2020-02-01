@@ -51,7 +51,8 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(thisTask.DeleteTask());
+           MessageWindow message=new MessageWindow (thisTask.DeleteTask());
+            message.Show();
             this.Close();
         }
 

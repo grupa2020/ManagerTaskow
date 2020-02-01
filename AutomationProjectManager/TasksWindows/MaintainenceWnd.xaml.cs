@@ -44,27 +44,22 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-            materialsLstBox.ItemsSource = null;
-            mainTask.DeleteTask();
-            materialsLstBox.ItemsSource = maintainenceTask.Materials;
+            MessageWindow message = new MessageWindow("Czy na pewno chcesz usunąć to zadanie? ", true);
+
+            if(message.ShowDialog()==true)
+            {
+                materialsLstBox.ItemsSource = null;
+               MessageWindow message2=new MessageWindow (mainTask.DeleteTask());
+                message2.Show();
+                this.Close();
+            }
+
+           
+
 
         }
 
-        /*   private String GetListsAsString()
-           {
-               foreach (String str in lstBox.Items)
-               {
-                   str.Trim('|');
-               }
-               List<string> tasks = new List<string>();
-               foreach (string str in lstBox.Items)
-               {
-                   tasks.Add(str);
-               }
-
-               return string.Join("|", tasks);
-           }
-           */
+    
 
         private void updateContent()
         {
@@ -148,11 +143,29 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void Del_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ListViewItem eachItem in materialsLstBox.SelectedItems)
+            MessageWindow message = new MessageWindow("Czy na pewno chcesz usunąć wybrany materiał z listy? \n" + materialsLstBox.SelectedItem,true);
+
+            if(message.ShowDialog()==true)
             {
-                materialsLstBox.Items.Remove(eachItem);
+                int selectedIndex = materialsLstBox.SelectedIndex;
+                materialsLstBox.ItemsSource = null;
+                maintainenceTask.Materials.RemoveAt(selectedIndex);
+                materialsLstBox.ItemsSource = maintainenceTask.Materials;
+            }
+            else
+            {
+                //Nic nie rób
             }
 
+
+        }
+
+
+        //Tylko do testów
+        private void materialsLstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           // MessageWindow message = new MessageWindow(materialsLstBox.SelectedIndex.ToString());
+           // message.Show();
         }
     }
 }

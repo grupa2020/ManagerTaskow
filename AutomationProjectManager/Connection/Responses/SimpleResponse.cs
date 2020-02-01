@@ -12,6 +12,8 @@ namespace AutomationProjectManager.Connection.Responses
         [JsonConstructor]
         public SimpleResponse()
         {
+            this.Message = "brak odpowiedzi";
+            this.Succeeded = false;
         }
 
         public SimpleResponse(bool succeeded, string message)

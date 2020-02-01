@@ -42,6 +42,8 @@ namespace AutomationProjectManager
                     this.roleComboBox.IsEnabled = false;
                 }
 
+                
+
 
                 this.roleComboBox.SelectedIndex = CurrentUser.Role;
             }
@@ -49,6 +51,7 @@ namespace AutomationProjectManager
             if(IsNew)
             {
                 this.saveUser.Content = "Dodaj użytkownika";
+                this.roleComboBox.IsEnabled = true;
             }
             
             
