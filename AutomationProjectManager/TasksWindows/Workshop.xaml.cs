@@ -1,6 +1,7 @@
 ﻿using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,7 +37,7 @@ namespace AutomationProjectManager.ToolsWindows
         }
         private void NumberValidationTextBoxFloat(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex(@"^[-+]?[0-9]+\,[0-9]+$");
+            Regex regex = new Regex(@"^[-+]?[0-9]+\.[0-9]+$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -45,7 +46,7 @@ namespace AutomationProjectManager.ToolsWindows
             List<String> worksTemp = worksLstBox.Items.OfType<string>().ToList();
             List<String> materialsTemp = materialsLstBox.Items.OfType<string>().ToList();
 
-            workshopTask.UpdateContent(int.Parse(hoursBox.Text), int.Parse(workersBox.Text), float.Parse(costBox.Text), worksTemp, materialsTemp);
+            workshopTask.UpdateContent(int.Parse(hoursBox.Text), int.Parse(workersBox.Text), float.Parse(costBox.Text, CultureInfo.InvariantCulture.NumberFormat), worksTemp, materialsTemp);
             workshopTask.SaveTaskPUT();
             fillContent();
         }
@@ -89,6 +90,7 @@ namespace AutomationProjectManager.ToolsWindows
                 tempString = tempString.Substring(y + 2);
 
                 //works list parsing
+                worksList.Items.Clear();
                 x = tempString.IndexOf('|');
                 y = tempString.Substring(x + 1).IndexOf('|');
                 string[] items = tempString.Substring(x + 1, y).Split(';');
@@ -99,6 +101,7 @@ namespace AutomationProjectManager.ToolsWindows
                 tempString = tempString.Substring(y + 2);
 
                 //materials list parsing
+                materialsList.Items.Clear();
                 x = tempString.IndexOf('|');
                 y = tempString.Substring(x + 1).IndexOf('|');
                 items = tempString.Substring(x + 1, y).Split(';');
