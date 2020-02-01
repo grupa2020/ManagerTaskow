@@ -43,6 +43,11 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(hoursBox.Text.Length<=0 || costBox.Text.Length<=0 || costBox.Text.Length<=0)
+            {
+                MessageBox.Show("Uzupełnij puste pola!");
+                return;
+            }
             List<String> worksTemp = worksLstBox.Items.OfType<string>().ToList();
             List<String> materialsTemp = materialsLstBox.Items.OfType<string>().ToList();
 
