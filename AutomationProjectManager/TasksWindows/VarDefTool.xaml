@@ -1,12 +1,60 @@
 ﻿<Window x:Class="AutomationProjectManager.ToolsWindows.VarDefTool"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="VarDefTool" Height="450" Width="800">
+        Title="Lista KKS" Height="450" Width="800">
     <Grid>
-        
+        <TabControl HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="792">
+            <TabItem Header="Lista KKS" Width="120">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45.326" />
+                        <ColumnDefinition Width="607.674"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Filtruj po symbolu &#xD;&#xA;urządzenia:" Grid.Column="2" HorizontalAlignment="Left" Height="46" Margin="10,-2,0,0" VerticalAlignment="Top" Width="109" RenderTransformOrigin="0.374,0.16"/>
+                    <TextBox Name="txtFilter"  Grid.Column="2" HorizontalAlignment="Left" TextChanged="txtFilter_TextChanged" Height="45" Margin="14,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.526,1.049"/>
+                    <ListView x:Name="lstKKS"  HorizontalAlignment="Center" Height="392" VerticalAlignment="Top"  Width="653" Grid.ColumnSpan="2" MouseDoubleClick="lstKKS_MouseDoubleClick_1" Grid.RowSpan="2" HorizontalContentAlignment="Center" SelectionChanged="lstKKS_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="Indeks" Width="80"
+                                        DisplayMemberBinding="{Binding Indeks}"/>
+                                    <GridViewColumn Header=" Typ zmiennej " Width="120"
+                                        DisplayMemberBinding="{Binding TypZmiennej}"/>
+                                    <GridViewColumn Header=" Symbol urządzenia " Width="140"
+                                        DisplayMemberBinding="{Binding SymbolUrzadzenia}"/>
+                                    <GridViewColumn Header=" Symbol szafy " Width="120"
+                                        DisplayMemberBinding="{Binding SymbolSzafy}"/>
+                                    <GridViewColumn Header=" Opis " Width="80"
+                                        DisplayMemberBinding="{Binding Opis}"/>
+                                    <GridViewColumn Header=" Komentarz " Width="100"
+                                        DisplayMemberBinding="{Binding Komentarz}"/>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button x:Name="btnUsun" Content="Usuń" Grid.Column="2" HorizontalAlignment="Left" Height="40" Margin="14,243,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Click="Button_Click_Usn"/>
+                    <Button x:Name="btnDodaj" Content="Dodaj" Grid.Column="2" HorizontalAlignment="Left" Height="40" Margin="14,188,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Click="Button_Click_Dod"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="" Width="120">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="363*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
