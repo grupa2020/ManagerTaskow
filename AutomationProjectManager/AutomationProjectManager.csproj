@@ -95,6 +95,9 @@
     <Compile Include="AddBoardWindow.xaml.cs">
       <DependentUpon>AddBoardWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddKKSVariable.xaml.cs">
+      <DependentUpon>AddKKSVariable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddProject.xaml.cs">
       <DependentUpon>AddProject.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,7 @@
     <Compile Include="Connection\Responses\ValueResponse.cs" />
     <Compile Include="Connection\RestClient.cs" />
     <Compile Include="DataModels\Global.cs" />
+    <Compile Include="DataModels\KKS.cs" />
     <Compile Include="DataModels\NewBoardPoco.cs" />
     <Compile Include="DataModels\NewProjectPoco.cs" />
     <Compile Include="DataModels\NewTaskPoco.cs" />
@@ -172,6 +176,10 @@
     <Page Include="AddBoardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddKKSVariable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="AddProject.xaml">
       <SubType>Designer</SubType>
