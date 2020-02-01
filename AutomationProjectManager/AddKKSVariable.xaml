@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="Dodawanie nowej zmiennej systemowej" Height="320" Width="350">
+        Title="Dodawanie nowej zmiennej systemowej" Height="320" Width="350" WindowStartupLocation="CenterScreen" Topmost="True">
     <Grid x:Name="gridProdukt">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace AutomationProjectManager.ToolsWindows
 {
@@ -24,9 +25,11 @@ namespace AutomationProjectManager.ToolsWindows
     {
         internal ObservableCollection<KKS> ListaKKS = null;
 
+        private TaskPoco mainTask;
         public VarDefTool(TaskPoco task)
         {
             InitializeComponent();
+            mainTask = task;
             PrzgotujWiazanie();
         }
 
@@ -40,6 +43,14 @@ namespace AutomationProjectManager.ToolsWindows
             widok.SortDescriptions.Add(new SortDescription("SymbolUrzadzenia", ListSortDirection.Ascending));
 
             widok.Filter = FiltrUzytkownika;
+
+            //Wczytanie zapisanej treści
+            if(mainTask.Content!=null && mainTask.Content!=string.Empty && mainTask.Content!="")
+            {
+                ListaKKS = JsonConvert.DeserializeObject<ObservableCollection<KKS>>(mainTask.Content);
+            }
+
+            lstKKS.ItemsSource = ListaKKS;
         }
         private bool FiltrUzytkownika(object item)
         {
@@ -84,6 +95,63 @@ namespace AutomationProjectManager.ToolsWindows
         private void lstKKS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void MaksimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+
+                this.WindowState = WindowState.Maximized;
+            }
+
+
+        }
+
+        private void MinimizeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Zapisanie treści
+            mainTask.Content = JsonConvert.SerializeObject(ListaKKS);
+            MessageWindow message = new MessageWindow(mainTask.SaveTaskPUT());
+            message.Show();
+            
+        }
+
+        private void delBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageWindow message = new MessageWindow("Czy na pewno chcesz usunąć całe zadanie?", true);
+
+            if(message.ShowDialog()==true)
+            {
+                MessageWindow message1 = new MessageWindow(mainTask.DeleteTask());
+                message1.Show();
+                this.Close();
+            }
         }
     }
 }

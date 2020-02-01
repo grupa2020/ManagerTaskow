@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="Mounting"
         Height="700" Width="800" MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
@@ -43,6 +44,7 @@
         Click="AddBtn_Click" HorizontalAlignment="Right"
         Height="35" Width="36"
         Padding="4,4,4,4" >
+                                <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
                             </Button>
                             <Button Margin="5,5,5,5"  
         Padding="4,4,4,4" x:Name="DeleteBtn"
@@ -50,6 +52,8 @@
         HorizontalAlignment="Right"                                       
         Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
         Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
+
+                                <svgc:SvgViewbox Source="Resources/clear-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
                             </Button>
                         </StackPanel>
                     </StackPanel>
@@ -70,6 +74,7 @@
         Click="AddBtn2_Click" HorizontalAlignment="Right"
         Height="35" Width="36"
         Padding="4,4,4,4" >
+                                <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
                             </Button>
                             <Button Margin="5,5,5,5"  
         Padding="4,4,4,4" x:Name="DeleteBtn2"
@@ -77,6 +82,8 @@
         HorizontalAlignment="Right"                                       
         Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
         Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
+
+                                <svgc:SvgViewbox Source="Resources/clear-24px.svg" Margin="3,3,3,3"  Stretch="Uniform"/>
                             </Button>
                         </StackPanel>
                     </StackPanel>

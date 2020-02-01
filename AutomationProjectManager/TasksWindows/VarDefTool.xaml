@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="Lista KKS" Height="450" Width="800">
-    <Grid>
-        <TabControl HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="792">
+        Title="Lista KKS" WindowStyle="None" 
+        AllowsTransparency="True"
+        SizeToContent="WidthAndHeight" MouseDown="Window_MouseDown" Background="Transparent" WindowStartupLocation="CenterOwner" >
+    <Grid Background="{DynamicResource MaterialDesignBackground}">
+        <TabControl HorizontalAlignment="Left"
+                    Margin="0,25,0,60"
+                    Height="420" VerticalAlignment="Top" 
+                    Width="792">
             <TabItem Header="Lista KKS" Width="120">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -56,5 +61,10 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button x:Name="CloseBtn" Margin="0,14,8,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <Button x:Name="MaksimizeBtn" Margin="0,14,38,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+        <Button x:Name="MinimizeBtn" Margin="0,14,70,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
+        <Button Content="Zapisz" x:Name="saveBtn" Margin="0,0,10,10" Click="saveBtn_Click" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153"/>
+        <Button Content="Usuń" x:Name="delBtn"  HorizontalAlignment="Left" Margin="10,0,0,10" Width="153" Click="delBtn_Click" Height="35" VerticalAlignment="Bottom" RenderTransformOrigin="0.686,1.086"/>
     </Grid>
 </Window>

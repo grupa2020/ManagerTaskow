@@ -70,6 +70,7 @@ namespace AutomationProjectManager
                 {
                     MessageWindow message = new MessageWindow("Pomyślnie dodano użytkownika.");
                     message.Show();
+                    this.Close();
                 }
                 else
                 {
