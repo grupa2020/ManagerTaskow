@@ -1,0 +1,39 @@
+﻿<Window x:Class="AutomationProjectManager.AddKKSVariable"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
+        mc:Ignorable="d"
+        Title="Dodawanie nowej zmiennej systemowej" Height="320" Width="350">
+    <Grid x:Name="gridProdukt">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Indeks w PLC:" Grid.Row="0" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Indeks}" />
+        <Label Content="Typ zmiennej:" Grid.Row="1" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding TypZmiennej}" />
+        <Label Content="Symbol urządzenia:" Grid.Row="2" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding SymbolUrzadzenia}" />
+        <Label Content="Symbol szafy:" Grid.Row="3" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding SymbolSzafy}" />
+        <Label Content="Opis:" Grid.Row="4" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding Opis}" />
+        <Label Content="Komentarz:" Grid.Row="5" Grid.Column="0" Margin="5" />
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="5" Text="{Binding Komentarz}" />
+        <Button x:Name="btnPotwierdz" Click="btnPotwierdz_Click" Content="Potwierdź" 
+                HorizontalAlignment="Center" Height="39" Margin="108,56,103,-49" 
+                Grid.Row="5" VerticalAlignment="Top" Width="131" Grid.ColumnSpan="2" />
+    </Grid>
+</Window>
