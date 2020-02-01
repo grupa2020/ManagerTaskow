@@ -1,5 +1,7 @@
 ﻿using AutomationProjectManager.DataModels.TasksChildrens;
 using AutomationProjectManager.Model;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,51 +24,79 @@ namespace AutomationProjectManager.ToolsWindows
     using ChildTasks = DataModels.TasksChildrens;
     public partial class MaintainenceWnd : Window
     {
-        ChildTasks.Maintainence maintainenceTask;
+        Maintainence maintainenceTask;
+
+        TaskPoco mainTask;
+
         public MaintainenceWnd(TaskPoco task)
         {
             InitializeComponent();
-            maintainenceTask = new ChildTasks.Maintainence(task.BoardId, task.Content, task.TaskId);
+            mainTask = task;
+            maintainenceTask = new ChildTasks.Maintainence(mainTask.Content);
             fillContent();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            maintainenceTask.Content = GetListsAsString();
-            maintainenceTask.SaveTaskPUT();
+            updateContent();
+            mainTask.SaveTaskPUT();
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(maintainenceTask.DeleteTask());
-            this.Close();
+            materialsLstBox.ItemsSource = null;
+            mainTask.DeleteTask();
+            materialsLstBox.ItemsSource = maintainenceTask.Materials;
+
         }
 
-        private String GetListsAsString()
+        /*   private String GetListsAsString()
+           {
+               foreach (String str in lstBox.Items)
+               {
+                   str.Trim('|');
+               }
+               List<string> tasks = new List<string>();
+               foreach (string str in lstBox.Items)
+               {
+                   tasks.Add(str);
+               }
+
+               return string.Join("|", tasks);
+           }
+           */
+
+        private void updateContent()
         {
-            foreach (String str in lstBox.Items)
+            try
             {
-                str.Trim('|');
+                maintainenceTask.date = datePicker.SelectedDate.Value;
+                maintainenceTask.Description = this.Description.Text;
+                maintainenceTask.People = this.People.Text;
+                mainTask.Content = JsonConvert.SerializeObject(maintainenceTask);
+                mainTask.SaveTaskPUT();
             }
-            List<string> tasks = new List<string>();
-            foreach (string str in lstBox.Items)
+            catch (Exception e)
             {
-                tasks.Add(str);
+                MessageWindow message = new MessageWindow(e.Message);
             }
-
-            return string.Join("|", tasks);
         }
+
+
         private void fillContent()
         {
-            lstBox.Items.Clear();
-            if (maintainenceTask.Content != null && (maintainenceTask.Content.Length > 0))
+            try
             {
-                string[] items = maintainenceTask.Content.Split('|');
-                foreach (string itm in items)
-                {
-                    lstBox.Items.Add(itm);
-                }
+                this.Description.Text = maintainenceTask.Description;
+                this.People.Text = maintainenceTask.People;
+                this.materialsLstBox.ItemsSource = maintainenceTask.Materials;
+                this.datePicker.SelectedDate = maintainenceTask.date;
             }
+            catch (Exception e)
+            {
+                MessageWindow message = new MessageWindow(e.Message);
+            }
+
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -98,32 +128,30 @@ namespace AutomationProjectManager.ToolsWindows
                 this.DragMove();
         }
 
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            List<String> itemsToRemove = new List<String>();
-            foreach (String item in lstBox.SelectedItems)
-            {
-                itemsToRemove.Add(item);
-            }
 
-            foreach (String inx in itemsToRemove)
-            {
-                lstBox.Items.Remove(inx);
-            }
-        }
 
-        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (taskText.Text.Length > 0)
+            try
             {
-                taskText.Text.Trim('|');
-                lstBox.Items.Add(taskText.Text);
-                taskText.Clear();
+
+                materialsLstBox.ItemsSource = null;
+                maintainenceTask.Materials.Add(newMaterialTxtBox.Text);
+                materialsLstBox.ItemsSource = maintainenceTask.Materials;
+
+            }
+            catch (Exception exception)
+            {
+                MessageWindow message = new MessageWindow(exception.Message);
             }
         }
 
-        private void lstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Del_Click(object sender, RoutedEventArgs e)
         {
+            foreach (ListViewItem eachItem in materialsLstBox.SelectedItems)
+            {
+                materialsLstBox.Items.Remove(eachItem);
+            }
 
         }
     }
