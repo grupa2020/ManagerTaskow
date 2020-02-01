@@ -15,7 +15,13 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskId = -1;
             this.TaskType = TaskTypeEnum.DriversProject;
         }
-
+        public DriversProject(TaskPoco task)
+        {
+            this.BoardId = task.BoardId;
+            this.TaskId = task.TaskId;
+            this.Content = task.Content;
+            this.TaskType = TaskTypeEnum.DriversProject;
+        }
         public DriversProject(int BoardId, string Content, int TaskId)
         {
             this.BoardId = BoardId;

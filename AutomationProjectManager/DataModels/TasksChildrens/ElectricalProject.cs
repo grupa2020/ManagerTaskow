@@ -16,6 +16,14 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.ElectricalProject;
         }
 
+        public ElectricalProject(TaskPoco task)
+        {
+            this.BoardId = task.BoardId;
+            this.TaskId = task.TaskId;
+            this.Content = task.Content;
+            this.TaskType = TaskTypeEnum.ElectricalProject;
+        }
+
         public ElectricalProject(int BoardId, string Content, int TaskId)
         {
             this.BoardId = BoardId;

@@ -1,4 +1,5 @@
 ﻿using AutomationProjectManager.Model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,20 +19,26 @@ namespace AutomationProjectManager.ToolsWindows
     /// <summary>
     /// Logika interakcji dla klasy ElectricalProject.xaml
     /// </summary>
+    using ChildTasks = AutomationProjectManager.DataModels.TasksChildrens;
     public partial class ElectricalProject : Window
     {
+        ChildTasks.ElectricalProject electrickProjTask;
         public ElectricalProject(TaskPoco task)
         {
             InitializeComponent();
+            electrickProjTask = new ChildTasks.ElectricalProject(task);
+            fillContent();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-        /*    thisTask.Description = projDescription();
-            thisTask.UpdateContent();
-            thisTask.SaveTaskPUT(); */
+            electrickProjTask.Content = PathText.Text;
+            electrickProjTask.SaveTaskPUT();
         }
-
+        private void fillContent()
+        {
+            PathText.Text = electrickProjTask.Content;
+        }
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -64,6 +71,12 @@ namespace AutomationProjectManager.ToolsWindows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+        private void Browse_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+                PathText.Text = openFileDialog.FileName;
         }
     }
 }

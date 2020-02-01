@@ -1,6 +1,8 @@
 ﻿using AutomationProjectManager.Model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,18 +20,27 @@ namespace AutomationProjectManager.ToolsWindows
     /// <summary>
     /// Logika interakcji dla klasy DriversProject.xaml
     /// </summary>
+    using ChildTasks = AutomationProjectManager.DataModels.TasksChildrens;
+
     public partial class DriversProject : Window
     {
+        ChildTasks.DriversProject driversTask;
         public DriversProject(TaskPoco task)
         {
             InitializeComponent();
+            driversTask = new ChildTasks.DriversProject(task);
+            fillContent();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-         /*   thisTask.Description = projDescription();
-            thisTask.UpdateContent();
-            thisTask.SaveTaskPUT(); */
+            driversTask.Content = PathText.Text;
+            driversTask.SaveTaskPUT(); 
+        }
+
+        private void fillContent()
+        {
+            PathText.Text = driversTask.Content;
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
@@ -64,6 +75,12 @@ namespace AutomationProjectManager.ToolsWindows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+        private void Browse_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+                PathText.Text = openFileDialog.FileName;
         }
     }
 }
