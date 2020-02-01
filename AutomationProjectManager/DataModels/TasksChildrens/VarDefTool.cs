@@ -23,7 +23,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.VarDefTool;
         }
 
-        public  void UpdateContent()
+        new public  void UpdateContent()
         {
 
         }

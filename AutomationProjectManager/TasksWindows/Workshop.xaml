@@ -5,8 +5,124 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         mc:Ignorable="d"
-        Title="Workshop" Height="450" Width="800">
-    <Grid>
-        
+        Title="Workshop" Height="700" Width="800" MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
+
+        <TabControl  Margin="0,0,0,0" Background="Transparent" >
+            <TabItem Header="Raport" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}">
+                <StackPanel>
+                    <TextBlock>
+                        Raport prac warsztatowych
+                    </TextBlock>
+                    <TextBlock Name="textDate">
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock> Liczba godzin: </TextBlock>
+                        <TextBlock Name="textHours"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock> Liczba pracowników: </TextBlock>
+                        <TextBlock Name="textWorkers"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock> Koszt całkowity:</TextBlock>
+                        <TextBlock Name="textCost"></TextBlock>
+                    </StackPanel>
+                    <ListView Name="worksList" Style="{x:Null}" Height="250" SelectionChanged="lstBox_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Prace" Width="300"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Name="materialsList" Style="{x:Null}" Height="250" SelectionChanged="lstBox_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Materiały" Width="300"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Formularz" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Liczba godzin:</TextBlock>
+                        <TextBox Name="hoursBox" PreviewTextInput="NumberValidationTextBox" Width="30"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Liczba pracowników:</TextBlock>
+                        <TextBox Name="workersBox" PreviewTextInput="NumberValidationTextBox" Width="30"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Całkowity koszt:</TextBlock>
+                        <TextBox Name="costBox" PreviewTextInput="NumberValidationTextBoxFloat" Width="30"/>
+                    </StackPanel>
+                    <StackPanel Width="700">
+                        <ListView x:Name="worksLstBox" Style="{x:Null}" Height="200" SelectionChanged="lstBox_SelectionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Prace" Width="300"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="taskText" Width="500" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"/>
+                            <Button Margin="5,5,5,5" 
+        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" 
+        Background="#1976d2" BorderBrush="#1976d2" x:Name="AddBtn"
+        VerticalAlignment="Bottom"
+        Click="AddBtn_Click" HorizontalAlignment="Right"
+        Height="35" Width="36"
+        Padding="4,4,4,4" >
+                            </Button>
+                            <Button Margin="5,5,5,5"  
+        Padding="4,4,4,4" x:Name="DeleteBtn"
+        Click="DeleteBtn_Click" VerticalAlignment="Bottom" 
+        HorizontalAlignment="Right"                                       
+        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
+        Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Width="700">
+                        <ListView x:Name="materialsLstBox" Style="{x:Null}" Height="200" SelectionChanged="lstBox_SelectionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Materialy" Width="300"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="taskText2" Width="500" Foreground="{DynamicResource GlobalForeColor}" Background="{DynamicResource TextAreasBacground}"/>
+                            <Button Margin="5,5,5,5" 
+        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" 
+        Background="#1976d2" BorderBrush="#1976d2" x:Name="AddBtn2"
+        VerticalAlignment="Bottom"
+        Click="AddBtn2_Click" HorizontalAlignment="Right"
+        Height="35" Width="36"
+        Padding="4,4,4,4" >
+                            </Button>
+                            <Button Margin="5,5,5,5"  
+        Padding="4,4,4,4" x:Name="DeleteBtn2"
+        Click="DeleteBtn2_Click" VerticalAlignment="Bottom" 
+        HorizontalAlignment="Right"                                       
+        Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"
+        Background="#ff1744" BorderBrush="#ff1744" Height="35" Width="36">
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Width="800">
+                        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}"  Width="153" Click="delBtn_Click" Height="35" />
+                        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}"  Click="saveBtn_Click" Height="35" Width="153"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <Button x:Name="CloseBtn" Margin="0,10,15,0" Content="X" Padding="4,4,4,4"  Style="{StaticResource CloseButton}" Click="CloseBtn_Click" Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <Button x:Name="MaksimizeBtn" Margin="0,10,46,0" Content="↕"  Style="{StaticResource MaximizeButton}" Click="MaksimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,5" />
+        <Button x:Name="MinimizeBtn" Margin="0,10,77,0" Content="↙" Padding="4,4,4,4"  Style="{StaticResource MinimizeButton}" Click="MinimizeBtn_Click"  Height="26" Width="26" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="22"/>
+
     </Grid>
 </Window>

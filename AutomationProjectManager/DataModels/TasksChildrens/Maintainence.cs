@@ -24,7 +24,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.Maintainence;
         }
 
-        public  void UpdateContent()
+        new public  void UpdateContent()
         {
 
         }

@@ -23,7 +23,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.DriversProject;
         }
 
-        public  void UpdateContent()
+        new public  void UpdateContent()
         {
 
         }

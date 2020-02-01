@@ -38,9 +38,8 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
         {
-            lstBox.Items.Clear();
-            maintainenceTask.Content = "";
-            maintainenceTask.SaveTaskPUT();
+            MessageBox.Show(maintainenceTask.DeleteTask());
+            this.Close();
         }
 
         private String GetListsAsString()

@@ -25,7 +25,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.ProjectDescription;
         }
 
-        public  void UpdateContent()
+        new public  void UpdateContent()
         {
             this.Content = Description;
         }

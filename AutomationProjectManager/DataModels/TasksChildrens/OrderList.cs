@@ -24,7 +24,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.OrderList;
         }
 
-        public void UpdateContent()
+        new public void UpdateContent()
         {
 
         }
