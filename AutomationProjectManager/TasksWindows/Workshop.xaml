@@ -7,6 +7,19 @@
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="Workshop" Height="700" Width="800" MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5,5,5,5"></Setter>
+            <Setter Property="Foreground" Value="{DynamicResource GlobalForeColor}" />
+            <Setter Property="Background" Value="{DynamicResource TextAreasBacground}"></Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource GlobalForeColor}"></Setter>
+        </Style>
+
+    </Window.Resources>
+
+
     <Grid Background="{DynamicResource MaterialDesignBackground}" Margin="0,0,0,0">
 
         <TabControl  Margin="0,0,0,0" Background="Transparent" >
@@ -48,15 +61,15 @@
             <TabItem Header="Formularz" Background="{DynamicResource MaterialDesignBackground}" BorderBrush="{DynamicResource GlobalBordersBrush}" Foreground="{DynamicResource GlobalForeColor}">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>Liczba godzin:</TextBlock>
+                        <TextBlock Height="20">Liczba godzin:</TextBlock>
                         <TextBox Name="hoursBox" PreviewTextInput="NumberValidationTextBox" Width="98"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>Liczba pracowników:</TextBlock>
+                        <TextBlock Height="20">Liczba pracowników:</TextBlock>
                         <TextBox Name="workersBox" PreviewTextInput="NumberValidationTextBox" Width="101"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>Całkowity koszt:</TextBlock>
+                        <TextBlock Height="20">Całkowity koszt:</TextBlock>
                         <TextBox Name="costBox" PreviewTextInput="NumberValidationTextBoxFloat" Width="123"/>
                     </StackPanel>
                     <StackPanel Width="700">
@@ -76,9 +89,7 @@
         Click="AddBtn_Click" HorizontalAlignment="Right"
         Height="35" Width="36"
         Padding="4,4,4,4" >
-
                                 <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
-
                             </Button>
                             <Button Margin="5,5,5,5"  
         Padding="4,4,4,4" x:Name="DeleteBtn"
@@ -122,10 +133,14 @@
                             </Button>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Width="800">
-                        <Button Content="Usuń" x:Name="delBtn" Style="{StaticResource ResourceKey=CloseButton}"  Width="153" Click="delBtn_Click" Height="35" />
-                        <Button Content="Zapisz" x:Name="saveBtn" Style="{StaticResource MinimizeButton}"  Click="saveBtn_Click" Height="35" Width="153"/>
-                    </StackPanel>
+                    <Grid  Width="800" MinHeight="50">
+                        <Button Content="Usuń" x:Name="delBtn"
+                                Style="{StaticResource ResourceKey=CloseButton}" Click="delBtn_Click" Height="35" Margin="10,6,0,10" HorizontalAlignment="Left" Width="153" />
+                        <Button Content="Zapisz" x:Name="saveBtn" 
+                                Style="{StaticResource MinimizeButton}"  
+                                Click="saveBtn_Click" Height="35" Width="153"
+                                Margin="0,10,14,6" HorizontalAlignment="Right"/>
+                    </Grid>
                 </StackPanel>
             </TabItem>
         </TabControl>

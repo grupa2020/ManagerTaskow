@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Newtonsoft.Json;
+using AutomationProjectManager.Connection.Responses;
 
 namespace AutomationProjectManager.ToolsWindows
 {
@@ -137,8 +138,22 @@ namespace AutomationProjectManager.ToolsWindows
         {
             //Zapisanie treści
             mainTask.Content = JsonConvert.SerializeObject(ListaKKS);
-            MessageWindow message = new MessageWindow(mainTask.SaveTaskPUT());
-            message.Show();
+            SimpleResponse simpleResponse;
+            simpleResponse = JsonConvert.DeserializeObject<SimpleResponse>(mainTask.SaveTaskPUT());
+            if (simpleResponse.Succeeded)
+            {
+                MessageWindow message1 = new MessageWindow("Zapisano zmiany pomyślnie!");
+                message1.Show();
+                
+            }
+            else
+            {
+                MessageWindow message1 = new MessageWindow("Coś poszło nie tak..");
+                message1.Show();
+                
+            }
+
+          
             
         }
 
@@ -148,9 +163,21 @@ namespace AutomationProjectManager.ToolsWindows
 
             if(message.ShowDialog()==true)
             {
-                MessageWindow message1 = new MessageWindow(mainTask.DeleteTask());
-                message1.Show();
-                this.Close();
+                SimpleResponse simpleResponse;
+                simpleResponse = JsonConvert.DeserializeObject<SimpleResponse>(mainTask.DeleteTask());
+                if(simpleResponse.Succeeded)
+                {
+                    MessageWindow message1 = new MessageWindow("Usunięto zadanie");
+                    message1.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageWindow message1 = new MessageWindow("Coś poszło nie tak..");
+                    message1.Show();
+                    this.Close();
+                }
+                
             }
         }
     }
