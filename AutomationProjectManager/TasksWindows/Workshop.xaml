@@ -103,10 +103,10 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Width="700">
-                        <ListView x:Name="materialsLstBox" Style="{x:Null}" Height="200" SelectionChanged="lstBox_SelectionChanged">
+                        <ListView x:Name="faultsLstBox" Style="{x:Null}" Height="200" SelectionChanged="lstBox_SelectionChanged">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Materialy" Width="300"/>
+                                    <GridViewColumn Header="Usterki" Width="300"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -119,9 +119,7 @@
         Click="AddBtn2_Click" HorizontalAlignment="Right"
         Height="35" Width="36"
         Padding="4,4,4,4" >
-
                                 <svgc:SvgViewbox Source="Resources/add-24px.svg" Margin="3,3,3,3"  Stretch="Fill"/>
-
                             </Button>
                             <Button Margin="5,5,5,5"  
         Padding="4,4,4,4" x:Name="DeleteBtn2"

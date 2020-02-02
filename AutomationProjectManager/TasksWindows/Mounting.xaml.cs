@@ -1,6 +1,7 @@
 ﻿using AutomationProjectManager.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,8 +44,17 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            mountingTask.UpdateContent(int.Parse(hoursBox.Text), int.Parse(workersBox.Text), float.Parse(costBox.Text), worksLstBox.Items.OfType<string>().ToList(), materialsLstBox.Items.OfType<string>().ToList());
+            if (hoursBox.Text.Length <= 0 || costBox.Text.Length <= 0 || costBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Uzupełnij puste pola!");
+                return;
+            }
+            List<String> worksTemp = worksLstBox.Items.OfType<string>().ToList();
+            List<String> materialsTemp = materialsLstBox.Items.OfType<string>().ToList();
+
+            mountingTask.UpdateContent(int.Parse(hoursBox.Text), int.Parse(workersBox.Text), float.Parse(costBox.Text, CultureInfo.InvariantCulture.NumberFormat), worksTemp, materialsTemp);
             mountingTask.SaveTaskPUT();
+            fillContent();
         }
 
         private void delBtn_Click(object sender, RoutedEventArgs e)
@@ -55,15 +65,58 @@ namespace AutomationProjectManager.ToolsWindows
 
         private void fillContent()
         {
-            //lstBox.Items.Clear();
-            //if (maintainenceTask.Content != null && (maintainenceTask.Content.Length > 0))
-            //{
-            //    string[] items = maintainenceTask.Content.Split('|');
-            //    foreach (string itm in items)
-            //    {
-            //        lstBox.Items.Add(itm);
-            //    }
-            //}
+            string tempString;
+            tempString = mountingTask.Content;
+            if (tempString.Length > 0)
+            {
+                int x, y;
+
+                //Date parsing
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                textDate.Text = tempString.Substring(x + 1, y);
+                tempString = tempString.Substring(y + 2);
+
+                //hours parsing
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                textHours.Text = tempString.Substring(x + 1, y);
+                tempString = tempString.Substring(y + 2);
+
+                //workers count parsing
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                textWorkers.Text = tempString.Substring(x + 1, y);
+                tempString = tempString.Substring(y + 2);
+
+                //cost parsing
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                textCost.Text = tempString.Substring(x + 1, y);
+                tempString = tempString.Substring(y + 2);
+
+                //works list parsing
+                worksList.Items.Clear();
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                string[] items = tempString.Substring(x + 1, y).Split(';');
+                foreach (string itm in items)
+                {
+                    worksList.Items.Add(itm);
+                }
+                tempString = tempString.Substring(y + 2);
+
+                //materials list parsing
+                materialsList.Items.Clear();
+                x = tempString.IndexOf('|');
+                y = tempString.Substring(x + 1).IndexOf('|');
+                items = tempString.Substring(x + 1, y).Split(';');
+                foreach (string itm in items)
+                {
+                    materialsList.Items.Add(itm);
+                }
+                tempString = tempString.Substring(y + 2);
+            }
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)

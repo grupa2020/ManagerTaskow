@@ -29,7 +29,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
             this.TaskType = TaskTypeEnum.Workshop;
         }
 
-        new public  void UpdateContent(int Hours, int WorkersCount, float Cost, List<String> Works, List<String> Materials)
+        new public void UpdateContent(int Hours, int WorkersCount, float Cost, List<String> Works, List<String> Materials)
         {
             hours = Hours;
             workersCount = WorkersCount;
