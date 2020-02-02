@@ -13,6 +13,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = -1;
             this.Description = "";
+            this.Content = "";
             this.TaskId = -1;
             this.TaskType = TaskTypeEnum.ProjectDescription;
         }
@@ -21,6 +22,7 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
         {
             this.BoardId = BoardId;
             this.Description = Content;
+            this.Content = "";
             this.TaskId = TaskId;
             this.TaskType = TaskTypeEnum.ProjectDescription;
         }

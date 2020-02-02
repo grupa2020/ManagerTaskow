@@ -62,7 +62,7 @@ namespace AutomationProjectManager.Factories
                    
                 case TaskTypeEnum.ProjectDescription:
                     {
-                        newWindow = new ProjectDescription(Task);
+                        newWindow = new ProjectDescriptionWindow(Task);
                         return newWindow;
                     }
                     

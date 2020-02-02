@@ -91,14 +91,16 @@ namespace AutomationProjectManager
 
                 if (responseMsg.Succeeded)
                 {
-                    MessageBox.Show("Pomyślnie dodano nowy projekt");
+                    MessageWindow message = new MessageWindow("Pomyślnie dodano nowy projekt");
+                    message.Show();
 
                     isNew = false;
 
                 }
                 else
                 {
-                    MessageBox.Show("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                    MessageWindow message = new MessageWindow("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                    message.Show();
                 }
 
             }
@@ -119,14 +121,16 @@ namespace AutomationProjectManager
 
                 if (responseMsg.Succeeded)
                 {
-                    MessageBox.Show("Pomyślnie zapisano zmiany");
+                    MessageWindow message = new MessageWindow("Pomyślnie zapisano zmiany");
+                    message.Show();
 
                     isNew = false;
 
                 }
                 else
                 {
-                    MessageBox.Show("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                    MessageWindow message = new MessageWindow("Coś poszło nie tak :( \n Odpowiedź serwera: \n" + responseMsg.Message);
+                    message.Show();
                 }
 
             }

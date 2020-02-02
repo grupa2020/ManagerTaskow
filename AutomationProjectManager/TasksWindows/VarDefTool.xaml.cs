@@ -161,23 +161,26 @@ namespace AutomationProjectManager.ToolsWindows
         {
             MessageWindow message = new MessageWindow("Czy na pewno chcesz usunąć całe zadanie?", true);
 
-            if(message.ShowDialog()==true)
+            try
             {
-                SimpleResponse simpleResponse;
-                simpleResponse = JsonConvert.DeserializeObject<SimpleResponse>(mainTask.DeleteTask());
-                if(simpleResponse.Succeeded)
+                if (message.ShowDialog() == true)
                 {
-                    MessageWindow message1 = new MessageWindow("Usunięto zadanie");
-                    message1.Show();
-                    this.Close();
+                    string simpleResponse;
+                    simpleResponse = mainTask.DeleteTask();
+                  
+                    if(simpleResponse!=null)
+                    {
+                        MessageWindow message1 = new MessageWindow("Usunięto zadanie");
+                        message1.Show();
+                        this.Close();
+                    }
+                                      
                 }
-                else
-                {
-                    MessageWindow message1 = new MessageWindow("Coś poszło nie tak..");
-                    message1.Show();
-                    this.Close();
-                }
-                
+            }
+            catch(Exception exc)
+            {
+                MessageWindow messageWindow = new MessageWindow(exc.Message);
+                messageWindow.Show();
             }
         }
     }

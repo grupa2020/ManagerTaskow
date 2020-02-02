@@ -161,8 +161,8 @@
     <Compile Include="TasksWindows\OrderList.xaml.cs">
       <DependentUpon>OrderList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TasksWindows\ProjectDescription.xaml.cs">
-      <DependentUpon>ProjectDescription.xaml</DependentUpon>
+    <Compile Include="TasksWindows\ProjectDescriptionWindow.xaml.cs">
+      <DependentUpon>ProjectDescriptionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TasksWindows\VarDefTool.xaml.cs">
       <DependentUpon>VarDefTool.xaml</DependentUpon>
@@ -246,7 +246,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TasksWindows\ProjectDescription.xaml">
+    <Page Include="TasksWindows\ProjectDescriptionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

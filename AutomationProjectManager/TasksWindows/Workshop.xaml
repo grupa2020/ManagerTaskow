@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutomationProjectManager.ToolsWindows"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
-        Title="Workshop" Height="700" Width="800" MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        Title="Workshop" Height="700" Width="800" MouseDown="Window_MouseDown" WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5,5,5,5"></Setter>
