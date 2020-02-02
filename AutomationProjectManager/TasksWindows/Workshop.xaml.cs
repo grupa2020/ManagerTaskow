@@ -49,7 +49,7 @@ namespace AutomationProjectManager.ToolsWindows
                 return;
             }
             List<String> worksTemp = worksLstBox.Items.OfType<string>().ToList();
-            List<String> materialsTemp = materialsLstBox.Items.OfType<string>().ToList();
+            List<String> materialsTemp = faultsLstBox.Items.OfType<string>().ToList();
 
             workshopTask.UpdateContent(int.Parse(hoursBox.Text), int.Parse(workersBox.Text), float.Parse(costBox.Text, CultureInfo.InvariantCulture.NumberFormat), worksTemp, materialsTemp);
             workshopTask.SaveTaskPUT();
@@ -175,14 +175,14 @@ namespace AutomationProjectManager.ToolsWindows
         private void DeleteBtn2_Click(object sender, RoutedEventArgs e)
         {
             List<String> itemsToRemove = new List<String>();
-            foreach (String item in materialsLstBox.SelectedItems)
+            foreach (String item in faultsLstBox.SelectedItems)
             {
                 itemsToRemove.Add(item);
             }
 
             foreach (String inx in itemsToRemove)
             {
-                materialsLstBox.Items.Remove(inx);
+                faultsLstBox.Items.Remove(inx);
             }
         }
 
@@ -191,7 +191,7 @@ namespace AutomationProjectManager.ToolsWindows
             if (taskText2.Text.Length > 0)
             {
                 taskText2.Text.Trim(',');
-                materialsLstBox.Items.Add(taskText2.Text);
+                faultsLstBox.Items.Add(taskText2.Text);
                 taskText2.Clear();
             }
         }

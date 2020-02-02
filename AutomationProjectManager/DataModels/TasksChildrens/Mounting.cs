@@ -45,15 +45,16 @@ namespace AutomationProjectManager.DataModels.TasksChildrens
 
             string tempContent = "";
 
-            tempContent += "h|" + hours.ToString()+"|";
-            tempContent += "w|" + workersCount.ToString() + "|";
-            tempContent += "c|" + cost.ToString() + "|";
-            tempContent += "Lw|";
+            tempContent += '|' + DateTime.Now.ToString().Substring(0, 10) + '|';
+            tempContent += '|' + hours.ToString() + '|';
+            tempContent += '|' + workersCount.ToString() + '|';
+            tempContent += '|' + cost.ToString() + '|';
+            tempContent += '|';
             tempContent += string.Join(";", works);
-            tempContent += "|";
-            tempContent += "Lm|";
+            tempContent += '|';
+            tempContent += '|';
             tempContent += string.Join(";", materials);
-            tempContent += "|";
+            tempContent += '|';
 
             Content = tempContent;
         }
